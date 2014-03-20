@@ -1,0 +1,22 @@
+=== Huiskamers ===
+Tags: matching, huiskamers
+Requires at least: 3.8.1
+Tested up to: 3.8.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Local group administration plugin for thuisverder.nl
+
+== Description ==
+Provides a plugin for thuisverder.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
+
+
+== Installation ==
+1. Upload the `huiskamers` directory to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. place [huiskamers] somewhere in a post
+
+== Changelog ==
+
+= 0.1 =
+* Initial setup, currently a work in progress
