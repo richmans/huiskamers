@@ -20,3 +20,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 = 0.1 =
 * Initial setup, currently a work in progress
+
+= 0.2 = 
+* Created basic data framework

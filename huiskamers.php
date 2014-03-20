@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 0.1
+Version: 0.2
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -25,13 +25,13 @@ class Huiskamers {
 		add_action( 'init', array( $this, 'widget_textdomain' ) );
 
 		// Hooks fired when the Widget is activated and deactivated
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-
-	
+		// Uses weird path because when used with symlinks, it doesnt work
+		// http://wordpress.org/support/topic/register_activation_hook-does-not-work
+		register_activation_hook( WP_PLUGIN_DIR . '/huiskamers/huiskamers.php', array( $this, 'activate' ) );
+		register_deactivation_hook( WP_PLUGIN_DIR . '/huiskamers/huiskamers.php', array( $this, 'deactivate' ) );
 
 		// Register admin styles and scripts
-		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 
 		// Register site styles and scripts
@@ -43,6 +43,8 @@ class Huiskamers {
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
 	} // end constructor
+
+
 
 	/*--------------------------------------------------*/
 	/* Widget API Functions
@@ -75,7 +77,8 @@ class Huiskamers {
 		$cache[ 'widget']  = $widget_string;
 
 		wp_cache_set( 'huiskamers', $cache);
-
+		$this->use_lib();
+		$widget_string = Huiskamers\Region::get(1)->description();
 		return $widget_string;
 
 	} 
@@ -103,13 +106,19 @@ class Huiskamers {
 		load_plugin_textdomain( 'huiskamers', false, plugin_dir_path( __FILE__ ) . 'lang/' );
 	} // end widget_textdomain
 
+
+	/** This loads everything in /lib **/
+	public function use_lib(){
+		include plugin_dir_path( __FILE__ ) . 'lib/include.php';
+	}
 	/**
 	 * Fired when the plugin is activated.
 	 *
 	 * @param  boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
-	public function activate( $network_wide ) {
-		// TODO define activation functionality here
+	public function activate(){
+		$this->use_lib();
+		Huiskamers\Region::create_table();
 	} // end activate
 
 	/**
@@ -117,8 +126,9 @@ class Huiskamers {
 	 *
 	 * @param boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
 	 */
-	public function deactivate( $network_wide ) {
-		// TODO define deactivation functionality here
+	public function deactivate( ) {
+		$this->use_lib();
+		Huiskamers\Region::drop_table();
 	} // end deactivate
 
 	/**
@@ -179,5 +189,6 @@ class Huiskamers {
 
 	}
 } // end class
+
 $huiskamers = new Huiskamers();
 ?>
