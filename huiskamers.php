@@ -42,14 +42,8 @@ class Huiskamers {
 		add_action('admin_menu', array($this, 'build_admin_menu'));
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
-	} // end constructor
-
-
-
-	/*--------------------------------------------------*/
-	/* Widget API Functions
-	/*--------------------------------------------------*/
-
+	} 
+	
 	/**
 	 * Outputs the content of the widget.
 	 */
@@ -60,19 +54,15 @@ class Huiskamers {
 		if ( !is_array( $cache ) )
 			$cache = array();
 
-
 		if ( isset ( $cache[ 'widget' ] ) )
 			return print $cache[ 'widget' ];
 
-
 		$widget_string = $before_widget;
 
-		// TODO: Here is where you manipulate your widget's values based on their input fields
 		ob_start();
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;
-
 
 		$cache[ 'widget']  = $widget_string;
 
@@ -80,7 +70,6 @@ class Huiskamers {
 		$this->use_lib();
 		$widget_string = Huiskamers\Region::get(1)->description();
 		return $widget_string;
-
 	} 
 	
 	//This is the function that is executed when [huiskamers] is found in a post
@@ -88,23 +77,16 @@ class Huiskamers {
   	echo $this->widget();
   }
 
-
-	public function flush_widget_cache() 
-	{
+	public function flush_widget_cache() {
     	wp_cache_delete( 'huiskamers' );
 	}
 	
-
-	/*--------------------------------------------------*/
-	/* Public Functions
-	/*--------------------------------------------------*/
-
 	/**
 	 * Loads the Widget's text domain for localization and translation.
 	 */
 	public function widget_textdomain() {
 		load_plugin_textdomain( 'huiskamers', false, plugin_dir_path( __FILE__ ) . 'lang/' );
-	} // end widget_textdomain
+	}
 
 
 	/** This loads everything in /lib **/
@@ -119,7 +101,7 @@ class Huiskamers {
 	public function activate(){
 		$this->use_lib();
 		Huiskamers\Region::create_table();
-	} // end activate
+	}
 
 	/**
 	 * Fired when the plugin is deactivated.
@@ -129,47 +111,35 @@ class Huiskamers {
 	public function deactivate( ) {
 		$this->use_lib();
 		Huiskamers\Region::drop_table();
-	} // end deactivate
+	}
 
 	/**
 	 * Registers and enqueues admin-specific styles.
 	 */
 	public function register_admin_styles() {
-
-		// TODO: Change 'widget-name' to the name of your plugin
 		wp_enqueue_style( 'huiskamers-admin-styles', plugins_url( 'huiskamers/css/admin.css' ) );
-
-	} // end register_admin_styles
+	}
 
 	/**
 	 * Registers and enqueues admin-specific JavaScript.
 	 */
 	public function register_admin_scripts() {
-
-		// TODO: Change 'widget-name' to the name of your plugin
 		wp_enqueue_script( 'huiskamers-admin-script', plugins_url( 'huiskamers/js/admin.js' ), array('jquery') );
-
-	} // end register_admin_scripts
+	}
 
 	/**
 	 * Registers and enqueues widget-specific styles.
 	 */
 	public function register_widget_styles() {
-
-		// TODO: Change 'widget-name' to the name of your plugin
 		wp_enqueue_style( 'huiskamers-widget-styles', plugins_url( 'huiskamers/css/widget.css' ) );
-
-	} // end register_widget_styles
+	}
 
 	/**
 	 * Registers and enqueues widget-specific scripts.
 	 */
 	public function register_widget_scripts() {
-
-		// TODO: Change 'widget-name' to the name of your plugin
 		wp_enqueue_script( 'huiskamers-script', plugins_url( 'huiskamers/js/widget.js' ), array('jquery') );
-
-	} // end register_widget_scripts
+	}
 
 	/**
 	* Registers the admin menu 
