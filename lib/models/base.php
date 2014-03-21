@@ -46,8 +46,9 @@ abstract class Base {
 		$e = $wpdb->query($sql);
 	}
 
-	public static function get($id){
+	public static function find($id){
 		global $wpdb;
+		$id = intval($id);
 		$table_name = static::prefixed_table_name();
 		$sql = "SELECT * FROM $table_name where id=$id";
 		$record = $wpdb->get_row( $sql, ARRAY_A );

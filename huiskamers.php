@@ -43,7 +43,7 @@ class Huiskamers {
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
 	} 
-	
+
 	/**
 	 * Outputs the content of the widget.
 	 */
@@ -68,7 +68,7 @@ class Huiskamers {
 
 		wp_cache_set( 'huiskamers', $cache);
 		$this->use_lib();
-		$widget_string = Huiskamers\Region::get(1)->description();
+		$widget_string = Huiskamers\Region::find(1)->description();
 		return $widget_string;
 	} 
 	
@@ -156,7 +156,9 @@ class Huiskamers {
 
 	/** Shows the regions page **/
 	public function show_regions_page(){
-
+		$this->use_lib();
+		$region_controller = new Huiskamers\RegionController();
+		$region_controller->route();
 	}
 } // end class
 
