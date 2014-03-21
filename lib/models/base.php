@@ -5,7 +5,7 @@ abstract class Base {
 	abstract public static function fields();
 	private $values = array();
 
-	public function __construct($values) {
+	public function __construct($values=array()) {
 		$this->values = $values;
 	}
 
@@ -52,7 +52,7 @@ abstract class Base {
 		$table_name = static::prefixed_table_name();
 		$sql = "SELECT * FROM $table_name where id=$id";
 		$record = $wpdb->get_row( $sql, ARRAY_A );
-
+		if($record==NULL) throw new \Exception("Record not found");
 		$instance = new static($record);
 		return $instance;
 	}
