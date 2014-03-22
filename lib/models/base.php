@@ -9,13 +9,18 @@ abstract class Base {
 		$this->values = $values;
 	}
 
+	public static function get_namespace() {
+		return trim(strtolower(__NAMESPACE__));
+	}
+
 	public static function indexes() {
 		return array(); 
 	}
 
 	public static function prefixed_table_name() {
 		global $wpdb;
-		return $table_name = $wpdb->prefix.'huiskamers_'.static::table_name();
+		$namespace = self::get_namespace();
+		return $table_name = $wpdb->prefix.$namespace.'_'.static::table_name();
 	}
 
 	public static function drop_table(){
@@ -46,6 +51,17 @@ abstract class Base {
 		$e = $wpdb->query($sql);
 	}
 
+	public static function where($sql_where){
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$sql = "SELECT * FROM $table_name where $sql_where";
+
+		### TODO
+		$records = $wpdb->get_row( $sql, ARRAY_A );
+		if($records==NULL) throw new \Exception("Record not found");
+		$instance = new static($record);
+		return $instance;
+	}
 	public static function find($id){
 		global $wpdb;
 		$id = intval($id);

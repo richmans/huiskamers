@@ -5,6 +5,10 @@ abstract class BaseController {
 		return array('index', 'show', 'insert', 'edit', 'save', 'delete');
 	}
 
+	public function get_namespace() {
+		return trim(strtolower(__NAMESPACE__));
+	}
+
 	// returns the model class associated with this controller
 	public function model() {
 		// get my own classname
@@ -18,8 +22,9 @@ abstract class BaseController {
 	public function section() {
 		// get my own classname
 		$my_class = get_called_class();
+		$namespace_length = strlen($this->get_namespace()) + 1;
 		// chop off the 'Controller' part and the 'Huiskamers' part
-		$section_name = strtolower(substr($my_class,11,-10));
+		$section_name = strtolower(substr($my_class,$namespace_length,-10));
 		return $section_name;
 	}
 
@@ -35,7 +40,8 @@ abstract class BaseController {
 
 	public function url($method, $id=NULL){
 		$section = $this->section();
-		$url = "?page=huiskamers_$section&method=$method";
+		$namespace = $this->get_namespace();
+		$url = "?page={$namespace}_$section&method=$method";
 		if ($id != NULL){
 			$url .= "&id=$id";
 		}
@@ -44,23 +50,32 @@ abstract class BaseController {
 
 	public function index($id) {
 		$section = $this->section();
+		$model_name = $this->model();
+		$models = $model_name::where('1=1');
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_index.php" );
 	}
 
 	public function insert($id) {
 		$section = $this->section();
 		$form_mode = 'new';
-		$model = $this->model();
-		$region = new $model();
+		$model_name = $this->model();
+		$model = new $model_name();
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
 	}
 
 	public function edit($id) {
 		$section = $this->section();
-		$model = $this->model();
-		$region = $model::find($id);
+		$model_name = $this->model();
+		$model = $model_name::find($id);
 		$form_mode = 'edit';
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
+	}
+
+	public function show($id) {
+		$section = $this->section();
+		$model_name = $this->model();
+		$model = $model_name::find($id);
+		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_show.php" );	
 	}
 }
 ?>
