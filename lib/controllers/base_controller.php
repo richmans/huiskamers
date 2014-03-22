@@ -2,7 +2,7 @@
 namespace Huiskamers;
 abstract class BaseController {
 	public function methods(){ 
-		return array('index', 'show', 'insert', 'edit', 'save', 'delete');
+		return array('index', 'show', 'insert', 'edit', 'create', 'update', 'delete');
 	}
 
 	public function get_namespace() {
@@ -52,12 +52,13 @@ abstract class BaseController {
 		$section = $this->section();
 		$model_name = $this->model();
 		$models = $model_name::where('1=1');
+
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_index.php" );
 	}
 
 	public function insert($id) {
 		$section = $this->section();
-		$form_mode = 'new';
+		$form_mode = 'create';
 		$model_name = $this->model();
 		$model = new $model_name();
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
@@ -67,8 +68,33 @@ abstract class BaseController {
 		$section = $this->section();
 		$model_name = $this->model();
 		$model = $model_name::find($id);
-		$form_mode = 'edit';
+		$form_mode = 'update';
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
+	}
+
+	public function create($id) {
+		$section = $this->section();
+		$model_name = $this->model();
+		$model = new $model_name($_POST[$section]);
+		$model->create();
+		$this->redirect('show', $model->id());
+	}
+
+	public function update($id) {
+		$section = $this->section();
+		$model_name = $this->model();
+		$model = $model_name::find($id);
+		$model->update_fields($_POST[$section]);
+		$model->save();
+		$this->redirect('show', $model->id());
+	}
+
+	public function delete($id) {
+		$section = $this->section();
+		$model_name = $this->model();
+		$model = $model_name::find($id);
+		$model->delete();
+		$this->redirect('index');
 	}
 
 	public function show($id) {
@@ -76,6 +102,14 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$model = $model_name::find($id);
 		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_show.php" );	
+	}
+
+	public function redirect($method, $id=NULL){
+		$this->redirect_url($this->url($method, $id));
+	}
+
+	public function redirect_url($url){
+		include( plugin_dir_path( __FILE__ ) . "../../views/redirect.php" );	
 	}
 }
 ?>

@@ -51,17 +51,65 @@ abstract class Base {
 		$e = $wpdb->query($sql);
 	}
 
+
+	public function create() {
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$wpdb->insert( $table_name, $this->values); 
+		$this->values['id'] = $wpdb->insert_id;
+	}
+
+	public function save() { 
+		if ($this->id() == NULL) {
+			$this->create();
+		}else{
+			$this->update();
+		}
+	}
+
+	public function fix_slashes($data){
+		echo get_magic_quotes_gpc();
+		if(get_magic_quotes_gpc() == TRUE){
+			$data = stripslashes($data);
+		}
+		return $data;
+	}
+
+	public function update() {
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		if($this->id() == NULL) throw new \Exception("Tried to update an unsaved record");
+		$where = array('id' => $this->id());
+		$wpdb->update( $table_name, $this->values, $where); 		
+	}
+
+	public function update_fields($fields) {
+		foreach($this->fields() as $name => $type){
+			if($name == 'id') continue;
+			$this->values[$name] = $this->fix_slashes($fields[$name]);
+		}
+	}
+
+	public function delete() {
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		if($this->id() == NULL) throw new \Exception("Tried to delete an unsaved record");
+		$where = array('id' => $this->id());
+		$wpdb->delete( $table_name, $where); 
+	}
+
 	public static function where($sql_where){
 		global $wpdb;
 		$table_name = static::prefixed_table_name();
 		$sql = "SELECT * FROM $table_name where $sql_where";
-
-		### TODO
-		$records = $wpdb->get_row( $sql, ARRAY_A );
-		if($records==NULL) throw new \Exception("Record not found");
-		$instance = new static($record);
-		return $instance;
+		$records = $wpdb->get_results( $sql, ARRAY_A );
+		$result = array();
+		foreach($records as $record) {
+			$result[] = new static($record);
+		}
+		return $result;
 	}
+
 	public static function find($id){
 		global $wpdb;
 		$id = intval($id);
