@@ -6,8 +6,7 @@
 				<tr valign='top'>
 					<th scope='row'><label for='name'>Naam</label></th>
 					<td>
-						<input name="region[name]" type="text" id="region_name" value="<?=esc_attr($model->name())?>" class="regular-text"/>
-	
+						<input name="region[name]" type="text" id="region_name" value="<?=esc_attr($model->name())?>" class="regular-text" autocomplete='off'/>
 					</td>
 			</tr>
 			</tbody>

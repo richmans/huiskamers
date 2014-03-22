@@ -145,12 +145,18 @@ class Huiskamers {
 	* Registers the admin menu 
 	*/
 	public function build_admin_menu(){
-		add_menu_page('Huiskamers', 'Huiskamers', 'manage_options', 'huiskamers', array($this, 'show_admin_page'), 'dashicons-book-alt');
+		add_menu_page('Huiskamers', 'Huiskamers', 'manage_options', 'huiskamers', array($this, 'show_admin_page'), 'dashicons-groups');
 		add_submenu_page('huiskamers', 'Regios beheren', 'Regios', 'manage_options', 'huiskamers_region', array($this, 'show_regions_page'));
+		add_submenu_page('huiskamers', 'Inschrijvingen beheren', 'Inschrijvingen', 'manage_options', 'huiskamers_subscriptions', array($this, 'show_subscriptions_page'));
 	}
 
 	/** Shows the main admin page **/
 	public function show_admin_page(){
+
+	}
+
+	/** Shows the subscriptions admin page **/
+	public function show_subscriptions_page(){
 
 	}
 
