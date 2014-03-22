@@ -77,7 +77,7 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$model = new $model_name($_POST[$section]);
 		$model->create();
-		$this->redirect('show', $model->id());
+		$this->redirect('index');
 	}
 
 	public function update($id) {
@@ -86,7 +86,7 @@ abstract class BaseController {
 		$model = $model_name::find($id);
 		$model->update_fields($_POST[$section]);
 		$model->save();
-		$this->redirect('show', $model->id());
+		$this->redirect('index');
 	}
 
 	public function delete($id) {
