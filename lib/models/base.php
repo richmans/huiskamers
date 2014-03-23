@@ -39,6 +39,8 @@ abstract class Base {
 			$sql_definition='TEXT';
 		}else if ($options['type'] == 'number'){
 			$sql_definition='INT';
+		}else if ($options['type'] == 'dropdown'){
+			$sql_definition='INT';
 		}
 		$nulldef = 'not null';
 		return  "$field $sql_definition $nulldef, \n";
@@ -161,6 +163,13 @@ abstract class Base {
 		}
 	}
 
+	public function validate_dropdown($field, $options){
+		$value = $this->values[$field];
+		if($value == NULL || intval($value) == 0){
+			$this->errors[$field] = "is niet gekozen.";
+		}
+	}
+
 	public function validate_number($field, $options){
 		$value = $this->values[$field];
 		if(!(is_numeric($value))){
@@ -176,6 +185,8 @@ abstract class Base {
 			$this->validate_presence($field, $options);
 			if($options['type'] == 'number'){
 				$this->validate_number($field, $options);
+			}else if ($options['type'] == 'dropdown'){
+				$this->validate_dropdown($field, $options);
 			}
 			$validation = $options['validate'];
 			if($validation != NULL){

@@ -7,7 +7,7 @@ class FormHelper {
 	}
 
 	public function input($field, $caption, $model){
-		$invalid_class = ($model->is_invalid('name')) ? 'class=\'form-invalid\'' : '';
+		$invalid_class = ($model->is_invalid($field)) ? 'class=\'form-invalid\'' : '';
 		echo "<tr valign='top' $invalid_class>\n";
 		echo "<th scope='row'><label for='$field'>$caption</label></th>\n";
 		echo "<td>\n";
@@ -23,13 +23,30 @@ class FormHelper {
 		$fields = $model->fields();
 		$options = $fields[$field];
 		$type = $options['type'];
-		if($type == 'number'){
+		if($type == 'dropdown'){
+			$values = $options['values'];
+			$this->select_field($field, $caption, $model, $values);
+		}else if($type == 'number'){
 			$this->input_string_field($field, $caption, $model);			
 		}else if ($type == 'text'){
 			$this->input_text_field($field, $caption, $model);			
 		}else{
 			$this->input_string_field($field, $caption, $model);			
 		}
+	}
+
+	public function select_field($field, $caption, $model, $values){
+		$value = $model->$field();
+		$values = array_merge(array('Selecteer'), $values);
+		$section = $this->section;
+		echo "<select style='width:350px' name='{$section}[{$field}]' id='{$section}_{$field}'>\n";
+		foreach($values as $option_key => $option_value){
+			$selected = (intval($option_key) == intval($value))?'selected':'';
+			$option = esc_attr($option);
+
+			echo "<option value='$option_key' $selected>$option_value</option>\n";
+		}
+		echo "</select>\n";
 	}
 
 	public function input_text_field($field, $caption, $model){
