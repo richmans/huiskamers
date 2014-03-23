@@ -53,7 +53,7 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$models = $model_name::where('1=1');
 
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_index.php" );
+		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/index.php" );
 	}
 
 	public function insert($id) {
@@ -61,7 +61,7 @@ abstract class BaseController {
 		$form_mode = 'create';
 		$model_name = $this->model();
 		$model = new $model_name();
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
+		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );	
 	}
 
 	public function edit($id) {
@@ -69,7 +69,7 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$model = $model_name::find($id);
 		$form_mode = 'update';
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_form.php" );	
+		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );	
 	}
 
 	public function create($id) {
@@ -101,7 +101,7 @@ abstract class BaseController {
 		$section = $this->section();
 		$model_name = $this->model();
 		$model = $model_name::find($id);
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}_show.php" );	
+		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/show.php" );	
 	}
 
 	public function redirect($method, $id=NULL){

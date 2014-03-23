@@ -19,7 +19,7 @@ abstract class Base {
 
 	public static function prefixed_table_name() {
 		global $wpdb;
-		$namespace = self::get_namespace();
+		$namespace = static::get_namespace();
 		return $table_name = $wpdb->prefix.$namespace.'_'.static::table_name();
 	}
 
@@ -32,7 +32,9 @@ abstract class Base {
 
 	public static function create_table(){
 		global $wpdb;
+
 		$table_name = static::prefixed_table_name();
+		
 		$sql = "CREATE TABLE  $table_name (\n";
 		$sql .= "id INT NOT NULL AUTO_INCREMENT, \n";
 		$fields = static::fields();
@@ -51,8 +53,9 @@ abstract class Base {
 		$sql .= "KEY updated_at (updated_at)";
 	
 		$sql .= ");";
-
+			
 		$e = $wpdb->query($sql);
+	
 	}
 
 
