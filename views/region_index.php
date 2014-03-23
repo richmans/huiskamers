@@ -8,6 +8,8 @@
 			<thead><tr>
 				<th>#</th>
 				<th>Naam</th>
+				<th>Gemaakt</th>
+				<th>Bewerkt</th>
 				<th>&nbsp;</th>
 			</tr></thead>
 			<tbody>
@@ -17,6 +19,9 @@
 				<tr class='<?=($alternate) ? 'alternate' : ''?>'>
 					<td><?=$regio->id()?></td>
 					<td><?= $regio->name() ?></td>
+					<td><?= $regio->created_at() ?></td>
+					<td><?= $regio->updated_at() ?></td>
+					
 					<td>
 						<span class='edit'><a href='<?=$this->url('edit', $regio->id())?>'>Edit</a></span>&nbsp;&nbsp;
 						<span class='delete'><a href='<?=$this->url('delete', $regio->id())?>'>Delete</a></span>

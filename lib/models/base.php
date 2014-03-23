@@ -41,6 +41,8 @@ abstract class Base {
 			$sql_options = $options['sql'];
 			$sql .= "$field $sql_options, \n";
 		}
+		$sql .= "created_at TIMESTAMP NOT NULL DEFAULT 0, \n";
+		$sql .= "updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, \n";
 		$sql .= "PRIMARY KEY  (id), \n";
 		foreach($indexes as $index) {
 			$sql .= "KEY $index ($index), \n";
@@ -55,7 +57,8 @@ abstract class Base {
 	public function create() {
 		global $wpdb;
 		$table_name = static::prefixed_table_name();
-		$wpdb->insert( $table_name, $this->values); 
+		$values = array_merge($this->values, array('created_at' => timestamp(), 'updated_at' => timestamp()));
+		$wpdb->insert( $table_name, $values); 
 		$this->values['id'] = $wpdb->insert_id;
 	}
 
@@ -67,26 +70,20 @@ abstract class Base {
 		}
 	}
 
-	public function fix_slashes($data){
-		echo get_magic_quotes_gpc();
-		if(get_magic_quotes_gpc() == TRUE){
-			$data = stripslashes($data);
-		}
-		return $data;
-	}
-
 	public function update() {
 		global $wpdb;
 		$table_name = static::prefixed_table_name();
 		if($this->id() == NULL) throw new \Exception("Tried to update an unsaved record");
 		$where = array('id' => $this->id());
-		$wpdb->update( $table_name, $this->values, $where); 		
+		$values = array_merge($this->values, array('updated_at' => timestamp()));
+		$wpdb->update( $table_name, $values, $where); 		
+
 	}
 
 	public function update_fields($fields) {
 		foreach($this->fields() as $name => $type){
 			if($name == 'id') continue;
-			$this->values[$name] = $this->fix_slashes($fields[$name]);
+			$this->values[$name] = fix_slashes($fields[$name]);
 		}
 	}
 
