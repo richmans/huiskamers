@@ -5,18 +5,23 @@ if(!class_exists('WP_List_Table')){
 }
 
 
-class RegionTableHelper extends \WP_List_Table {
+class TableHelper extends \WP_List_Table {
     private $controller = NULL;
     private $model_name = NULL;
-    function __construct($controller, $model_name){
+    private $section = NULL;
+    
+    public $page_length=100;
+    public $columns = array();
+    function __construct($controller){
         global $status, $page;
         $this->controller = $controller;
-        $this->model_name = $model_name;
+        $this->model_name = $controller->model();
+        $this->section = $controller->section();
         //Set parent defaults
         parent::__construct( array(
-            'singular'  => 'regio',     //singular name of the listed records
-            'plural'    => 'regio\'s',    //plural name of the listed records
-            'ajax'      => false        //does this table support ajax?
+            'singular'  => $this->section,
+            'plural'    => $this->section . 's',
+            'ajax'      => false
         ) );
         
     }
@@ -51,18 +56,11 @@ class RegionTableHelper extends \WP_List_Table {
 
 
     function get_columns(){
-        $columns = array(
-            'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title'     => 'Naam',
-            'created_at'    => 'Gemaakt',
-            'updated_at'  => 'Bewerkt'
-        );
-        return $columns;
+        return array_merge(array('cb' => '<input type="checkbox" />'), $this->columns);
     }
 
     function get_sortable_columns() {
         $sortable_columns = array(
-            'id' => array('id', true), 
             'title'     => array('name',false),     //true means it's already sorted
             'created_at'    => array('created_at',false),
             'updated_at'  => array('updated_at',false)
@@ -77,16 +75,25 @@ class RegionTableHelper extends \WP_List_Table {
         return $actions;
     }
 
+    function singular(){
+        $this->_args['singular'];
+    }
+
+    function plural(){
+        $this->_args['plural'];
+    }
+
     function process_bulk_action() {
-        //Detect when a bulk action is being triggered...
         if( 'delete'===$this->current_action() ) {
-            $regio_ids = $_REQUEST['regio'];
-            Region::delete_bulk($regio_ids);
+            $ids = $_REQUEST[$this->section];
+            if(empty($ids)) return;
+            $model_name = $this->model_name;
+            $model_name::delete_bulk($ids);
         }
     }
 
     function prepare_items() {
-        $per_page = 5;
+        $per_page = $this->page_length;
         $columns = $this->get_columns();
         $hidden = array();
         $sortable = $this->get_sortable_columns();
