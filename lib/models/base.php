@@ -47,7 +47,9 @@ abstract class Base {
 		foreach($indexes as $index) {
 			$sql .= "KEY $index ($index), \n";
 		}
-		$sql = substr($sql,0,-3);
+		$sql .= "KEY created_at (created_at), \n";
+		$sql .= "KEY updated_at (updated_at)";
+	
 		$sql .= ");";
 
 		$e = $wpdb->query($sql);
@@ -95,10 +97,38 @@ abstract class Base {
 		$wpdb->delete( $table_name, $where); 
 	}
 
-	public static function where($sql_where){
+	public static function limit($page, $page_length) {
+		$start = ($page - 1) * $page_length;
+		return "$start, $page_length";
+	}
+
+	public static function count($sql_where){
 		global $wpdb;
 		$table_name = static::prefixed_table_name();
-		$sql = "SELECT * FROM $table_name where $sql_where";
+		$sql = "SELECT count(*) FROM $table_name where $sql_where;";
+		$count = $wpdb->get_var( $sql );
+		return $count;
+	}
+
+	public static function delete_bulk($input_ids){
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$ids = array();
+		//check that all ids are ints
+		foreach($input_ids as $id) {
+			$id = intval($id);
+			if($id > 0) $ids[] = $id;
+		}
+		$id_string = implode(',', $ids);
+		$sql = "delete from $table_name where id in ($id_string);";
+		$wpdb->query($sql);
+	}
+
+	public static function where($sql_where, $order='id asc', $page=1, $page_length=100){
+		global $wpdb;
+		$limit = self::limit($page, $page_length);
+		$table_name = static::prefixed_table_name();
+		$sql = "SELECT * FROM $table_name where $sql_where order by $order limit $limit;";
 		$records = $wpdb->get_results( $sql, ARRAY_A );
 		$result = array();
 		foreach($records as $record) {

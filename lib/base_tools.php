@@ -1,7 +1,6 @@
 <?
 	namespace Huiskamers;
 	function fix_slashes($data){
-		echo get_magic_quotes_gpc();
 		if(get_magic_quotes_gpc() == TRUE){
 			$data = stripslashes($data);
 		}
