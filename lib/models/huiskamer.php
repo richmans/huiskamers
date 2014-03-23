@@ -4,15 +4,15 @@ class Huiskamer extends Base {
 	public static function table_name() { return 'huiskamers'; }
 	public static function fields() {
 		return array(
-			'name' => array('sql' => 'VARCHAR( 255 ) NOT NULL'),
-			'description' => array('sql' => 'TEXT'),
-			'email' => array('sql' => 'VARCHAR( 255 ) NOT NULL'),
-			'regions' => array('sql' => 'VARCHAR( 255 ) NOT NULL'),
-			'group_size' => array('sql' => 'INT NOT NULL'),
-			'age_max' => array('sql' => 'INT NOT NULL'),
-			'age_min' => array('sql' => 'INT NOT NULL'),
-			'day_part' => array('sql' => 'VARCHAR( 255 ) NOT NULL'),
-			'frequency' => array('sql' => 'VARCHAR( 255 ) NOT NULL'),
+			'name' => array('type' => 'string'),
+			'description' => array('type' => 'text'),
+			'email' => array('type' => 'string', 'validate' => 'email'),
+			'regions' => array('type' => 'string'),
+			'group_size' => array('type' => 'number'),
+			'age_max' => array('type' => 'number'),
+			'age_min' => array('type' => 'number'),
+			'day_part' => array('type' => 'string'),
+			'frequency' => array('type' => 'string'),
 		);
 	}
 

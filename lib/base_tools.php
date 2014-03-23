@@ -11,4 +11,5 @@
 		date_default_timezone_set('Europe/Amsterdam');
 		return  date( 'Y-m-d H:i:s', time() );
 	}
+
 ?>

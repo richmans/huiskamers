@@ -4,6 +4,7 @@ abstract class Base {
 	abstract public static function table_name();
 	abstract public static function fields();
 	private $values = array();
+	public $errors = array();
 
 	public function __construct($values=array()) {
 		$this->values = $values;
@@ -30,6 +31,19 @@ abstract class Base {
 		$e = $wpdb->query($sql);
 	}
 
+	public static function column_definition($field, $options){
+		$sql_options = $options['sql'];
+		if($options['type'] == 'string'){
+			$sql_definition='VARCHAR( 255 )';
+		}else if ($options['type'] == 'text'){
+			$sql_definition='TEXT';
+		}else if ($options['type'] == 'number'){
+			$sql_definition='INT';
+		}
+		$nulldef = 'not null';
+		return  "$field $sql_definition $nulldef, \n";
+	}
+
 	public static function create_table(){
 		global $wpdb;
 
@@ -40,8 +54,7 @@ abstract class Base {
 		$fields = static::fields();
 		$indexes = static::indexes();
 		foreach($fields as $field => $options) {
-			$sql_options = $options['sql'];
-			$sql .= "$field $sql_options, \n";
+			$sql .= static::column_definition($field, $options);
 		}
 		$sql .= "created_at TIMESTAMP NOT NULL DEFAULT 0, \n";
 		$sql .= "updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, \n";
@@ -61,28 +74,31 @@ abstract class Base {
 
 	public function create() {
 		global $wpdb;
+		if ($this->validate() == false) return false;
 		$table_name = static::prefixed_table_name();
 		$values = array_merge($this->values, array('created_at' => timestamp(), 'updated_at' => timestamp()));
 		$wpdb->insert( $table_name, $values); 
 		$this->values['id'] = $wpdb->insert_id;
+		return true;
 	}
 
 	public function save() { 
 		if ($this->id() == NULL) {
-			$this->create();
+			return $this->create();
 		}else{
-			$this->update();
+			return $this->update();
 		}
 	}
 
 	public function update() {
 		global $wpdb;
+		if ($this->validate() == false) return false;
 		$table_name = static::prefixed_table_name();
 		if($this->id() == NULL) throw new \Exception("Tried to update an unsaved record");
 		$where = array('id' => $this->id());
 		$values = array_merge($this->values, array('updated_at' => timestamp()));
 		$wpdb->update( $table_name, $values, $where); 		
-
+		return true;
 	}
 
 	public function update_fields($fields) {
@@ -125,6 +141,49 @@ abstract class Base {
 		$id_string = implode(',', $ids);
 		$sql = "delete from $table_name where id in ($id_string);";
 		$wpdb->query($sql);
+	}
+
+	public function is_invalid($field){
+		return (array_key_exists($field, $this->errors));
+	}
+
+	public function validate_presence($field, $options){
+		$value = $this->values[$field];
+		if($value == NULL || $value == ''){
+			$this->errors[$field] = "mag niet leeg zijn.";
+		}
+	}
+
+	public function validate_email($field, $options){
+		$value = $this->values[$field];
+		if(!(is_email($value))){
+			$this->errors[$field] = "is geen geldig email adres.";
+		}
+	}
+
+	public function validate_number($field, $options){
+		$value = $this->values[$field];
+		if(!(is_numeric($value))){
+			$this->errors[$field] = "is geen nummer.";
+		}
+	}
+
+	public function validate() {
+		$fields = $this->fields();
+		$this->errors = array();
+
+		foreach($fields as $field => $options){
+			$this->validate_presence($field, $options);
+			if($options['type'] == 'number'){
+				$this->validate_number($field, $options);
+			}
+			$validation = $options['validate'];
+			if($validation != NULL){
+				$validation_method = "validate_$validation";
+				$this->$validation_method($field, $options);
+			}
+		}
+		return empty($this->errors);
 	}
 
 	public static function where($sql_where, $order='id asc', $page=1, $page_length=100){

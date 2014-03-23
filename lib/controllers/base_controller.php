@@ -76,8 +76,12 @@ abstract class BaseController {
 		$section = $this->section();
 		$model_name = $this->model();
 		$model = new $model_name($_POST[$section]);
-		$model->create();
-		$this->redirect('index');
+		if($model->create()){
+			$this->redirect('index');
+		}else{
+			$form_mode = 'create';
+			include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );			
+		}
 	}
 
 	public function update($id) {
@@ -85,8 +89,13 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$model = $model_name::find($id);
 		$model->update_fields($_POST[$section]);
-		$model->save();
-		$this->redirect('index');
+		if($model->save()){
+			$this->redirect('index');	
+		}else{
+			$form_mode = 'update';
+			include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );			
+		}
+		
 	}
 
 	public function delete($id) {
