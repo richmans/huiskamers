@@ -38,6 +38,10 @@ abstract class BaseController {
 
 	}
 
+	public function view_path($view, $section) {
+		return plugin_dir_path( __FILE__ ) . "../../views/{$section}/${view}.php";
+	}
+
 	public function url($method, $id=NULL){
 		$section = $this->section();
 		$namespace = $this->get_namespace();
@@ -53,7 +57,7 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$models = $model_name::where('1=1');
 
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/index.php" );
+		include($this->view_path('index', $section));
 	}
 
 	public function insert($id) {
@@ -61,7 +65,7 @@ abstract class BaseController {
 		$form_mode = 'create';
 		$model_name = $this->model();
 		$model = new $model_name();
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );	
+		include($this->view_path('form', $section));
 	}
 
 	public function edit($id) {
@@ -69,7 +73,7 @@ abstract class BaseController {
 		$model_name = $this->model();
 		$model = $model_name::find($id);
 		$form_mode = 'update';
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );	
+		include($this->view_path('form', $section));
 	}
 
 	public function create($id) {
@@ -80,7 +84,7 @@ abstract class BaseController {
 			$this->redirect('index');
 		}else{
 			$form_mode = 'create';
-			include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );			
+			include($this->view_path('form', $section));
 		}
 	}
 
@@ -93,7 +97,7 @@ abstract class BaseController {
 			$this->redirect('index');	
 		}else{
 			$form_mode = 'update';
-			include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/form.php" );			
+			include($this->view_path('form', $section));
 		}
 		
 	}
@@ -110,7 +114,7 @@ abstract class BaseController {
 		$section = $this->section();
 		$model_name = $this->model();
 		$model = $model_name::find($id);
-		include( plugin_dir_path( __FILE__ ) . "../../views/{$section}/show.php" );	
+		include($this->view_path('show', $section));
 	}
 
 	public function redirect($method, $id=NULL){
