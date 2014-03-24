@@ -13,7 +13,7 @@
 			<? $form->input('age_max', 'Maximum leeftijd', $model) ?>
 			<? $form->input('day_part', 'Wanneer', $model) ?>
 			<? $form->input('frequency', 'Hoe vaak', $model) ?>
-			
+			<? $form->input('active', 'Actief', $model) ?>
 		</tbody>
 	</table>
 	<p class="submit">

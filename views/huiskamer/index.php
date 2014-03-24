@@ -10,8 +10,11 @@
 			 			'region_names' => 'Regio',
 			 			'day_part'     => 'Wanneer',
 			 			'frequency'     => 'Hoe vaak',
+			 			'active_pretty' => 'Actief',
             'created_at'    => 'Gemaakt',
-            'updated_at'  => 'Bewerkt');
+            'updated_at'  => 'Bewerkt'
+
+            );
   		 $huiskamer_table->prepare_items();
   		 $huiskamer_table->display();
     ?>

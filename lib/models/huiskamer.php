@@ -13,6 +13,7 @@ class Huiskamer extends Base {
 			'age_min' => array('type' => 'dropdown', 'lookup' => 'ages'),
 			'day_part' => array('type' => 'string'),
 			'frequency' => array('type' => 'string'),
+			'active' => array('type' => 'boolean'),
 		);
 	}
 
@@ -24,6 +25,10 @@ class Huiskamer extends Base {
 		$ids = explode(",", $this->regions());
 		$ids = array_map(function($m) {return intval(substr($m, 1, -1));}, $ids);
 		return $ids;
+	}
+
+	public function active_pretty() {
+		return ($this->active() == 1) ? "Ja" : "Nee";
 	}
 
 	public function region_names() {

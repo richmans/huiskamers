@@ -49,6 +49,8 @@ class FormHelper {
 			$this->multiple_select_field($field, $caption, $value, $lookup);
 		}else if($type == 'number'){
 			$this->input_string_field($field, $caption, $model);			
+		}else if($type == 'boolean'){
+			$this->input_boolean_field($field, $caption, $value);			
 		}else if ($type == 'text'){
 			$this->input_text_field($field, $caption, $model);			
 		}else{
@@ -56,6 +58,11 @@ class FormHelper {
 		}
 	}
 
+	public function input_boolean_field($field, $caption, $value) {
+		$checked = ($value == 1) ? 'checked' : '';
+		$section = $this->section;
+		echo "<input type='checkbox' name='{$section}[{$field}]' $checked value='1' />";
+	}
 
 	public function multiple_select_field($field, $caption, $value, $options){
 		$values = explode(",", $value);

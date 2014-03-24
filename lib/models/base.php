@@ -41,6 +41,8 @@ abstract class Base {
 			$sql_definition='INT';
 		}else if ($options['type'] == 'dropdown'){
 			$sql_definition='INT';
+		}else if ($options['type'] == 'boolean'){
+			$sql_definition='TINYINT';
 		}
 		$nulldef = 'not null';
 		return  "$field $sql_definition $nulldef, \n";
@@ -189,13 +191,15 @@ abstract class Base {
 		$this->errors = array();
 
 		foreach($fields as $field => $options){
-			$this->validate_presence($field, $options);
+			
 			if($options['type'] == 'number'){
 				$this->validate_number($field, $options);
 			}else if ($options['type'] == 'dropdown'){
 				$this->validate_dropdown($field, $options);
 			}else if ($options['type'] == 'multiple_dropdown'){
 				$this->validate_multiple_dropdown($field, $options);
+			}else if ($options['type'] != 'boolean') {
+				$this->validate_presence($field, $options);
 			}
 			$validation = $options['validate'];
 			if($validation != NULL){
