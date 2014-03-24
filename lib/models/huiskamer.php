@@ -5,7 +5,7 @@ class Huiskamer extends Base {
 	public static function fields() {
 		return array(
 			'name' => array('type' => 'string'),
-			'description' => array('type' => 'text'),
+			'description' => array('type' => 'text', 'validate' => 'description'),
 			'email' => array('type' => 'string', 'validate' => 'email'),
 			'regions' => array('type' => 'multiple_dropdown', 'model' => 'Region'),
 			'group_size' => array('type' => 'dropdown', 'lookup' => 'group_sizes'),
@@ -15,6 +15,13 @@ class Huiskamer extends Base {
 			'frequency' => array('type' => 'string'),
 			'active' => array('type' => 'boolean'),
 		);
+	}
+
+	public function validate_description() {
+		$length = strlen($this->description());
+		if($length > 200){
+			$this->errors['description'] =  "mag niet langer zijn dan 200 tekens (huidig $length)";
+		}
 	}
 
 	public static function indexes() {
