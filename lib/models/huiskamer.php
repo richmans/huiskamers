@@ -28,7 +28,7 @@ class Huiskamer extends Base {
 	}
 
 	public function active_pretty() {
-		return ($this->active() == 1) ? "Ja" : "Nee";
+		return ($this->active() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
 	}
 
 	public function region_names() {
