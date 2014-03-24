@@ -22,8 +22,23 @@ class Huiskamer extends Base {
 
 	public function region_ids() {
 		$ids = explode(",", $this->regions());
-		$ids = array_map(function($m) {return substr($m, 1, -1);}, $ids);
+		$ids = array_map(function($m) {return intval(substr($m, 1, -1));}, $ids);
+		return $ids;
 	}
 
+	public function region_names() {
+		$ids = $this->region_ids();
+		$lookup = Region::all();
+		$names = array();
+		foreach($ids as $id){
+			if($lookup[$id] != NULL){
+				$name = $lookup[$id]->name();
+			} else {
+				$name = 'onbekend';
+			}
+			$names[] = $name;
+		}
+		return implode(', ', $names);
+	}
 }
 ?>

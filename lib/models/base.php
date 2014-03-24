@@ -218,7 +218,7 @@ abstract class Base {
 		$records = $wpdb->get_results( $sql, ARRAY_A );
 		$result = array();
 		foreach($records as $record) {
-			$result[] = new static($record);
+			$result[intval($record['id'])] = new static($record);
 		}
 		return $result;
 	}

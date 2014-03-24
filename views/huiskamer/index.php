@@ -7,6 +7,7 @@
 			 $huiskamer_table->columns = array( 
 			 			'title'     => 'Naam',
 			 			'description'     => 'Beschrijving',
+			 			'region_names' => 'Regio',
 			 			'day_part'     => 'Wanneer',
 			 			'frequency'     => 'Hoe vaak',
             'created_at'    => 'Gemaakt',
