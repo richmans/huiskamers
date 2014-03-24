@@ -1,5 +1,6 @@
 <?
 include('base_tools.php');
+include('models/lookup.php');
 include('models/base.php');
 include('models/region.php');
 include('models/huiskamer.php');

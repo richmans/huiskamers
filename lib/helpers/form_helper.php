@@ -19,13 +19,34 @@ class FormHelper {
 		echo "</tr>\n";
 	}
 
+	public function get_lookup($options){
+		$lookup_name = $options['lookup'];
+		$lookup_model = "Huiskamers\\" . $options['model'];
+		$lookup = array();
+		if($lookup_name != NULL){
+			$lookup = Lookup::$lookups[$lookup_name];
+		}else if($lookup_model != NULL){
+			$models = $lookup_model::all('name asc');
+			$lookup[''] = 'Selecteer';
+			foreach($models as $model){
+				$lookup[$model->id()] = $model->name();
+			}
+
+		}
+		return $lookup;
+	}
+
 	public function input_field($field, $caption, $model){
 		$fields = $model->fields();
+		$value = $model->$field();
 		$options = $fields[$field];
 		$type = $options['type'];
 		if($type == 'dropdown'){
-			$values = $options['values'];
-			$this->select_field($field, $caption, $model, $values);
+			$lookup = $this->get_lookup($options);
+			$this->select_field($field, $caption, $value, $lookup);
+		}else if($type == 'multiple_dropdown'){
+			$lookup = $this->get_lookup($options);
+			$this->multiple_select_field($field, $caption, $value, $lookup);
 		}else if($type == 'number'){
 			$this->input_string_field($field, $caption, $model);			
 		}else if ($type == 'text'){
@@ -35,12 +56,32 @@ class FormHelper {
 		}
 	}
 
-	public function select_field($field, $caption, $model, $values){
-		$value = $model->$field();
-		$values = array_merge(array('Selecteer'), $values);
+
+	public function multiple_select_field($field, $caption, $value, $options){
+		$values = explode(",", $value);
+		$values = array_map(function($m) {return substr($m, 1, -1);}, $values);
+		$nodisplay = 'display:none;';
+		echo "<div class='multiple-select-container'>\n";
+		foreach($values as $value){
+			echo "<div class='multiple-select'>\n";
+		
+			$this->select_field($field, $caption, $value, $options, 0);
+
+			echo "&nbsp;&nbsp;<a class='delete' style='color:#a00;$nodisplay' href='#'>Delete</a>";
+			echo "</div>\n";
+			$nodisplay = '';
+		}
+		echo "<a href='#' class='add'>Add</a>";
+		echo "</div>\n";
+
+	}
+
+	public function select_field($field, $caption, $value, $options, $counter=''){
 		$section = $this->section;
-		echo "<select style='width:350px' name='{$section}[{$field}]' id='{$section}_{$field}'>\n";
-		foreach($values as $option_key => $option_value){
+
+		$index = ($counter === '')? '' : "[]";
+		echo "<select style='width:350px' name='{$section}[{$field}]$index'>\n";
+		foreach($options as $option_key => $option_value){
 			$selected = (intval($option_key) == intval($value))?'selected':'';
 			$option = esc_attr($option);
 

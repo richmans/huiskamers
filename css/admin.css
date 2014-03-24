@@ -1,1 +1,4 @@
 /* This stylesheet is used to style the admin option form of the widget. */
+div.multiple-select {
+	margin-bottom:10px;
+}

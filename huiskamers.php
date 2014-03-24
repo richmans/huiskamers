@@ -153,6 +153,7 @@ class Huiskamers {
 		
 	}
 
+
 	/** Shows the main admin page **/
 	public function show_admin_page(){
 		$this->use_lib();

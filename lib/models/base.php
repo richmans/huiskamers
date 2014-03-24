@@ -105,8 +105,7 @@ abstract class Base {
 
 	public function update_fields($fields) {
 		foreach($this->fields() as $name => $type){
-			if($name == 'id') continue;
-			$this->values[$name] = fix_slashes($fields[$name]);
+			$this->set($name, fix_slashes($fields[$name]));
 		}
 	}
 
@@ -119,8 +118,9 @@ abstract class Base {
 	}
 
 	public static function limit($page, $page_length) {
+		if($page == 0) return '';
 		$start = ($page - 1) * $page_length;
-		return "$start, $page_length";
+		return "limit $start, $page_length";
 	}
 
 	public static function count($sql_where){
@@ -165,8 +165,15 @@ abstract class Base {
 
 	public function validate_dropdown($field, $options){
 		$value = $this->values[$field];
-		if($value == NULL || intval($value) == 0){
+		if($value == NULL || $value == ''){
 			$this->errors[$field] = "is niet gekozen.";
+		}
+	}
+
+	public function validate_multiple_dropdown($field, $options){
+		$value = $this->values[$field];
+		if(strpos($value, '()') !== false){
+			$this->errors[$field] = "zijn niet allemaal ingevuld.";
 		}
 	}
 
@@ -187,6 +194,8 @@ abstract class Base {
 				$this->validate_number($field, $options);
 			}else if ($options['type'] == 'dropdown'){
 				$this->validate_dropdown($field, $options);
+			}else if ($options['type'] == 'multiple_dropdown'){
+				$this->validate_multiple_dropdown($field, $options);
 			}
 			$validation = $options['validate'];
 			if($validation != NULL){
@@ -197,11 +206,15 @@ abstract class Base {
 		return empty($this->errors);
 	}
 
+	public static function all($order='id asc'){
+		return static::where('1=1', $order, 0);
+	}
+
 	public static function where($sql_where, $order='id asc', $page=1, $page_length=100){
 		global $wpdb;
 		$limit = self::limit($page, $page_length);
 		$table_name = static::prefixed_table_name();
-		$sql = "SELECT * FROM $table_name where $sql_where order by $order limit $limit;";
+		$sql = "SELECT * FROM $table_name where $sql_where order by $order $limit;";
 		$records = $wpdb->get_results( $sql, ARRAY_A );
 		$result = array();
 		foreach($records as $record) {
@@ -226,6 +239,12 @@ abstract class Base {
 	}
 
 	public function set($name, $value){
+		$fields = $this->fields();
+		$options = $fields[$name];
+		if($options != NULL and $options['type'] == 'multiple_dropdown' and is_array($value)){
+			$value = array_map(function($value){return "($value)";}, $value);
+			$value = implode(",", $value);
+		}
 		$this->values[$name] = $value;
 	}
 

@@ -79,7 +79,8 @@ abstract class BaseController {
 	public function create($id) {
 		$section = $this->section();
 		$model_name = $this->model();
-		$model = new $model_name($_POST[$section]);
+		$model = new $model_name();
+		$model->update_fields($_POST[$section]);
 		if($model->create()){
 			$this->redirect('index');
 		}else{
