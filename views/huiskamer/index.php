@@ -7,6 +7,8 @@
 			 $huiskamer_table->columns = array( 
 			 			'title'     => 'Naam',
 			 			'description'     => 'Beschrijving',
+			 			'day_part'     => 'Wanneer',
+			 			'frequency'     => 'Hoe vaak',
             'created_at'    => 'Gemaakt',
             'updated_at'  => 'Bewerkt');
   		 $huiskamer_table->prepare_items();

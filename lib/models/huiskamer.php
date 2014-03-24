@@ -19,5 +19,11 @@ class Huiskamer extends Base {
 	public static function indexes() {
 		return array('name', 'group_size', 'age_max', 'age_min', 'day_part', 'frequency');
 	}
+
+	public function region_ids() {
+		$ids = explode(",", $this->regions());
+		$ids = array_map(function($m) {return substr($m, 1, -1);}, $ids);
+	}
+
 }
 ?>
