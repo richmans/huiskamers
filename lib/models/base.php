@@ -41,6 +41,8 @@ abstract class Base {
 			$sql_definition='INT';
 		}else if ($options['type'] == 'dropdown'){
 			$sql_definition='INT';
+		}else if ($options['type'] == 'multiple_dropdown'){
+			$sql_definition='VARCHAR( 255 )';
 		}else if ($options['type'] == 'boolean'){
 			$sql_definition='TINYINT';
 		}
@@ -70,7 +72,7 @@ abstract class Base {
 		$sql .= "KEY updated_at (updated_at)";
 	
 		$sql .= ");";
-			
+
 		$e = $wpdb->query($sql);
 	
 	}
@@ -254,7 +256,8 @@ abstract class Base {
 
 	public function __call($name, $arguments){
 		if(strpos($name, 'set_') === 0){
-			return $this->set($name, $arguments);
+			$name = substr($name, 4);
+			return $this->set($name, $arguments[0]);
 		}else{
 			return $this->get($name);
 		}

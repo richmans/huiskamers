@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 0.6
+Version: 0.7
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -103,8 +103,10 @@ class Huiskamers {
 	 */
 	public function activate(){
 		$this->use_lib();
+
 		Huiskamers\Region::create_table();
 		Huiskamers\Huiskamer::create_table();
+		Huiskamers\Message::create_table();
 	}
 
 	/**
@@ -116,6 +118,7 @@ class Huiskamers {
 		$this->use_lib();
 		Huiskamers\Region::drop_table();
 		Huiskamers\Huiskamer::drop_table();
+		Huiskamers\Message::drop_table();
 	}
 
 	/**
@@ -151,7 +154,7 @@ class Huiskamers {
 	*/
 	public function build_admin_menu(){
 		add_menu_page('Huiskamers', 'Huiskamers', 'manage_options', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
-		add_submenu_page('huiskamers_huiskamer', 'Inschrijvingen beheren', 'Inschrijvingen', 'manage_options', 'huiskamers_subscriptions', array($this, 'show_subscriptions_page'));
+		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_options', 'huiskamers_message', array($this, 'show_messages_page'));
 		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_options', 'huiskamers_region', array($this, 'show_regions_page'));
 		
 	}
@@ -164,9 +167,10 @@ class Huiskamers {
 		$huiskamer_controller->route();
 	}
 
-	/** Shows the subscriptions admin page **/
-	public function show_subscriptions_page(){
-
+	public function show_messages_page(){
+		$this->use_lib();
+		$message_controller = new Huiskamers\MessageController();
+		$message_controller->route();
 	}
 
 	/** Shows the regions page **/
@@ -177,8 +181,12 @@ class Huiskamers {
 	}
 
 	public function process_application() {
-		if (isset( $_POST['huiskamer_application'])) {
-			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> 'true') ), 302);
+		if (isset( $_POST['huiskamer_message'])) {
+			$this->use_lib();
+			$message_controller = new Huiskamers\MessageController();
+			$result = $message_controller->send_message();
+			$result_tag = ($result == true) ? 'ok' : 'fail';
+			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> $result_tag) ), 302);
 			exit;
 		}
 	}

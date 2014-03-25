@@ -1,6 +1,6 @@
 /* This stylesheet is used to style the public view of the widget. */
-img.email {
-	width:200px;
+img.huiskamer-email {
+	width:100px;
 }
 
 form.huiskamer label{
@@ -26,6 +26,15 @@ div.huiskamer-email-sent {
 	font-weight: 900;
 	color: green;
 	background-color:#AAFFAA;
+	padding:20px;
+	margin-bottom:10px;
+}
+
+div.huiskamer-email-fail {
+	font-size: 15pt;
+	font-weight: 900;
+	color: #CC0000;
+	background-color:#FFAAAA;
 	padding:20px;
 	margin-bottom:10px;
 }

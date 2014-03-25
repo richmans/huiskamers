@@ -1,6 +1,6 @@
 <?
 namespace Huiskamers;
-class HuiskamerController extends BaseController {
-	
+class HuiskamerController extends BaseController{
+
 }
 ?>

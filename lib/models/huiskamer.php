@@ -52,5 +52,18 @@ class Huiskamer extends Base {
 		}
 		return implode(', ', $names);
 	}
+
+
+	public function send_email($subject, $message){
+		$result = wp_mail( $this->email(), $subject, $message); 
+		if($result == false) return false;
+
+		$admin_email = huiskamer_option('admin_email');
+		if($admin_email != NULL){
+			$result = wp_mail($admin_email , $subject, $message); 
+			if($result == false) return false;
+		}
+		return true;
+	}
 }
 ?>

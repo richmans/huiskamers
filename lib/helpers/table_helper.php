@@ -9,7 +9,7 @@ class TableHelper extends \WP_List_Table {
     private $controller = NULL;
     private $model_name = NULL;
     private $section = NULL;
-    
+    public $disable_edit = false;
     public $page_length=100;
     public $columns = array();
     function __construct($controller){
@@ -32,11 +32,12 @@ class TableHelper extends \WP_List_Table {
 
     function column_title($item){
         //Build row actions
-        $actions = array(
-
-            'edit'      => '<a href=\'' . $this->controller->url('edit', $item->id()) . '\'>Edit</a>',
-            'delete'    => '<a href=\'' . $this->controller->url('delete', $item->id()) . '\'>Delete</a>',
-        );
+        $actions = array();
+        if(!$this->disable_edit){
+            $actions['edit'] = '<a href=\'' . $this->controller->url('edit', $item->id()) . '\'>Edit</a>';
+        }
+        $actions['delete'] = '<a href=\'' . $this->controller->url('delete', $item->id()) . '\'>Delete</a>';
+        
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
