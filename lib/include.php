@@ -10,4 +10,5 @@ include('controllers/region_controller.php');
 include('controllers/huiskamer_controller.php');
 include('helpers/table_helper.php');
 include('helpers/form_helper.php');
+
 ?>

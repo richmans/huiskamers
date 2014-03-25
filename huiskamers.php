@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 0.3
+Version: 0.4
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -48,6 +48,9 @@ class Huiskamers {
 	 * Outputs the content of the widget.
 	 */
 	public function widget() {
+		var_dump($_REQUEST);
+		$this->use_lib();
+		add_thickbox();
 		// Check if there is a cached output
 		$cache = wp_cache_get( 'huiskamers' );
 
@@ -60,6 +63,7 @@ class Huiskamers {
 		$widget_string = $before_widget;
 
 		ob_start();
+		$huiskamers = Huiskamers\Huiskamer::where("active=1");
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;
@@ -67,8 +71,8 @@ class Huiskamers {
 		$cache[ 'widget']  = $widget_string;
 
 		wp_cache_set( 'huiskamers', $cache);
-		$this->use_lib();
-		$widget_string = Huiskamers\Region::find(1)->description();
+		
+		
 		return $widget_string;
 	} 
 	
@@ -173,6 +177,9 @@ class Huiskamers {
 		$region_controller->route();
 	}
 } // end class
-
+include('lib/controllers/plugin_updater.php');
+if ( is_admin() ) {
+    new Huiskamers\PluginUpdater( __FILE__, 'richmans', "huiskamers" );
+}
 $huiskamers = new Huiskamers();
 ?>
