@@ -11,7 +11,7 @@ class PluginUpdater {
     private $accessToken; // GitHub private repo token
  
     function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' ) {
-        add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransitent" ) );
+        add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransient" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_post_install", array( $this, "postInstall" ), 10, 3 );
  
@@ -25,6 +25,7 @@ class PluginUpdater {
     private function initPluginData() {
         $this->slug = plugin_basename( $this->pluginFile );
         $this->pluginData = get_plugin_data( $this->pluginFile );
+
     }
  
     // Get information regarding our plugin from GitHub
@@ -34,7 +35,10 @@ class PluginUpdater {
         }
         // Query the GitHub API
         $url = "https://api.github.com/repos/{$this->username}/{$this->repo}/releases";
-                  
+              // We need the access token for private repos
+        if ( ! empty( $this->accessToken ) ) {
+            $url = add_query_arg( array( "access_token" => $this->accessToken ), $url );
+        }    
         // Get the results
         $this->githubAPIResult = wp_remote_retrieve_body( wp_remote_get( $url ) );
         if ( ! empty( $this->githubAPIResult ) ) {
@@ -43,10 +47,11 @@ class PluginUpdater {
         if ( is_array( $this->githubAPIResult ) ) {
             $this->githubAPIResult = $this->githubAPIResult[0];
         }
+        
     }
  
     // Push in plugin version information to get the update notification
-    public function setTransitent( $transient ) {
+    public function setTransient( $transient ) {
         if ( empty( $transient->checked ) ) {
             return $transient;
         }
@@ -54,11 +59,12 @@ class PluginUpdater {
         $this->initPluginData();
         $this->getRepoReleaseInfo();
         $doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
-
         // Update the transient to include our updated plugin data
         if ( $doUpdate == 1 ) {
             $package = $this->githubAPIResult->zipball_url;
-         
+             if ( !empty( $this->accessToken ) ) {
+                $package = add_query_arg( array( "access_token" => $this->accessToken ), $package );
+            }
             $obj = new \stdClass();
             $obj->slug = $this->slug;
             $obj->new_version = $this->githubAPIResult->tag_name;
@@ -66,7 +72,6 @@ class PluginUpdater {
             $obj->package = $package;
             $transient->response[$this->slug] = $obj;
         }
-         
         return $transient;
     }
  
@@ -77,6 +82,7 @@ class PluginUpdater {
         if ( empty( $response->slug ) || $response->slug != $this->slug ) {
             return false;
         }
+        
         // Add our plugin information
         $response->last_updated = $this->githubAPIResult->published_at;
         $response->slug = $this->slug;
@@ -85,20 +91,21 @@ class PluginUpdater {
         $response->author = $this->pluginData["AuthorName"];
         $response->homepage = $this->pluginData["PluginURI"];
          
-        // This is our release download zip file
-        $downloadLink = $this->githubAPIResult->zipball_url;
-         
-        // Include the access token for private GitHub repos
+         // Include the access token for private GitHub repos
         if ( !empty( $this->accessToken ) ) {
             $downloadLink = add_query_arg(
                 array( "access_token" => $this->accessToken ),
                 $downloadLink
             );
         }
+        // This is our release download zip file
+        $downloadLink = $this->githubAPIResult->zipball_url;
+         
+        
         $response->download_link = $downloadLink;
 
         // We're going to parse the GitHub markdown release notes, include the parser
-        require_once( plugin_dir_path( __FILE__ ) . "lib/models/parsedown.php" );
+        require_once( plugin_dir_path( __FILE__ ) . "/../models/parsedown.php" );
         $response->sections = array(
             'description' => $this->pluginData["Description"],
             'changelog' => class_exists( "Parsedown" )
@@ -126,7 +133,6 @@ class PluginUpdater {
                 }
             }
         }
-         
         return $response;
     }
  
