@@ -1,4 +1,7 @@
 <h1>Kring overzicht</h1>
+<? if ($email_sent == true) {?>
+     <div class='huiskamer-email-sent'>Uw email is verstuurd - bedankt!</div>
+<? } ?>
 <table class='custom-table style-4'>
 <?foreach($huiskamers as $huiskamer) { ?>
 <tr>
@@ -13,18 +16,29 @@
 		<td><?=$huiskamer->description()?></td>
 		<td><?=$huiskamer->region_names()?></td>
 
-		<td><a href="#TB_inline?width=400&height=200&inlineId=my-content-id" class="thickbox">Email</a>	</td>
+		<td>
+               <a title='Bericht naar huiskamer' href="#TB_inline?width=200&height=300&inlineId=huiskamers-email-form" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
+                    <img class='email' src='<?=WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>' height='50px;'/>
+               </a>	
+          </td>
 	</tr>
 <?}?>
 </table>
 
-<div id="my-content-id" style="display:none;">
-     <p>
-     <form method='post'>
-     	Here is some awesome information that you would not see otherwise   
-     	<input name='dit'/><br/>
-     	<textarea></textarea> 
-     	<input type='submit'/>
-     	</form>
+<div id="huiskamers-email-form" style="display:none;">
+     <p>Verstuur een bericht naar een vertegenwoordiger van de huiskamer.</p>
+     <form method='post' class='huiskamer'>
+          <input type='hidden' name='huiskamer_application[huiskamer_id]' value='<?=$huiskamer_id?>'/>
+          <div class='field'>
+               <label for='name'>Naam</label><input type='text' name='huiskamer_application[name]'/>
+          </div>
+          <div class='field'>
+               <label for='email'>Uw email adres</label><input type='text' name='huiskamer_application[email]'/>
+          </div>
+          <div class='field'>
+               <label for='bericht'>Bericht</label><textarea name='huiskamer_application[message]'></textarea>
+          </div>
+          <input type='submit'/>
+     </form>
      </p>
 </div>

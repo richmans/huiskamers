@@ -1,1 +1,31 @@
 /* This stylesheet is used to style the public view of the widget. */
+img.email {
+	width:200px;
+}
+
+form.huiskamer label{
+	width:100px;
+	display:inline-block;
+	vertical-align: top;
+}
+
+form.huiskamer input[type=text]{
+	width:300px;
+}
+
+form.huiskamer textarea{
+	width:300px;
+}
+
+form.huiskamer div.field{
+	margin-bottom:10px;
+}
+
+div.huiskamer-email-sent {
+	font-size: 15pt;
+	font-weight: 900;
+	color: green;
+	background-color:#AAFFAA;
+	padding:20px;
+	margin-bottom:10px;
+}

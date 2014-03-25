@@ -23,7 +23,7 @@ class Huiskamers {
 
 		// load plugin text domain
 		add_action( 'init', array( $this, 'widget_textdomain' ) );
-
+		add_action('init', array($this, 'process_application'));
 		// Hooks fired when the Widget is activated and deactivated
 		// Uses weird path because when used with symlinks, it doesnt work
 		// http://wordpress.org/support/topic/register_activation_hook-does-not-work
@@ -48,12 +48,11 @@ class Huiskamers {
 	 * Outputs the content of the widget.
 	 */
 	public function widget() {
-		var_dump($_REQUEST);
 		$this->use_lib();
 		add_thickbox();
 		// Check if there is a cached output
 		$cache = wp_cache_get( 'huiskamers' );
-
+		$email_sent = $_REQUEST['huiskamers-email-sent'];
 		if ( !is_array( $cache ) )
 			$cache = array();
 
@@ -175,6 +174,13 @@ class Huiskamers {
 		$this->use_lib();
 		$region_controller = new Huiskamers\RegionController();
 		$region_controller->route();
+	}
+
+	public function process_application() {
+		if (isset( $_POST['huiskamer_application'])) {
+			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> 'true') ), 302);
+			exit;
+		}
 	}
 } // end class
 include('lib/controllers/plugin_updater.php');
