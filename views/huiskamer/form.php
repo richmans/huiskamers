@@ -9,6 +9,7 @@
 			<? $form->input('email', 'Email', $model) ?>
 			<? $form->input('regions', 'Regio\'s', $model) ?>
 			<? $form->input('group_size', 'Grootte', $model) ?>
+			<? $form->input('group_type', 'Samenstelling', $model) ?>
 			<? $form->input('age_min', 'Minimum leeftijd', $model) ?>
 			<? $form->input('age_max', 'Maximum leeftijd', $model) ?>
 			<? $form->input('day_part', 'Wanneer', $model) ?>

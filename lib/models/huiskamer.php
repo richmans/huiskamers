@@ -9,6 +9,7 @@ class Huiskamer extends Base {
 			'email' => array('type' => 'string', 'validate' => 'email'),
 			'regions' => array('type' => 'multiple_dropdown', 'model' => 'Region'),
 			'group_size' => array('type' => 'dropdown', 'lookup' => 'group_sizes'),
+			'group_type' => array('type' => 'string'),
 			'age_max' => array('type' => 'dropdown', 'lookup' => 'ages'),
 			'age_min' => array('type' => 'dropdown', 'lookup' => 'ages'),
 			'day_part' => array('type' => 'string'),
