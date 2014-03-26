@@ -5,7 +5,19 @@
 <? if ($email_sent == 'fail') {?>
      <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden. Probeer het later nog eens.</div>
 <? } ?>
+<p>
+Zoek een huiskamer in 
+<select style="width:150px" id='huiskamers-select-region'>
+<option value='-1'>Heel Nederland</option>
+<? foreach(Huiskamers\Region::all() as $region) { ?>
+     <option value='<?=$region->id()?>'><?=esc_html($region->name())?></option>
+<? } ?>
+</select>
 
+geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/>
+
+jaar.
+</p>
 <table class='custom-table style-4'>
 <?foreach($huiskamers as $huiskamer) { ?>
 <tr>
