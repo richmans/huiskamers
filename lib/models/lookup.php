@@ -28,6 +28,10 @@ class Lookup {
 
 		);
 
-	
+	public static function get($group, $value){
+		if(!(array_key_exists($group, self::$lookups))) return 'onbekend';
+		if(!(array_key_exists($value, self::$lookups[$group]))) return 'onbekend';
+		return self::$lookups[$group][$value];
+	}	
 }
 ?>

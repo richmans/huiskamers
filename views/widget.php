@@ -9,17 +9,23 @@
 <table class='custom-table style-4'>
 <?foreach($huiskamers as $huiskamer) { ?>
 <tr>
-<th>Naam</th>
-
-<th>Beschrijving</th>
+<th>Aantal leden</th>
+<th>Leeftijdspreiding</th>
+<th>Samenstelling</th>
 <th>Regio</th>
+<th>Dagdeel</th>
+<th>Frequentie</th>
+<th>Beschrijving</th>
 <th>Email</th>
 </tr>
 	<tr>
-		<td><?=$huiskamer->name()?></td>
-		<td><?=$huiskamer->description()?></td>
-		<td><?=$huiskamer->region_names()?></td>
-
+		<td><?=Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?></td>
+          <td><?=$huiskamer->age_min()?>-<?=$huiskamer->age_max()?></td>
+          <td><?=esc_html($huiskamer->group_type())?></td>
+		<td><?=esc_html($huiskamer->region_names())?></td>
+		<td><?=esc_html($huiskamer->day_part())?></td>
+          <td><?=esc_html($huiskamer->frequency())?></td>
+          <td><?=esc_html($huiskamer->description())?></td>
 		<td>
                <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=huiskamers-email-form" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
                     <img class='huiskamer-email' src='<?=WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
