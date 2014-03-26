@@ -40,6 +40,7 @@ class Huiskamers {
 
 		// register the function to build up the admin menu
 		add_action('admin_menu', array($this, 'build_admin_menu'));
+		add_action( 'admin_init', array($this, 'register_settings') );
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
 	} 
@@ -156,9 +157,22 @@ class Huiskamers {
 		add_menu_page('Huiskamers', 'Huiskamers', 'manage_options', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
 		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_options', 'huiskamers_message', array($this, 'show_messages_page'));
 		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_options', 'huiskamers_region', array($this, 'show_regions_page'));
-		
+	  add_options_page('Huiskamer options', 'Huiskamers', 'manage_options', 'huiskamer-options', array( $this, 'show_options_page' ));
+        
 	}
 
+	public function register_settings() {
+		register_setting( 'huiskamers', 'huiskamers_admin-email', 'is_email' );
+		register_setting( 'huiskamers', 'huiskamers_new-message-email-message' );
+	  register_setting( 'huiskamers', 'huiskamers_reminder-email-message' );
+	  register_setting( 'huiskamers', 'huiskamers_send-reminder-email-after', 'intval' );
+	}
+
+	public function show_options_page() {
+		$this->use_lib();
+		$options_controller = new Huiskamers\OptionsController();
+		$options_controller->route();
+	}
 
 	/** Shows the main admin page **/
 	public function show_admin_page(){

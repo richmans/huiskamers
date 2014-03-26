@@ -13,13 +13,4 @@
 		return  date( 'Y-m-d H:i:s', time() );
 	}
 
-	function huiskamer_option($name,$default=NULL){
-		$default_options = array();
-		$options = get_option( 'huiskamer-options', $default_options );
-		if(array_key_exists($name, $options)){
-			return $options[$name];
-		}else{
-			return $default;
-		}
-	}
 ?>

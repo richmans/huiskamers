@@ -8,9 +8,8 @@
 			 			'title'     => 'Naam',
 			 			'email'     => 'Email',
 			 			'message' => 'Bericht',
-			 			'created_at'    => 'Gemaakt',
-            'updated_at'  => 'Bewerkt'
-
+			 			'created_at'    => 'Verstuurd',
+          
             );
 			 $message_table->disable_edit = true;
   		 $message_table->prepare_items();

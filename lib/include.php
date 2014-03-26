@@ -10,6 +10,7 @@ include('controllers/base_controller.php');
 include('controllers/region_controller.php');
 include('controllers/huiskamer_controller.php');
 include('controllers/message_controller.php');
+include('controllers/options_controller.php');
 include('helpers/table_helper.php');
 include('helpers/form_helper.php');
 

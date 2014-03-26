@@ -58,8 +58,8 @@ class Huiskamer extends Base {
 		$result = wp_mail( $this->email(), $subject, $message); 
 		if($result == false) return false;
 
-		$admin_email = huiskamer_option('admin_email');
-		if($admin_email != NULL){
+		$admin_email = get_option('huiskamers_admin-email');
+		if(is_email($admin_email)){
 			$result = wp_mail($admin_email , $subject, $message); 
 			if($result == false) return false;
 		}
