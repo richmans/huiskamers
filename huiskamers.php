@@ -104,10 +104,13 @@ class Huiskamers {
 	 */
 	public function activate(){
 		$this->use_lib();
-
+		$this->register_settings();
+		$this->setting_defaults();
 		Huiskamers\Region::create_table();
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
+
+		
 	}
 
 	/**
@@ -117,9 +120,13 @@ class Huiskamers {
 	 */
 	public function deactivate( ) {
 		$this->use_lib();
+		$this->unregister_settings();
 		Huiskamers\Region::drop_table();
 		Huiskamers\Huiskamer::drop_table();
 		Huiskamers\Message::drop_table();
+
+		
+
 	}
 
 	/**
@@ -166,6 +173,36 @@ class Huiskamers {
 		register_setting( 'huiskamers', 'huiskamers_new-message-email-message' );
 	  register_setting( 'huiskamers', 'huiskamers_reminder-email-message' );
 	  register_setting( 'huiskamers', 'huiskamers_send-reminder-email-after', 'intval' );
+	}
+
+	public function unregister_settings() {
+		delete_option( 'huiskamers_admin-email');
+		delete_option(  'huiskamers_new-message-email-message' );
+	  delete_option( 'huiskamers_reminder-email-message' );
+	  delete_option( 'huiskamers_send-reminder-email-after');
+	}
+
+	public function setting_defaults() {
+		update_option('huiskamers_admin-email', 'huiskamers@kvdnvlaardingen.nl');
+		update_option('huiskamers_send-reminder-email-after', 10);
+		update_option('huiskamers_new-message-email-message', "Hallo,
+
+Er is een aanmelding binnen gekomen op thuisverder.nl voor huiskamer [huiskamer].
+
+Naam: [naam]
+Email: [email]
+Bericht: [bericht]
+
+Groeten, thuisverder.nl");
+		update_option('huiskamers_reminder-email-message', "Hallo,
+
+Hierbij een herinnering voor de aanmelding bij huiskamer [huiskamer] op thuisverder.nl.
+
+Naam: [naam]
+Email: [email]
+Bericht: [bericht]
+
+Groeten, thuisverder.nl");
 	}
 
 	public function show_options_page() {
