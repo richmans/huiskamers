@@ -106,6 +106,7 @@ class Huiskamers {
 		$this->use_lib();
 		$this->register_settings();
 		$this->setting_defaults();
+		$this->add_auth();
 		Huiskamers\Region::create_table();
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
@@ -124,9 +125,15 @@ class Huiskamers {
 		Huiskamers\Region::drop_table();
 		Huiskamers\Huiskamer::drop_table();
 		Huiskamers\Message::drop_table();
+	}
 
-		
-
+	public function add_auth() {
+		$role = get_role( 'administrator' );
+		$role->add_cap( 'manage_huiskamers' );
+		add_role('huiskamer_manager', 'Huiskamer Manager', array(
+  		'manage_huiskamers' => true,
+  		'read' => true
+  	));
 	}
 
 	/**
@@ -161,10 +168,10 @@ class Huiskamers {
 	* Registers the admin menu 
 	*/
 	public function build_admin_menu(){
-		add_menu_page('Huiskamers', 'Huiskamers', 'manage_options', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
-		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_options', 'huiskamers_message', array($this, 'show_messages_page'));
-		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_options', 'huiskamers_region', array($this, 'show_regions_page'));
-	  add_options_page('Huiskamer options', 'Huiskamers', 'manage_options', 'huiskamer-options', array( $this, 'show_options_page' ));
+		add_menu_page('Huiskamers', 'Huiskamers', 'manage_huiskamers', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
+		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_huiskamers', 'huiskamers_message', array($this, 'show_messages_page'));
+		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_huiskamers', 'huiskamers_region', array($this, 'show_regions_page'));
+	  add_options_page('Huiskamer options', 'Huiskamers', 'manage_huiskamers', 'huiskamer-options', array( $this, 'show_options_page' ));
         
 	}
 
