@@ -4,10 +4,10 @@ class Message extends Base {
 	public static function table_name() { return 'messages'; }
 	public static function fields() {
 		return array(
-			'name' => array('type' => 'string'),
+			'name' => array('type' => 'string', 'optional' => true),
 			'huiskamer' => array('type' => 'dropdown', 'model' => 'Huiskamer'),
 			'email' => array('type' => 'string', 'validate' => 'email'),
-			'message' => array('type' => 'text'),
+			'message' => array('type' => 'text', 'optional' => true),
 			'ip' => array('type' => 'string'),
 			'reminder_sent' => array('type' => 'boolean')
 		);

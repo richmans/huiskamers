@@ -1,5 +1,9 @@
 (function ($) {
-	
+	function validate_email(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+	}
+
 	function filter_age(row){
 		var min_age = $(row).attr('data-age-min');
 		var max_age = $(row).attr('data-age-max');
@@ -9,20 +13,16 @@
 		} else {
 			return true;	
 		}
-		
 	}
 
 	function filter_region(row){
 		var regions = $(row).attr('data-regions');
 		var prefered_region = $('select#huiskamers-select-region').val();
 		if(prefered_region != -1){
-
-			
 			return (regions.search("(" + prefered_region + ")") != -1);
 		} else {
 			return true;	
 		}
-		
 	}
 
 	function run_filters(row) {
@@ -52,9 +52,18 @@
 		  return false;
   	});
 
+  	$('div#huiskamers-email-form form').submit(function(){
+  		var email = $('input#huiskamer-email-input').val();
+  		if(!(validate_email(email))){
+  			alert("Vul uw email adres in zodat we contact met u op kunnen nemen!");
+  			return false;
+  		}
+  		
+  	});
+
   	$('select#huiskamers-select-region').change(function() {
   		apply_filters();
-  	})
+  	});
 
   	$('input#huiskamers-select-age').keydown(function( event ) {
 		  if ( event.which == 13 ) {
@@ -65,8 +74,5 @@
 		$('button#huiskamers-search').click(function() {
 			apply_filters();
 		})
-
-
-		
 	});
 }(jQuery));

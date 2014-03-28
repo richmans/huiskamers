@@ -56,7 +56,7 @@ jaar. <button id='huiskamers-search'>Zoek</button>
                <label for='name'>Naam</label><input type='text' name='huiskamer_message[name]'/>
           </div>
           <div class='field'>
-               <label for='email'>Uw email adres</label><input type='text' name='huiskamer_message[email]'/>
+               <label for='email'>Uw email adres</label><input type='text' id='huiskamer-email-input' name='huiskamer_message[email]'/>
           </div>
           <div class='field'>
                <label for='bericht'>Bericht</label><textarea name='huiskamer_message[message]'></textarea>

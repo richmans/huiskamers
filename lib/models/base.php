@@ -154,6 +154,7 @@ abstract class Base {
 	}
 
 	public function validate_presence($field, $options){
+		if($options['optional'] == true) return true;
 		$value = $this->values[$field];
 		if($value == NULL || $value == ''){
 			$this->errors[$field] = "mag niet leeg zijn.";
