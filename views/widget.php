@@ -16,10 +16,9 @@ Zoek een huiskamer in
 
 geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/>
 
-jaar.
+jaar. <button id='huiskamers-search'>Zoek</button>
 </p>
-<table class='custom-table style-4'>
-<?foreach($huiskamers as $huiskamer) { ?>
+<table class='custom-table style-4 huiskamers'>
 <tr>
 <th>Aantal leden</th>
 <th>Leeftijdspreiding</th>
@@ -30,7 +29,9 @@ jaar.
 <th>Beschrijving</th>
 <th>Email</th>
 </tr>
-	<tr>
+<?foreach($huiskamers as $huiskamer) { ?>
+
+	<tr class='huiskamer-row' data-regions='<?=$huiskamer->regions()?>' data-age-min='<?=$huiskamer->age_min()?>' data-age-max='<?=$huiskamer->age_max()?>'>
 		<td><?=Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?></td>
           <td><?=$huiskamer->age_min()?>-<?=$huiskamer->age_max()?></td>
           <td><?=esc_html($huiskamer->group_type())?></td>
