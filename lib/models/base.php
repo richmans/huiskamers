@@ -47,7 +47,30 @@ abstract class Base {
 			$sql_definition='TINYINT';
 		}
 		$nulldef = ($options['optional']) ? '' : 'not null';
-		return  "$field $sql_definition $nulldef, \n";
+		return  "$field $sql_definition $nulldef";
+	}
+
+	public static function add_column($field, $options){
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$col_def = static::column_definition($field, $options);
+		$sql = "alter table $table_name add column $col_def";
+		$wpdb->query($sql);
+	}
+
+	public static function update_column($old_field, $field, $options){
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$col_def = static::column_definition($field, $options);
+		$sql = "alter table $table_name change column $old_field $col_def";
+		$wpdb->query($sql);
+	}
+
+	public static function delete_column($field){
+		global $wpdb;
+		$table_name = static::prefixed_table_name();
+		$sql = "alter table $table_name drop column $field";
+		$wpdb->query($sql);
 	}
 
 	public static function create_table(){
@@ -60,7 +83,7 @@ abstract class Base {
 		$fields = static::fields();
 		$indexes = static::indexes();
 		foreach($fields as $field => $options) {
-			$sql .= static::column_definition($field, $options);
+			$sql .= static::column_definition($field, $options) . ", \n";
 		}
 		$sql .= "created_at TIMESTAMP NOT NULL DEFAULT 0, \n";
 		$sql .= "updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, \n";
