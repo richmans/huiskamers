@@ -51,17 +51,8 @@ class Huiskamers {
 	public function widget() {
 		$this->use_lib();
 		add_thickbox();
-		// Check if there is a cached output
-		$cache = wp_cache_get( 'huiskamers' );
 		$email_sent = $_REQUEST['huiskamers-email-sent'];
-		if ( !is_array( $cache ) )
-			$cache = array();
-
-		if ( isset ( $cache[ 'widget' ] ) )
-			return print $cache[ 'widget' ];
-
 		$widget_string = $before_widget;
-
 		ob_start();
 		$huiskamers = Huiskamers\Huiskamer::where("active=1");
 		$custom_columns = Huiskamers\Field::where('visible=1');
@@ -69,11 +60,6 @@ class Huiskamers {
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;
 
-		$cache[ 'widget']  = $widget_string;
-
-		wp_cache_set( 'huiskamers', $cache);
-		
-		
 		return $widget_string;
 	} 
 	
@@ -82,9 +68,6 @@ class Huiskamers {
   	echo $this->widget();
   }
 
-	public function flush_widget_cache() {
-    	wp_cache_delete( 'huiskamers' );
-	}
 	
 	/**
 	 * Loads the Widget's text domain for localization and translation.
