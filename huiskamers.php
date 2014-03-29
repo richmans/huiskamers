@@ -64,6 +64,7 @@ class Huiskamers {
 
 		ob_start();
 		$huiskamers = Huiskamers\Huiskamer::where("active=1");
+		$custom_columns = Huiskamers\Field::where('visible=1');
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;

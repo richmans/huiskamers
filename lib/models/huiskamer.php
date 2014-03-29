@@ -2,7 +2,19 @@
 namespace Huiskamers;
 class Huiskamer extends Base {
 	public static function table_name() { return 'huiskamers'; }
+
 	public static function fields() {
+		$defaults = static::default_fields();
+		$columns = Field::all();
+		$customs = array();
+		foreach($columns as $column) {
+			$customs[$column->slug()] = $column->options();
+		}
+		$fields = array_merge($defaults, $customs);
+		return $fields;
+	}
+
+	public static function default_fields() {
 		return array(
 			'name' => array('type' => 'string'),
 			'description' => array('type' => 'text', 'validate' => 'description'),
@@ -16,6 +28,15 @@ class Huiskamer extends Base {
 			'frequency' => array('type' => 'string'),
 			'active' => array('type' => 'boolean'),
 		);
+	}
+
+	public static function visible_custom_fields() {
+		$columns = Field::where(array('visible' => 1));
+		$customs = array();
+		foreach($columns as $column) {
+			$customs[$column->slug()] = $column->options();
+		}
+		return $customs;
 	}
 
 	public function validate_description() {

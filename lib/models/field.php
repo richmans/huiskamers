@@ -17,7 +17,7 @@ class Field extends Base {
 			$this->errors['slug'] = 'mag alleen kleine letters en underscore bevatten.';
 		}
 		
-		if(array_key_exists($this->slug(), Huiskamer::fields())){
+		if(array_key_exists($this->slug(), Huiskamer::default_fields())){
 			$this->errors['slug'] = 'is al een standaard kolom.';	
 		}
 	}

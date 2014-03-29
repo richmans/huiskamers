@@ -15,6 +15,9 @@
 			<? $form->input('day_part', 'Wanneer', $model) ?>
 			<? $form->input('frequency', 'Hoe vaak', $model) ?>
 			<? $form->input('active', 'Actief', $model) ?>
+			<? foreach(Huiskamers\Field::all() as $field) { ?>
+			<? $form->input($field->slug(), $field->name(), $model) ?>
+			<? } ?>
 		</tbody>
 	</table>
 	<p class="submit">

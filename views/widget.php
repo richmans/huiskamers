@@ -27,6 +27,10 @@ jaar. <button id='huiskamers-search'>Zoek</button>
 <th>Dagdeel</th>
 <th>Frequentie</th>
 <th>Beschrijving</th>
+<? foreach($custom_columns as $column){ ?>
+     <th><?=esc_html($column->name())?></th>
+<? } ?>
+
 <th>Email</th>
 </tr>
 <?foreach($huiskamers as $huiskamer) { ?>
@@ -39,6 +43,11 @@ jaar. <button id='huiskamers-search'>Zoek</button>
 		<td><?=esc_html($huiskamer->day_part())?></td>
           <td><?=esc_html($huiskamer->frequency())?></td>
           <td><?=esc_html($huiskamer->description())?></td>
+          <? foreach($custom_columns as $column){ ?>
+               <? $slug = $column->slug();?>
+               <td><?=esc_html($huiskamer->$slug())?></td>
+          <? } ?>
+
 		<td>
                <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=huiskamers-email-form" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
                     <img class='huiskamer-email' src='<?=WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>

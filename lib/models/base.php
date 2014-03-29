@@ -141,7 +141,7 @@ abstract class Base {
 
 	public function update_fields($fields) {
 		foreach($this->fields() as $name => $type){
-			if($fields[$name]){
+			if($fields[$name] !== NULL){
 				$this->set($name, fix_slashes($fields[$name]));
 			}
 		}
@@ -206,7 +206,7 @@ abstract class Base {
 
 	public function validate_dropdown($field, $options){
 		$value = $this->values[$field];
-		if($value == NULL || $value == ''){
+		if($value === NULL || $value === ''){
 			$this->errors[$field] = "is niet gekozen.";
 		}
 	}
