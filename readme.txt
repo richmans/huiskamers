@@ -23,3 +23,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 = 1.1 =
 * Fix for age selection bug in the frontend
+
+= 1.2 =
+* Gave the email button a minimal size so it doesn't get squished
