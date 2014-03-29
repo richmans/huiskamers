@@ -18,11 +18,5 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 == Changelog ==
 
-= 0.1 =
-* Initial setup, currently a work in progress
-
-= 0.2 = 
-* Created basic data framework
-
-= 0.3 = 
-* Implemented region management
+= 1.0 =
+* First release
