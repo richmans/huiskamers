@@ -6,7 +6,7 @@
 			 $huiskamer_table->page_length = 50;
 			 $huiskamer_table->columns = array( 
 			 			'title'     => 'Naam',
-			 			'description'     => 'Beschrijving',
+			 			'description_truncated'     => 'Beschrijving',
 			 			'region_names' => 'Regio',
 			 			'day_part'     => 'Wanneer',
 			 			'frequency'     => 'Hoe vaak',

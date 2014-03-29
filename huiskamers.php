@@ -95,7 +95,6 @@ class Huiskamers {
 		Huiskamers\Field::create_table();
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
-
 		
 	}
 
@@ -241,6 +240,7 @@ Groeten, thuisverder.nl");
 			exit;
 		}
 	}
+
 } // end class
 include('lib/controllers/plugin_updater.php');
 if ( is_admin() ) {

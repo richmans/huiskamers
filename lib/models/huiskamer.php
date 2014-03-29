@@ -87,5 +87,11 @@ class Huiskamer extends Base {
 		}
 		return true;
 	}
+
+	public function description_truncated() {
+		$maxlen = 50;
+		if(strlen($this->description()) < $maxlen) return $this->description();
+		return substr($this->description(), 0, $maxlen) . '...';
+	}
 }
 ?>
