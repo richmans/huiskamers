@@ -46,7 +46,7 @@ abstract class Base {
 		}else if ($options['type'] == 'boolean'){
 			$sql_definition='TINYINT';
 		}
-		$nulldef = 'not null';
+		$nulldef = ($options['optional']) ? '' : 'not null';
 		return  "$field $sql_definition $nulldef, \n";
 	}
 
@@ -77,14 +77,21 @@ abstract class Base {
 	
 	}
 
+	public function hook($hook_name){
+		if (method_exists($this, $hook_name)){
+			$this->$hook_name();
+		}
+	}
 
 	public function create() {
 		global $wpdb;
+		$this->hook('before_create');
 		if ($this->validate() == false) return false;
 		$table_name = static::prefixed_table_name();
 		$values = array_merge($this->values, array('created_at' => timestamp(), 'updated_at' => timestamp()));
 		$wpdb->insert( $table_name, $values); 
 		$this->values['id'] = $wpdb->insert_id;
+		$this->hook('after_create');
 		return true;
 	}
 
@@ -98,27 +105,33 @@ abstract class Base {
 
 	public function update() {
 		global $wpdb;
+		$this->hook('before_update');
 		if ($this->validate() == false) return false;
 		$table_name = static::prefixed_table_name();
 		if($this->id() == NULL) throw new \Exception("Tried to update an unsaved record");
 		$where = array('id' => $this->id());
 		$values = array_merge($this->values, array('updated_at' => timestamp()));
 		$wpdb->update( $table_name, $values, $where); 		
+		$this->hook('after_update');
 		return true;
 	}
 
 	public function update_fields($fields) {
 		foreach($this->fields() as $name => $type){
-			$this->set($name, fix_slashes($fields[$name]));
+			if($fields[$name]){
+				$this->set($name, fix_slashes($fields[$name]));
+			}
 		}
 	}
 
 	public function delete() {
 		global $wpdb;
+		$this->hook('before_delete');
 		$table_name = static::prefixed_table_name();
 		if($this->id() == NULL) throw new \Exception("Tried to delete an unsaved record");
 		$where = array('id' => $this->id());
 		$wpdb->delete( $table_name, $where); 
+		$this->hook('after_delete');
 	}
 
 	public static function limit($page, $page_length) {
@@ -189,6 +202,18 @@ abstract class Base {
 		}
 	}
 
+	public function validate_unique($field, $options){
+		global $wpdb;
+		$value = $this->values[$field];
+		$id = $this->id();
+		$table = $this->prefixed_table_name();
+		$sql = $wpdb->prepare("select id from $table where $field = %s", $value);
+		$other_id = $wpdb->get_var($sql);
+		if($other_id != NULL && $other_id != $id) {
+			$this->errors[$field] = 'bestaat al.';
+		}
+	}
+
 	public function validate() {
 		$fields = $this->fields();
 		$this->errors = array();
@@ -204,11 +229,17 @@ abstract class Base {
 			}else if ($options['type'] != 'boolean') {
 				$this->validate_presence($field, $options);
 			}
-			$validation = $options['validate'];
-			if($validation != NULL){
-				$validation_method = "validate_$validation";
-				$this->$validation_method($field, $options);
+			$validations = $options['validate'];
+
+			if($validations != NULL){
+				if(!(is_array($validations))) $validations = array($validations);
+				foreach($validations as $validation) {
+					$validation_method = "validate_$validation";
+					$this->$validation_method($field, $options);
+				}
+
 			}
+			
 		}
 		return empty($this->errors);
 	}
