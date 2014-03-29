@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 0.8
+Version: 0.9
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -108,6 +108,7 @@ class Huiskamers {
 		$this->setting_defaults();
 		$this->add_auth();
 		Huiskamers\Region::create_table();
+		Huiskamers\Field::create_table();
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
 
@@ -125,6 +126,7 @@ class Huiskamers {
 		Huiskamers\Region::drop_table();
 		Huiskamers\Huiskamer::drop_table();
 		Huiskamers\Message::drop_table();
+		Huiskamers\Field::drop_table();
 	}
 
 	public function add_auth() {
@@ -171,6 +173,7 @@ class Huiskamers {
 		add_menu_page('Huiskamers', 'Huiskamers', 'manage_huiskamers', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
 		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_huiskamers', 'huiskamers_message', array($this, 'show_messages_page'));
 		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_huiskamers', 'huiskamers_region', array($this, 'show_regions_page'));
+		add_submenu_page('huiskamers_huiskamer', 'Kolommen beheren', 'Kolommen', 'manage_huiskamers', 'huiskamers_field', array($this, 'show_fields_page'));
 	  add_options_page('Huiskamer options', 'Huiskamers', 'manage_huiskamers', 'huiskamer-options', array( $this, 'show_options_page' ));
         
 	}
@@ -229,6 +232,12 @@ Groeten, thuisverder.nl");
 		$this->use_lib();
 		$message_controller = new Huiskamers\MessageController();
 		$message_controller->route();
+	}
+
+	public function show_fields_page(){
+		$this->use_lib();
+		$field_controller = new Huiskamers\FieldController();
+		$field_controller->route();
 	}
 
 	/** Shows the regions page **/

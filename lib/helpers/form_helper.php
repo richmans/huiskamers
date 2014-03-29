@@ -6,12 +6,13 @@ class FormHelper {
 		$this->section = $section;
 	}
 
-	public function input($field, $caption, $model){
+	public function input($field, $caption, $model, $explanation=NULL){
 		$invalid_class = ($model->is_invalid($field)) ? 'class=\'form-invalid\'' : '';
 		echo "<tr valign='top' $invalid_class>\n";
 		echo "<th scope='row'><label for='$field'>$caption</label></th>\n";
 		echo "<td>\n";
 		$this->input_field($field, $caption, $model);
+		if($explanation) echo "<p class='description'>$explanation</p>\n";
 		echo "</td>\n";
 		echo "<td>";
 		echo $model->errors[$field]. "\n";
