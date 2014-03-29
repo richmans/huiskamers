@@ -20,3 +20,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 = 1.0 =
 * First release
+
+= 1.1 =
+* Fix for age selection bug in the frontend

@@ -5,10 +5,11 @@
 	}
 
 	function filter_age(row){
-		var min_age = $(row).attr('data-age-min');
-		var max_age = $(row).attr('data-age-max');
+		var min_age = parseInt($(row).attr('data-age-min'));
+		var max_age = parseInt($(row).attr('data-age-max'));
 		var prefered_age = $('input#huiskamers-select-age').val();
 		if(prefered_age){
+			prefered_age = parseInt(prefered_age);
 			return ((min_age <= prefered_age) && (max_age >= prefered_age));
 		} else {
 			return true;	
