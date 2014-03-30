@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.2
+Version: 1.3
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -43,6 +43,7 @@ class Huiskamers {
 		add_action( 'admin_init', array($this, 'register_settings') );
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
+		add_action( 'huiskamer_send_reminders', array($this, 'send_reminders' ));
 	} 
 
 	/**
@@ -52,14 +53,13 @@ class Huiskamers {
 		$this->use_lib();
 		add_thickbox();
 		$email_sent = $_REQUEST['huiskamers-email-sent'];
-		$widget_string = $before_widget;
+		$widget_string = '';
 		ob_start();
 		$huiskamers = Huiskamers\Huiskamer::where("active=1");
 		$custom_columns = Huiskamers\Field::where('visible=1');
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
-		$widget_string .= $after_widget;
-
+		
 		return $widget_string;
 	} 
 	
@@ -91,11 +91,12 @@ class Huiskamers {
 		$this->register_settings();
 		$this->setting_defaults();
 		$this->add_auth();
+
 		Huiskamers\Region::create_table();
 		Huiskamers\Field::create_table();
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
-		
+		wp_schedule_event( time(), 'daily', 'huiskamer_send_reminders' );
 	}
 
 	/**
@@ -110,6 +111,7 @@ class Huiskamers {
 		Huiskamers\Huiskamer::drop_table();
 		Huiskamers\Message::drop_table();
 		Huiskamers\Field::drop_table();
+		wp_clear_scheduled_hook( 'huiskamer_send_reminders' );
 	}
 
 	public function add_auth() {
@@ -238,6 +240,18 @@ Groeten, thuisverder.nl");
 			$result_tag = ($result == true) ? 'ok' : 'fail';
 			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> $result_tag) ), 302);
 			exit;
+		}
+	}
+
+	public function send_reminders() {
+		$this->use_lib();
+		$reminder_interval = intval(get_option('huiskamers_send-reminder-email-after'));
+		if($reminder_interval == 0) return;
+		$messages = Huiskamers\Message::where("reminder_sent=0 and datediff(curdate(), created_at) > $reminder_interval");
+		foreach($messages as $message){
+			$message->send_reminder_email();
+			$message->set_reminder_sent(true);
+			$message->update();
 		}
 	}
 
