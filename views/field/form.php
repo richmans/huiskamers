@@ -6,8 +6,17 @@
 	<form method='post' action='<?=$this->url($form_mode, $id);?>'>
 	<table class='form-table'>
 		<tbody>
+		 
+
 			<? $form->input('name', 'Naam', $model, 'Naam van de kolom die zichtbaar is op de website.') ?>
-			<? $form->input('slug', 'Slug', $model, 'Naam van de kolom in het systeem. Gebruik alleen kleine letters en underscore.') ?>
+			<? if ($model->is_default()) {?>
+				<tr><th scope='row'>Slug</th><td>
+				<?=esc_html($model->slug());?>
+				</td></tr>
+			<? } else { ?>
+				<? $form->input('slug', 'Slug', $model, 'Naam van de kolom in het systeem. Gebruik alleen kleine letters en underscore.') ?>
+			<?}?>
+			<? $form->input('order_nr', 'Volgorde', $model) ?>
 			<? $form->input('required', 'Verplicht', $model) ?>
 			<? $form->input('visible', 'Zichtbaar', $model, 'Zichtbaar op de website?') ?>
 		</tbody>

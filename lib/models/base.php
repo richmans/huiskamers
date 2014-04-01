@@ -10,6 +10,9 @@ abstract class Base {
 		$this->values = $values;
 	}
 
+	public function can_delete() {
+		return true;
+	}
 	public static function get_namespace() {
 		return trim(strtolower(__NAMESPACE__));
 	}

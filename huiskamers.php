@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.3
+Version: 1.4
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -97,6 +97,7 @@ class Huiskamers {
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
 		wp_schedule_event( time(), 'daily', 'huiskamer_send_reminders' );
+		$this->check_default_columns();
 	}
 
 	/**
@@ -221,6 +222,7 @@ Groeten, thuisverder.nl");
 
 	public function show_fields_page(){
 		$this->use_lib();
+		$this->check_default_columns();
 		$field_controller = new Huiskamers\FieldController();
 		$field_controller->route();
 	}
@@ -252,6 +254,24 @@ Groeten, thuisverder.nl");
 			$message->send_reminder_email();
 			$message->set_reminder_sent(true);
 			$message->update();
+		}
+	}
+
+	public function check_default_columns() {
+		global $wpdb;
+		$existing = Huiskamers\Field::where("slug='name'");
+		if(!(empty($existing))) return;
+		$field_table = Huiskamers\Field::prefixed_table_name();
+		$sql = "update $field_table set order_nr = order_nr + 11";
+		$wpdb->query($sql);
+		$counter = 1;
+		foreach(Huiskamers\Huiskamer::default_fields() as $field => $options) {
+			$hash = array('slug' => $field, 'visible' => 1, 'required' => 1, 'name' => $options['caption']);
+			$field = new Huiskamers\Field($hash);
+			$field->save();
+			$field->set_order_nr($counter);
+			$field->save();
+			$counter += 1;
 		}
 	}
 

@@ -16,17 +16,17 @@ class Huiskamer extends Base {
 
 	public static function default_fields() {
 		return array(
-			'name' => array('type' => 'string'),
-			'description' => array('type' => 'text', 'validate' => 'description'),
-			'email' => array('type' => 'string', 'validate' => 'email'),
-			'regions' => array('type' => 'multiple_dropdown', 'model' => 'Region'),
-			'group_size' => array('type' => 'dropdown', 'lookup' => 'group_sizes'),
-			'group_type' => array('type' => 'string'),
-			'age_max' => array('type' => 'dropdown', 'lookup' => 'ages'),
-			'age_min' => array('type' => 'dropdown', 'lookup' => 'ages'),
-			'day_part' => array('type' => 'string'),
-			'frequency' => array('type' => 'string'),
-			'active' => array('type' => 'boolean'),
+			'name' => array('type' => 'string', 'caption' => 'Naam'),
+			'description' => array('type' => 'text', 'validate' => 'description', 'caption' => 'Beschrijving'),
+			'email' => array('type' => 'string', 'validate' => 'email', 'caption' => 'Email'),
+			'regions' => array('type' => 'multiple_dropdown', 'model' => 'Region', 'caption' => 'Regios'),
+			'group_size' => array('type' => 'dropdown', 'lookup' => 'group_sizes', 'caption' => 'Grootte'),
+			'group_type' => array('type' => 'string', 'caption' => 'Samenstelling'),
+			'age_max' => array('type' => 'dropdown', 'lookup' => 'ages', 'caption' => 'Maximum leeftijd'),
+			'age_min' => array('type' => 'dropdown', 'lookup' => 'ages', 'caption' => 'Minimum leeftijd'),
+			'day_part' => array('type' => 'string', 'caption' => 'Wanneer'),
+			'frequency' => array('type' => 'string', 'caption' => 'Hoe vaak'),
+			'active' => array('type' => 'boolean', 'caption' => 'Actief'),
 		);
 	}
 

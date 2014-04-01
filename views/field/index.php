@@ -6,8 +6,12 @@
 		<?
 			 $field_table = new Huiskamers\TableHelper($this, $model_name);
 			 $field_table->page_length = 50;
+			  $field_table->sortable_columns = array(
+            'order_nr'     => array('order_nr',false));
+			  $field_table->default_sort='order_nr';
 			 $field_table->columns = array( 
 			 			'title'     => 'Naam',
+			 			'order_nr'  => 'Volgorde',
             'created_at'    => 'Gemaakt',
             'updated_at'  => 'Bewerkt');
   		 $field_table->prepare_items();

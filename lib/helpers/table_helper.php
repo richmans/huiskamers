@@ -12,6 +12,8 @@ class TableHelper extends \WP_List_Table {
     public $disable_edit = false;
     public $page_length=100;
     public $columns = array();
+    public $sortable_columns=array();
+    public $default_sort = 'id';
     function __construct($controller){
         global $status, $page;
         $this->controller = $controller;
@@ -23,7 +25,11 @@ class TableHelper extends \WP_List_Table {
             'plural'    => $this->section . 's',
             'ajax'      => false
         ) );
-        
+        $this->sortable_columns = array(
+            'title'     => array('name',false),     //true means it's already sorted
+            'created_at'    => array('created_at',false),
+            'updated_at'  => array('updated_at',false)
+        );
     }
 
     function column_default($item, $column_name){
@@ -36,7 +42,9 @@ class TableHelper extends \WP_List_Table {
         if(!$this->disable_edit){
             $actions['edit'] = '<a href=\'' . $this->controller->url('edit', $item->id()) . '\'>Edit</a>';
         }
-        $actions['delete'] = '<a href=\'' . $this->controller->url('delete', $item->id()) . '\'>Delete</a>';
+        if($item->can_delete()){
+            $actions['delete'] = '<a href=\'' . $this->controller->url('delete', $item->id()) . '\'>Delete</a>';
+        }
         
         
         //Return the title contents
@@ -61,12 +69,8 @@ class TableHelper extends \WP_List_Table {
     }
 
     function get_sortable_columns() {
-        $sortable_columns = array(
-            'title'     => array('name',false),     //true means it's already sorted
-            'created_at'    => array('created_at',false),
-            'updated_at'  => array('updated_at',false)
-        );
-        return $sortable_columns;
+        
+        return $this->sortable_columns;
     }
 
     function get_bulk_actions() {
@@ -103,15 +107,15 @@ class TableHelper extends \WP_List_Table {
         $this->process_bulk_action();
         
         
-        $order_by = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'id'; //If no sort, default to title
+        $order_by = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : $this->default_sort; //If no sort, default to title
         $order_direction = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
         $order = "$order_by $order_direction";
         $where = '1=1';
-
         
         $current_page = $this->get_pagenum();
         $model_name = $this->model_name;
         $total_items = $model_name::count($where);
+
         $this->items = $model_name::where($where, $order, $current_page, $per_page);
         
         

@@ -17,9 +17,18 @@ class Field extends Base {
 			$this->errors['slug'] = 'mag alleen kleine letters en underscore bevatten.';
 		}
 		
-		if(array_key_exists($this->slug(), Huiskamer::default_fields())){
-			$this->errors['slug'] = 'is al een standaard kolom.';	
-		}
+	}
+
+	public function can_delete() {
+		return $this->is_custom();
+	}
+
+	public function is_custom() {
+		return (!(array_key_exists($this->slug(), Huiskamer::default_fields())));
+	}
+
+	public function is_default() {
+		return (array_key_exists($this->slug(), Huiskamer::default_fields()));
 	}
 
 	public static function indexes() {
@@ -28,7 +37,7 @@ class Field extends Base {
 
 	public function before_create() {
 		global $wpdb;
-		$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->table_name()}");
+		$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->prefixed_table_name()}");
 		if($max_order == NULL) $max_order = 0;
 		$this->set_order_nr($max_order + 1);
 	}
@@ -57,6 +66,12 @@ class Field extends Base {
 
 	public function after_update() {
 		Huiskamer::update_column($this->old_slug, $this->slug(), $this->options());
+	}
+
+	public function before_delete() {
+		if($this->is_default()) {
+			throw new \Exception("Kan standaard kolommen niet weg gooien");
+		}
 	}
 }
 ?>

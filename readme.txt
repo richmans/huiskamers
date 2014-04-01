@@ -29,3 +29,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 = 1.3 =
 * Configured cron to support the reminder email
+
+= 1.4 =
+Added column sorting
