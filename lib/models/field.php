@@ -50,10 +50,12 @@ class Field extends Base {
 	}
 
 	public function after_create() {
+		if($this->is_default()) return;
 		Huiskamer::add_column($this->slug(), $this->options());
 	}
 
 	public function after_delete() {
+		if($this->is_default()) return;
 		Huiskamer::delete_column($this->slug());
 	}
 
@@ -65,6 +67,7 @@ class Field extends Base {
 	}
 
 	public function after_update() {
+		if($this->is_default()) return;
 		Huiskamer::update_column($this->old_slug, $this->slug(), $this->options());
 	}
 
@@ -72,6 +75,10 @@ class Field extends Base {
 		if($this->is_default()) {
 			throw new \Exception("Kan standaard kolommen niet weg gooien");
 		}
+	}
+
+	public function visible_pretty() {
+		return ($this->visible() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
 	}
 }
 ?>

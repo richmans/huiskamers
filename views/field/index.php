@@ -12,6 +12,7 @@
 			 $field_table->columns = array( 
 			 			'title'     => 'Naam',
 			 			'order_nr'  => 'Volgorde',
+			 			'visible_pretty' => 'Zichtbaar',
             'created_at'    => 'Gemaakt',
             'updated_at'  => 'Bewerkt');
   		 $field_table->prepare_items();

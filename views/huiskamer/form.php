@@ -16,6 +16,7 @@
 			<? $form->input('frequency', 'Hoe vaak', $model) ?>
 			<? $form->input('active', 'Actief', $model) ?>
 			<? foreach(Huiskamers\Field::all() as $field) { ?>
+			<? if($field->is_default()) continue; ?>
 			<? $form->input($field->slug(), $field->name(), $model) ?>
 			<? } ?>
 		</tbody>

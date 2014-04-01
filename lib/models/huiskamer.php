@@ -10,7 +10,7 @@ class Huiskamer extends Base {
 		foreach($columns as $column) {
 			$customs[$column->slug()] = $column->options();
 		}
-		$fields = array_merge($defaults, $customs);
+		$fields = array_merge($customs, $defaults);
 		return $fields;
 	}
 

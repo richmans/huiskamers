@@ -56,7 +56,7 @@ class Huiskamers {
 		$widget_string = '';
 		ob_start();
 		$huiskamers = Huiskamers\Huiskamer::where("active=1");
-		$custom_columns = Huiskamers\Field::where('visible=1');
+		$columns = Huiskamers\Field::where('visible=1', 'order_nr asc');
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
 		
@@ -222,7 +222,6 @@ Groeten, thuisverder.nl");
 
 	public function show_fields_page(){
 		$this->use_lib();
-		$this->check_default_columns();
 		$field_controller = new Huiskamers\FieldController();
 		$field_controller->route();
 	}
@@ -264,9 +263,22 @@ Groeten, thuisverder.nl");
 		$field_table = Huiskamers\Field::prefixed_table_name();
 		$sql = "update $field_table set order_nr = order_nr + 11";
 		$wpdb->query($sql);
+
+		$hash = array(
+			'name' => array('caption' => 'Naam', 'visible' => false),
+			'group_size' => array('caption' => 'Aantal leden', 'visible' => true),
+			'age_min' => array('caption' => 'Leeftijdsspreiding', 'visible' => true),
+			'group_type' => array('caption' => 'Samenstelling','visible' => true),
+			'regions' => array('caption' => 'Regio','visible' => true),
+			'day_part' => array('caption' => 'Wanneer','visible' => true),
+			'frequency' => array('caption' => 'Hoe vaak','visible' => true),
+			'description' => array('caption' => 'Beschrijving','visible' => true),
+			'email' => array('caption' => 'Email', 'visible' => false),
+
+		);
 		$counter = 1;
-		foreach(Huiskamers\Huiskamer::default_fields() as $field => $options) {
-			$hash = array('slug' => $field, 'visible' => 1, 'required' => 1, 'name' => $options['caption']);
+		foreach($hash as $field => $options) {
+			$hash = array('slug' => $field, 'visible' => $options['visible'], 'required' => 1, 'name' => $options['caption']);
 			$field = new Huiskamers\Field($hash);
 			$field->save();
 			$field->set_order_nr($counter);
