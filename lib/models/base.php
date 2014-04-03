@@ -143,8 +143,8 @@ abstract class Base {
 	}
 
 	public function update_fields($fields) {
-		foreach($this->fields() as $name => $type){
-			if($fields[$name] !== NULL){
+		foreach($this->fields() as $name => $options){
+			if($fields[$name] !== NULL or $options['type'] == 'boolean'){
 				$this->set($name, fix_slashes($fields[$name]));
 			}
 		}

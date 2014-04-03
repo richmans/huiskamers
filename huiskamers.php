@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.4
+Version: 1.5
 Author: Richard Bronkhorst
 License: GPL2
 */

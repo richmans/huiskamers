@@ -32,3 +32,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 = 1.4 =
 Added column sorting
+
+= 1.5 = 
+Small bugfix
