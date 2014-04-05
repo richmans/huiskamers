@@ -32,7 +32,7 @@ class Field extends Base {
 	}
 
 	public static function indexes() {
-		return array('name', 'visible');
+		return array('name', 'visible', 'order_nr');
 	}
 
 	public function before_create() {

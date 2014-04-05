@@ -1,4 +1,3 @@
-<h1>Kring overzicht</h1>
 <? if ($email_sent == 'ok') {?>
      <div class='huiskamer-email-sent'>Uw email is verstuurd - bedankt!</div>
 <? } ?>
@@ -18,11 +17,14 @@ geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:9
 
 jaar. <button id='huiskamers-search'>Zoek</button>
 </p>
-<table class='custom-table style-4 huiskamers'>
+<table class='custom-table style-1 huiskamers'>
+<? $custom_styles = array('description' => 'width:400px', 'frequency' => 'width:150px');?>
 <tr>
 <? foreach($columns as $column){ ?>
      <? if ($column->slug() == 'age_max') continue; ?>
-     <th>
+     <? $custom_style = $custom_styles[$column->slug()]; ?>
+     <? $custom_style = ($custom_style) ? " style='$custom_style' " : ""; ?>
+     <th <?=$custom_style?>>
      <? if ($column->slug() == 'age_min') { ?>
           Leeftijdspreiding
      <? } else { ?>
@@ -74,7 +76,7 @@ jaar. <button id='huiskamers-search'>Zoek</button>
           <div class='field'>
                <label for='bericht'>Bericht</label><textarea name='huiskamer_message[message]'></textarea>
           </div>
-          <input type='submit'/>
+          <input type='submit' value='Versturen'/>
      </form>
      </p>
 </div>

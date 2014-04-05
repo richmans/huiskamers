@@ -27,7 +27,15 @@ class Huiskamer extends Base {
 			'day_part' => array('type' => 'string', 'caption' => 'Wanneer'),
 			'frequency' => array('type' => 'string', 'caption' => 'Hoe vaak'),
 			'active' => array('type' => 'boolean', 'caption' => 'Actief'),
+			'order_nr'  => array('type' => 'number'),
 		);
+	}
+
+	public function before_create() {
+		global $wpdb;
+		$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->prefixed_table_name()}");
+		if($max_order == NULL) $max_order = 0;
+		$this->set_order_nr($max_order + 1);
 	}
 
 	public static function visible_custom_fields() {
@@ -47,7 +55,7 @@ class Huiskamer extends Base {
 	}
 
 	public static function indexes() {
-		return array('name', 'group_size', 'age_max', 'age_min', 'day_part', 'frequency');
+		return array('name', 'group_size', 'age_max', 'age_min', 'day_part', 'frequency', 'order_nr');
 	}
 
 	public function region_ids() {

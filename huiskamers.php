@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.5
+Version: 1.6
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -55,7 +55,7 @@ class Huiskamers {
 		$email_sent = $_REQUEST['huiskamers-email-sent'];
 		$widget_string = '';
 		ob_start();
-		$huiskamers = Huiskamers\Huiskamer::where("active=1");
+		$huiskamers = Huiskamers\Huiskamer::where("active=1", 'order_nr asc');
 		$columns = Huiskamers\Field::where('visible=1', 'order_nr asc');
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
@@ -79,7 +79,7 @@ class Huiskamers {
 
 	/** This loads everything in /lib **/
 	public function use_lib(){
-		include plugin_dir_path( __FILE__ ) . 'lib/include.php';
+		include_once plugin_dir_path( __FILE__ ) . 'lib/include.php';
 	}
 	/**
 	 * Fired when the plugin is activated.
@@ -98,6 +98,7 @@ class Huiskamers {
 		Huiskamers\Message::create_table();
 		wp_schedule_event( time(), 'daily', 'huiskamer_send_reminders' );
 		$this->check_default_columns();
+		$this->check_huiskamer_order_column();
 	}
 
 	/**
@@ -179,6 +180,7 @@ class Huiskamers {
 	}
 
 	public function setting_defaults() {
+		if (get_option('huiskamers_admin-email')) return;
 		update_option('huiskamers_admin-email', 'huiskamers@kvdnvlaardingen.nl');
 		update_option('huiskamers_send-reminder-email-after', 10);
 		update_option('huiskamers_new-message-email-message', "Hallo,
@@ -254,6 +256,27 @@ Groeten, thuisverder.nl");
 			$message->set_reminder_sent(true);
 			$message->update();
 		}
+	}
+
+	public function check_huiskamer_order_column(){
+		global $wpdb;
+		$this->use_lib();
+		$table = Huiskamers\Huiskamer::prefixed_table_name();
+		$result = $wpdb->query("select order_nr from $table");
+		$field_table = Huiskamers\Field::prefixed_table_name();
+		if($result === false){
+			Huiskamers\Huiskamer::add_column('order_nr', array('type' => 'number'));
+			$wpdb->query("ALTER TABLE  $table ADD INDEX  `order_nr` (  `order_nr` )");
+			$wpdb->query("ALTER TABLE  $field_table ADD INDEX  `order_nr` (  `order_nr` )");
+			$huiskamers = Huiskamers\Huiskamer::all();
+			$index = 1;
+			foreach($huiskamers as $huiskamer){
+				$huiskamer->set_order_nr($index);
+				$huiskamer->save();
+				$index += 1;
+			}
+		}
+		
 	}
 
 	public function check_default_columns() {
