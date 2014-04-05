@@ -17,7 +17,7 @@ geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:9
 
 jaar. <button id='huiskamers-search'>Zoek</button>
 </p>
-<table class='custom-table style-1 huiskamers'>
+<table class='custom-table style-3 huiskamers'>
 <? $custom_styles = array('description' => 'width:400px', 'frequency' => 'width:150px');?>
 <tr>
 <? foreach($columns as $column){ ?>
