@@ -15,6 +15,7 @@
 			<? $form->input('day_part', 'Wanneer', $model) ?>
 			<? $form->input('frequency', 'Hoe vaak', $model) ?>
 			<? $form->input('active', 'Actief', $model) ?>
+			<? $form->input('available', 'Beschikbaar', $model) ?>
 			<? $form->input('order_nr', 'Volgorde', $model) ?>
 			<? foreach(Huiskamers\Field::all() as $field) { ?>
 			<? if($field->is_default()) continue; ?>

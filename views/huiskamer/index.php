@@ -14,6 +14,7 @@
 			 			'day_part'     => 'Wanneer',
 			 			'frequency'     => 'Hoe vaak',
 			 			'active_pretty' => 'Actief',
+						'available_pretty' => 'Beschikbaar',
 			 			'order_nr' => 'Volgorde',
             'created_at'    => 'Gemaakt',
             'updated_at'  => 'Bewerkt'

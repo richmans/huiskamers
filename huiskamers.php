@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.6
+Version: 1.7
 Author: Richard Bronkhorst
 License: GPL2
 */
@@ -44,6 +44,10 @@ class Huiskamers {
 
 		add_shortcode( 'huiskamers', array($this, 'render_shortcode') );
 		add_action( 'huiskamer_send_reminders', array($this, 'send_reminders' ));
+		
+		// function to make huiskamers available again after some time
+		add_action( 'huiskamer_make_available', array($this, 'make_available' ));
+		
 	} 
 
 	/**
@@ -97,8 +101,10 @@ class Huiskamers {
 		Huiskamers\Huiskamer::create_table();
 		Huiskamers\Message::create_table();
 		wp_schedule_event( time(), 'daily', 'huiskamer_send_reminders' );
+		wp_schedule_event( time(), 'daily', 'huiskamer_make_available' );
 		$this->check_default_columns();
 		$this->check_huiskamer_order_column();
+		$this->check_huiskamer_available_column();
 	}
 
 	/**
@@ -114,6 +120,7 @@ class Huiskamers {
 		Huiskamers\Message::drop_table();
 		Huiskamers\Field::drop_table();
 		wp_clear_scheduled_hook( 'huiskamer_send_reminders' );
+		wp_clear_scheduled_hook( 'huiskamer_make_available');
 	}
 
 	public function add_auth() {
@@ -170,6 +177,7 @@ class Huiskamers {
 		register_setting( 'huiskamers', 'huiskamers_new-message-email-message' );
 	  register_setting( 'huiskamers', 'huiskamers_reminder-email-message' );
 	  register_setting( 'huiskamers', 'huiskamers_send-reminder-email-after', 'intval' );
+	  register_setting( 'huiskamers', 'huiskamers_reset-availability-days', 'intval' );
 	}
 
 	public function unregister_settings() {
@@ -177,12 +185,14 @@ class Huiskamers {
 		delete_option(  'huiskamers_new-message-email-message' );
 	  delete_option( 'huiskamers_reminder-email-message' );
 	  delete_option( 'huiskamers_send-reminder-email-after');
+	  	  delete_option( 'huiskamers_reset-availability-days');
 	}
 
 	public function setting_defaults() {
 		if (get_option('huiskamers_admin-email')) return;
 		update_option('huiskamers_admin-email', 'huiskamers@kvdnvlaardingen.nl');
 		update_option('huiskamers_send-reminder-email-after', 10);
+		update_option('huiskamers_reset-availability-days', 365);
 		update_option('huiskamers_new-message-email-message', "Hallo,
 
 Er is een aanmelding binnen gekomen op thuisverder.nl voor huiskamer [huiskamer].
@@ -240,8 +250,7 @@ Groeten, thuisverder.nl");
 			$this->use_lib();
 			$message_controller = new Huiskamers\MessageController();
 			$result = $message_controller->send_message();
-			$result_tag = ($result == true) ? 'ok' : 'fail';
-			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> $result_tag) ), 302);
+			wp_redirect(add_query_arg(array( 'huiskamers-email-sent'=> $result) ), 302);
 			exit;
 		}
 	}
@@ -255,6 +264,16 @@ Groeten, thuisverder.nl");
 			$message->send_reminder_email();
 			$message->set_reminder_sent(true);
 			$message->update();
+		}
+	}
+	
+	public function make_available() {
+		$this->use_lib();
+		$reset_interval = intval(get_option('huiskamers_reset-availability-days'));
+		$huiskamers = Huiskamers\Huiskamer::where("available=0 and datediff(curdate(), unavailable_since) > $reset_interval");
+		foreach($huiskamers as $huiskamer) {
+			$huiskamer->set('available', true);
+			$huiskamer->update();
 		}
 	}
 
@@ -277,6 +296,18 @@ Groeten, thuisverder.nl");
 			}
 		}
 		
+	}
+	
+	public function check_huiskamer_available_column() {
+		global $wpdb;
+		$this->use_lib();
+		$table = Huiskamers\Huiskamer::prefixed_table_name();
+		$result = $wpdb->query("select available from $table");
+		
+		if ($result == false){
+			Huiskamers\Huiskamer::add_column('available', array('type' => 'boolean', 'default' => 1));
+			Huiskamers\Huiskamer::add_column('unavailable_since', array('type' => 'timestamp'));
+		}
 	}
 
 	public function check_default_columns() {

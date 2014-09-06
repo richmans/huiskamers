@@ -7,6 +7,11 @@ abstract class Base {
 	public $errors = array();
 
 	public function __construct($values=array()) {
+		foreach($this::fields() as $field => $options){
+			if($options['default'] != null && $values[$field] == null){
+				$values[$field] = $options['default'];
+			}
+		};
 		$this->values = $values;
 	}
 
@@ -36,6 +41,7 @@ abstract class Base {
 
 	public static function column_definition($field, $options){
 		$sql_options = $options['sql'];
+		$defaultdef = ($options['default'] == null) ? '' : "default " . $options['default'];
 		if($options['type'] == 'string'){
 			$sql_definition='VARCHAR( 255 )';
 		}else if ($options['type'] == 'text'){
@@ -48,9 +54,11 @@ abstract class Base {
 			$sql_definition='VARCHAR( 255 )';
 		}else if ($options['type'] == 'boolean'){
 			$sql_definition='TINYINT';
+		}else if ($options['type'] == 'timestamp'){
+			$sql_definition='TIMESTAMP';
 		}
 		$nulldef = ($options['optional']) ? '' : 'not null';
-		return  "$field $sql_definition $nulldef";
+		return  "$field $sql_definition $nulldef $defaultdef";
 	}
 
 	public static function add_column($field, $options){

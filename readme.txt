@@ -35,3 +35,7 @@ Added column sorting
 
 = 1.5 = 
 Small bugfix
+
+= 1.7 = 
+Added default value functionality to the framework
+Added a switch to temporarily disable emails to huiskamers

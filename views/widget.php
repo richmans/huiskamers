@@ -4,6 +4,9 @@
 <? if ($email_sent == 'fail') {?>
      <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden. Probeer het later nog eens.</div>
 <? } ?>
+<? if ($email_sent == 'unavailable') {?>
+     <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden, omdat de huiskamer momenteel geen aanmeldingen kan aannemen. Probeer het later nog eens.</div>
+<? } ?>
 <p>
 Zoek een huiskamer in 
 <select style="width:150px" id='huiskamers-select-region'>
@@ -55,7 +58,7 @@ jaar. <button id='huiskamers-search'>Zoek</button>
           <? } ?>
           
 		<td>
-               <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=huiskamers-email-form" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
+               <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?=$huiskamer->form_title()?>" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
                     <img class='huiskamer-email' src='<?=WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
                </a>	
           </td>
@@ -79,4 +82,8 @@ jaar. <button id='huiskamers-search'>Zoek</button>
           <input type='submit' value='Versturen'/>
      </form>
      </p>
+</div>
+
+<div id="huiskamers-unavailable" style="display:none;">
+     <p>Helaas kan de huiskamer momenteel geen berichten accepteren.</p>
 </div>

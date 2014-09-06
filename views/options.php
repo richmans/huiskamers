@@ -17,6 +17,11 @@
 </tr>
 
 <tr valign='top'>
+<th scope='row'>Huiskamers weer beschikbaar maken na</th>
+<td><input name='huiskamers_reset-availability-days' value='<?=esc_attr(get_option('huiskamers_reset-availability-days'))?>' class='regular-text'/> dagen</td>
+</tr>
+
+<tr valign='top'>
 <th scope='row'>Email bij nieuwe aanmelding</th>
 <td>
 <p class='description'>Gebruik de volgende velden om de gegevens van de aanmelding weer te geven:</p>

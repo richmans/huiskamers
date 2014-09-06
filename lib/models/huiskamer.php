@@ -2,7 +2,7 @@
 namespace Huiskamers;
 class Huiskamer extends Base {
 	public static function table_name() { return 'huiskamers'; }
-
+	
 	public static function fields() {
 		$defaults = static::default_fields();
 		$columns = Field::all();
@@ -26,7 +26,9 @@ class Huiskamer extends Base {
 			'age_min' => array('type' => 'dropdown', 'lookup' => 'ages', 'caption' => 'Minimum leeftijd'),
 			'day_part' => array('type' => 'string', 'caption' => 'Wanneer'),
 			'frequency' => array('type' => 'string', 'caption' => 'Hoe vaak'),
-			'active' => array('type' => 'boolean', 'caption' => 'Actief'),
+			'active' => array('type' => 'boolean', 'caption' => 'Actief', 'default' => true),
+			'available' => array('type' => 'boolean', 'caption' => 'Beschikbaar', 'default' => true),
+			'unavailable_since' => array('type' => 'timestamp'),
 			'order_nr'  => array('type' => 'number'),
 		);
 	}
@@ -36,6 +38,16 @@ class Huiskamer extends Base {
 		$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->prefixed_table_name()}");
 		if($max_order == NULL) $max_order = 0;
 		$this->set_order_nr($max_order + 1);
+	}
+	
+	public function before_update() {
+		if($this->available() == false && $this->unavailable_since() == 0) {
+			$this->set('unavailable_since', timestamp());
+		}
+		if($this->available() == true){
+			$this->set('unavailable_since', '0000-00-00');
+		}
+	
 	}
 
 	public static function visible_custom_fields() {
@@ -66,6 +78,10 @@ class Huiskamer extends Base {
 
 	public function active_pretty() {
 		return ($this->active() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
+	}
+
+	public function available_pretty() {
+		return ($this->available() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
 	}
 
 	public function region_names() {
@@ -100,6 +116,10 @@ class Huiskamer extends Base {
 		$maxlen = 50;
 		if(strlen($this->description()) < $maxlen) return $this->description();
 		return substr($this->description(), 0, $maxlen) . '...';
+	}
+	
+	public function form_title() {
+		return ($this->available()) ? 'huiskamers-email-form' : 'huiskamers-unavailable';
 	}
 }
 ?>
