@@ -85,5 +85,7 @@ jaar. <button id='huiskamers-search'>Zoek</button>
 </div>
 
 <div id="huiskamers-unavailable" style="display:none;">
-     <p>Helaas kan de huiskamer momenteel geen berichten accepteren.</p>
+     <p>Dankjewel voor je interesse in deze huiskamer! Helaas kan deze huiskamer tijdelijk geen nieuwe leden opnemen. Wellicht heeft één van de andere huiskamers ook je interesse.</p>
+
+<p>Het huiskamerteam</p>
 </div>

@@ -21,3 +21,11 @@ INSERT INTO `wp_huiskamers_regions` VALUES(20, 'Barendrecht', '2014-03-29 23:00:
 INSERT INTO `wp_huiskamers_regions` VALUES(21, 'Moordrecht', '2014-03-29 23:01:02', '2014-03-29 23:01:02');
 INSERT INTO `wp_huiskamers_huiskamers` VALUES(1, '22', 'Wij zijn een kleine groep mensen, sommigen al 40 jaar christen, anderen net 3 jaar. Wij zijn benieuwd naar wat God ons wil leren.', 'huiskamer22@thuisverder.nl', '(1)', 2, 'Echtparen en  alleenstaanden', 70, 50, 'Zondagavond', 'Eén keer per maand', 1, '2014-03-29 23:05:20', '2014-03-29 23:05:30');
 INSERT INTO `wp_huiskamers_huiskamers` VALUES(2, '33', 'Onze Huiskamer is pas opgezet, we zijn op zoek naar nieuwe leden. Nieuwe leden krijgen de mogelijkheid om mee te denken over de invulling, bijvoorbeeld met (bijbel)studies, maar ook andere invullingen zijn mogelijk. We vinden een ‘openminded’ instelling belangrijk.', 'huiskamer33@thuisverder.nl', '(2)', 2, 'Gezinnen met jonge kinderen en stellen zonder kinderen', 90, 0, 'Vrijdagavond', 'Eén keer per maand', 1, '2014-03-29 23:06:40', '2014-03-29 23:46:18');
+
+
+INSERT INTO `wp_huiskamers_huiskamers` (`id`, `name`, `description`, `email`, `regions`, `group_size`, `group_type`, `age_max`, `age_min`, `day_part`, `frequency`, `active`, `created_at`, `updated_at`, `order_nr`) VALUES
+(1, '22', 'Onze Huiskamer is pas opgezet, we zijn op zoek naar nieuwe leden. Nieuwe leden krijgen de mogelijkheid om mee te denken over de invulling, bijvoorbeeld met (bijbel)studies, maar ook andere invullingen zijn mogelijk. We vinden een open-minded instelling belangrijk.', 'sadf@sdlfkj.com', '(1)', 2, 'asdf', 0, 0, 'asdf', 'asdf', 1, '2014-04-05 10:59:05', '2014-04-05 11:42:46', 1),
+(2, '14', 'asf ''sdf"\\asdf''', 'asdf@sdfl.com', '(1)', 2, 'asdf', 0, 0, 'sfda', 'safd', 1, '2014-04-05 10:59:21', '2014-04-05 11:45:54', 2);
+
+INSERT INTO `wp_huiskamers_regions` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Nieuw Lysetie', '2014-04-05 10:58:51', '2014-04-05 10:58:51');
