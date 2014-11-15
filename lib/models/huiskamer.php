@@ -28,7 +28,7 @@ class Huiskamer extends Base {
 			'frequency' => array('type' => 'string', 'caption' => 'Hoe vaak'),
 			'active' => array('type' => 'boolean', 'caption' => 'Actief', 'default' => true),
 			'available' => array('type' => 'boolean', 'caption' => 'Beschikbaar', 'default' => true),
-			'unavailable_since' => array('type' => 'timestamp'),
+			'unavailable_since' => array('type' => 'timestamp', 'optional' => true),
 			'order_nr'  => array('type' => 'number'),
 		);
 	}
