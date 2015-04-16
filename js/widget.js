@@ -33,13 +33,27 @@
 	}
 
 	function apply_filters() {
-		$('table.huiskamers tr.huiskamer-row').each(function() {
+		$('table.huiskamers-table tr.huiskamer-row').each(function() {
 			var matches = true;
 			matches = run_filters($(this));
 			display = (matches) ? 'table-row': 'none';
 			$(this).css('display', display);
 		})
+                
+                apply_even_odd_classes();
 	}
+        
+        function apply_even_odd_classes()
+        {
+            var $allRows = $('tr:visible');
+             // Note that even and odd here is different then from the CSS standard. CSS standard is used.
+            var $evenRows = $allRows.filter(':odd');
+            var $oddRows = $allRows.filter(':even');
+
+            // Remove old classes, then add new ones.
+            $oddRows.removeClass('even').addClass('odd');
+            $evenRows.removeClass('odd').addClass('even');            
+        }
 
 	$(function () {
 		$('a.huiskamer-email').click(function(){
