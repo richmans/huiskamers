@@ -46,9 +46,8 @@
         function apply_even_odd_classes()
         {
             var $allRows = $('tr:visible');
-             // Note that even and odd here is different then from the CSS standard. CSS standard is used.
-            var $evenRows = $allRows.filter(':odd');
-            var $oddRows = $allRows.filter(':even');
+            var $oddRows = $allRows.filter(':odd');
+            var $evenRows = $allRows.filter(':even');
 
             // Remove old classes, then add new ones.
             $oddRows.removeClass('even').addClass('odd');
