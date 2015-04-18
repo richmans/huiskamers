@@ -36,8 +36,14 @@
 		$('table.huiskamers-table tr.huiskamer-row').each(function() {
 			var matches = true;
 			matches = run_filters($(this));
-			display = (matches) ? 'table-row': 'none';
-			$(this).css('display', display);
+                        if (matches)
+                        {
+                            $(this).css('display', ''); // Remove display property.
+                        }
+                        else
+                        {
+                            $(this).css('display', 'none');                            
+                        }
 		})
                 
                 apply_even_odd_classes();
