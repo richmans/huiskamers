@@ -1,3 +1,18 @@
+<?php 
+    function GetColumnHeader($slug, $columnName)
+    {
+        $result = "";
+        if ($slug == 'age_min') {
+            $result = "Leeftijdsspreiding";
+        } else {
+            $result = esc_html($columnName);
+        }
+        
+        return $result;
+    };
+
+?>
+
 <?php if ($email_sent == 'ok') {?>
      <div class='huiskamer-email-sent'>Uw email is verstuurd - bedankt!</div>
 <?php } ?>
@@ -11,9 +26,9 @@
     <div class="huiskamers">
         <div class="row blog">
             <div id="post-24" class="post-24 page type-page status-publish hentry">	
-<!--                <p style="background: red; color: white; padding:10px;">
+                <p style="background: red; color: white; padding:10px;">
                     Momenteel werken we aan deze pagina, kijk later nog eens terug.
-                </p>-->
+                </p>
                 <div class="postTitle">
                     <h1>Vind een huiskamer</h1>
                 </div>
@@ -41,11 +56,7 @@
                                      <?php $custom_style = $custom_styles[$column->slug()]; ?>
                                      <?php $custom_style = ($custom_style) ? " style='$custom_style' " : ""; ?>
                                      <th <?php echo $custom_style?>>
-                                     <?php if ($column->slug() == 'age_min') { ?>
-                                          Leeftijdspreiding
-                                     <?php } else { ?>
-                                          <?php echo esc_html($column->name())?>
-                                     <?php } ?>
+                                         <?php echo GetColumnHeader($column->slug(), $column->name()); ?>
                                      </th>
                                 <?php } ?>
                                 <th>Email</th>
@@ -60,7 +71,7 @@
                             <tr class='huiskamer-row <?php echo $evenOddClass ?>' data-regions='<?php echo $huiskamer->regions()?>' data-age-min='<?php echo $huiskamer->age_min()?>' data-age-max='<?php echo $huiskamer->age_max()?>'>
                                 <?php foreach($columns as $column){ ?>
                                     <?php if ($column->slug() == 'age_max') continue; ?>
-                                        <td>
+                                <td data-label="<?php echo GetColumnHeader($column->slug(), $column->name()); ?>">
                                             <?php $slug = $column->slug();?>
                                             <?php if($slug == 'age_min') { ?>
                                                  <?php echo $huiskamer->age_min()?>-<?php echo $huiskamer->age_max()?>
@@ -73,7 +84,7 @@
                                             <?php } ?>
                                         </td>
                                 <?php } ?>
-                                <td>
+                                <td data-label="Email">
                                     <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>' class="huiskamer-email">
                                         <img class='huiskamer-email' src='<?php echo WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
                                     </a>	
