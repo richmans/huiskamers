@@ -88,6 +88,16 @@
         $oddRows.removeClass('even').addClass('odd');
         $evenRows.removeClass('odd').addClass('even');            
     }
+    
+    function on_age_changed()
+    {
+            var filteredValue = $('input#huiskamers-select-age').val();
+            filteredValue = valuefilter_only_numeric(filteredValue);
+            filteredValue = valuefilter_max_length(filteredValue, 3);
+            $('input#huiskamers-select-age').val(filteredValue);
+            
+            apply_filters();        
+    }
 
     $(function () {
         $('a.huiskamer-email').click(function(){
@@ -114,12 +124,11 @@
   	});
         
         $('#huiskamers-select-age').on('input', function() {
-            var filteredValue = $('input#huiskamers-select-age').val();
-            filteredValue = valuefilter_only_numeric(filteredValue);
-            filteredValue = valuefilter_max_length(filteredValue, 3);
-            $('input#huiskamers-select-age').val(filteredValue);
-            
-            apply_filters();
+            on_age_changed();
+  	});
+        
+        $('#huiskamers-select-age').bind('input', function() {
+            on_age_changed();
   	});
         
 //        $('#huiskamers-select-age').keyup(function( event ) {
