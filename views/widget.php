@@ -26,9 +26,9 @@
     <div class="huiskamers">
         <div class="row blog">
             <div id="post-24" class="post-24 page type-page status-publish hentry">	
-                <p style="background: red; color: white; padding:10px;">
+<!--                <p style="background: red; color: white; padding:10px;">
                     Momenteel werken we aan deze pagina, kijk later nog eens terug.
-                </p>
+                </p>-->
                 <div class="postTitle">
                     <h1>Vind een huiskamer</h1>
                 </div>
