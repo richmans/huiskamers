@@ -1,4 +1,4 @@
-<? 
+<?php
 namespace Huiskamers;
 class OptionsController {
 	public function route() {

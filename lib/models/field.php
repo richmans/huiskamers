@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class Field extends Base {
 	public static function table_name() { return 'fields'; }

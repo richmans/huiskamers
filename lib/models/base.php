@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 abstract class Base {
 	abstract public static function table_name();

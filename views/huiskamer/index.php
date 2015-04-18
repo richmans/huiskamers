@@ -1,7 +1,7 @@
 <div class='wrap'>
-		<h2>Huiskamers <a href="<?=$this->url('insert');?>" class='add-new-h2'>Nieuwe huiskamer</a></h2>
+		<h2>Huiskamers <a href="<?php echo $this->url('insert');?>" class='add-new-h2'>Nieuwe huiskamer</a></h2>
 		<form method="post">
-		<?
+		<?php
 			 $huiskamer_table = new Huiskamers\TableHelper($this, $model_name);
 			 $huiskamer_table->page_length = 50;
 			  $field_table->sortable_columns = array(

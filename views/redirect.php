@@ -1,4 +1,4 @@
-<br/>Redirecting <a href='<?=$url?>'>here</a>...
+<br/>Redirecting <a href='<?php echo $url?>'>here</a>...
 <script type="text/javascript">
-		window.location = '<?=$url?>';
+		window.location = '<?php echo $url?>';
 </script>

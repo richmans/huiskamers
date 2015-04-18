@@ -1,12 +1,12 @@
-<? if ($email_sent == 'ok') {?>
+<?php if ($email_sent == 'ok') {?>
      <div class='huiskamer-email-sent'>Uw email is verstuurd - bedankt!</div>
-<? } ?>
-<? if ($email_sent == 'fail') {?>
+<?php } ?>
+<?php if ($email_sent == 'fail') {?>
      <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden. Probeer het later nog eens.</div>
-<? } ?>
-<? if ($email_sent == 'unavailable') {?>
+<?php } ?>
+<?php if ($email_sent == 'unavailable') {?>
      <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden, omdat de huiskamer momenteel geen aanmeldingen kan aannemen. Probeer het later nog eens.</div>
-<? } ?>
+<?php } ?>
 <section id="middle" class="grey_section">
     <div class="huiskamers">
         <div class="row blog">
@@ -22,9 +22,9 @@
                         Zoek een huiskamer in 
                         <select style="width:150px" id='huiskamers-select-region'>
                         <option value='-1'>Heel Nederland</option>
-                        <? foreach(Huiskamers\Region::all() as $region) { ?>
-                             <option value='<?=$region->id()?>'><?=esc_html($region->name())?></option>
-                        <? } ?>
+                        <?php foreach(Huiskamers\Region::all() as $region) { ?>
+                             <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
+                        <?php } ?>
                         </select>
 
                         geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/>
@@ -33,21 +33,21 @@
                     </p>
                     <table class='huiskamers-table'>
                         <!--TODO The following can't be used because of the ollapse style. Fix this in the style using classes?-->
-                        <!--<? $custom_styles = array('description' => 'width:400px', 'frequency' => 'width:150px');?>-->
+                        <!--<?php $custom_styles = array('description' => 'width:400px', 'frequency' => 'width:150px');?>-->
                         <thead>
                             <tr class="even">
-                                <? foreach($columns as $column){ ?>
-                                     <? if ($column->slug() == 'age_max') continue; ?>
-                                     <? $custom_style = $custom_styles[$column->slug()]; ?>
-                                     <? $custom_style = ($custom_style) ? " style='$custom_style' " : ""; ?>
-                                     <th <?=$custom_style?>>
-                                     <? if ($column->slug() == 'age_min') { ?>
+                                <?php foreach($columns as $column){ ?>
+                                     <?php if ($column->slug() == 'age_max') continue; ?>
+                                     <?php $custom_style = $custom_styles[$column->slug()]; ?>
+                                     <?php $custom_style = ($custom_style) ? " style='$custom_style' " : ""; ?>
+                                     <th <?php echo $custom_style?>>
+                                     <?php if ($column->slug() == 'age_min') { ?>
                                           Leeftijdspreiding
-                                     <? } else { ?>
-                                          <?=esc_html($column->name())?>
-                                     <? } ?>
+                                     <?php } else { ?>
+                                          <?php echo esc_html($column->name())?>
+                                     <?php } ?>
                                      </th>
-                                <? } ?>
+                                <?php } ?>
                                 <th>Email</th>
                             </tr>
                         </thead>
@@ -57,29 +57,29 @@
                                 $evenOddClass = $isEvenRow == true ? "even" : "odd";
                                 $isEvenRow = !$isEvenRow;
                         ?>
-                            <tr class='huiskamer-row <?php echo $evenOddClass ?>' data-regions='<?=$huiskamer->regions()?>' data-age-min='<?=$huiskamer->age_min()?>' data-age-max='<?=$huiskamer->age_max()?>'>
-                                <? foreach($columns as $column){ ?>
-                                    <? if ($column->slug() == 'age_max') continue; ?>
+                            <tr class='huiskamer-row <?php echo $evenOddClass ?>' data-regions='<?php echo $huiskamer->regions()?>' data-age-min='<?php echo $huiskamer->age_min()?>' data-age-max='<?php echo $huiskamer->age_max()?>'>
+                                <?php foreach($columns as $column){ ?>
+                                    <?php if ($column->slug() == 'age_max') continue; ?>
                                         <td>
-                                            <? $slug = $column->slug();?>
-                                            <? if($slug == 'age_min') { ?>
-                                                 <?=$huiskamer->age_min()?>-<?=$huiskamer->age_max()?>
-                                            <? } else if ($slug == 'group_size') { ?>
-                                                 <?=Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?>
-                                            <? } else if ($slug == 'regions') { ?>
-                                                 <?=esc_html($huiskamer->region_names())?>
-                                            <? } else { ?>
-                                                 <?=esc_html($huiskamer->$slug())?>
-                                            <? } ?>
+                                            <?php $slug = $column->slug();?>
+                                            <?php if($slug == 'age_min') { ?>
+                                                 <?php echo $huiskamer->age_min()?>-<?php echo $huiskamer->age_max()?>
+                                            <?php } else if ($slug == 'group_size') { ?>
+                                                 <?php echo Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?>
+                                            <?php } else if ($slug == 'regions') { ?>
+                                                 <?php echo esc_html($huiskamer->region_names())?>
+                                            <?php } else { ?>
+                                                 <?php echo esc_html($huiskamer->$slug())?>
+                                            <?php } ?>
                                         </td>
-                                <? } ?>
+                                <?php } ?>
                                 <td>
-                                    <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?=$huiskamer->form_title()?>" data-huiskamer='<?=$huiskamer->id()?>' class="huiskamer-email">
-                                        <img class='huiskamer-email' src='<?=WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
+                                    <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>' class="huiskamer-email">
+                                        <img class='huiskamer-email' src='<?php echo WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
                                     </a>	
                                 </td>
                             </tr>
-                        <?}?>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
@@ -91,7 +91,7 @@
 <div id="huiskamers-email-form" style="display:none;">
      <p>Verstuur een bericht naar een vertegenwoordiger van de huiskamer.</p>
      <form method='post' class='huiskamer'>
-          <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?=$huiskamer_id?>'/>
+          <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
           <div class='field'>
                <label for='name'>Naam</label><input type='text' name='huiskamer_message[name]'/>
           </div>

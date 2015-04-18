@@ -1,7 +1,7 @@
 <div class='wrap'>
 		<h2>Berichten</h2>
 		<form method="post">
-		<?
+		<?php
 			 $message_table = new Huiskamers\TableHelper($this, $model_name);
 			 $message_table->page_length = 50;
 			 $message_table->columns = array( 

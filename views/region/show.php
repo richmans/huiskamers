@@ -1,8 +1,8 @@
 <div class='wrap'>
 		<h2>Regio</h2>
-		<?=esc_html($model->name())?><br/>
-		<?=esc_html($model->description())?>
+		<?php echo esc_html($model->name())?><br/>
+		<?php echo esc_html($model->description())?>
 	</div>
-	<a href='<?=$this->url('index')?>'>Back</a>
+	<a href='<?php echo $this->url('index')?>'>Back</a>
 </div>
 

@@ -1,24 +1,24 @@
-<? $form = new Huiskamers\FormHelper('field'); ?>
+<?php $form = new Huiskamers\FormHelper('field'); ?>
 <div class='wrap'>
 
-	<h2><?=($form_mode == 'create') ? 'Nieuwe kolom' : 'Kolom bewerken' ?></h2>
+	<h2><?php echo ($form_mode == 'create') ? 'Nieuwe kolom' : 'Kolom bewerken' ?></h2>
 
-	<form method='post' action='<?=$this->url($form_mode, $id);?>'>
+	<form method='post' action='<?php echo $this->url($form_mode, $id);?>'>
 	<table class='form-table'>
 		<tbody>
 		 
 
-			<? $form->input('name', 'Naam', $model, 'Naam van de kolom die zichtbaar is op de website.') ?>
-			<? if ($model->is_default()) {?>
+			<?php $form->input('name', 'Naam', $model, 'Naam van de kolom die zichtbaar is op de website.') ?>
+			<?php if ($model->is_default()) {?>
 				<tr><th scope='row'>Slug</th><td>
-				<?=esc_html($model->slug());?>
+				<?php echo esc_html($model->slug());?>
 				</td></tr>
-			<? } else { ?>
-				<? $form->input('slug', 'Slug', $model, 'Naam van de kolom in het systeem. Gebruik alleen kleine letters en underscore.') ?>
-			<?}?>
-			<? $form->input('order_nr', 'Volgorde', $model) ?>
-			<? $form->input('required', 'Verplicht', $model) ?>
-			<? $form->input('visible', 'Zichtbaar', $model, 'Zichtbaar op de website?') ?>
+			<?php } else { ?>
+				<?php $form->input('slug', 'Slug', $model, 'Naam van de kolom in het systeem. Gebruik alleen kleine letters en underscore.') ?>
+			<?php } ?>
+			<?php $form->input('order_nr', 'Volgorde', $model) ?>
+			<?php $form->input('required', 'Verplicht', $model) ?>
+			<?php $form->input('visible', 'Zichtbaar', $model, 'Zichtbaar op de website?') ?>
 		</tbody>
 	</table>
 	<p class="submit">

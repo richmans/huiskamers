@@ -1,24 +1,24 @@
 <div class="wrap">
 <h2>Huiskamers</h2>
 <form method="post" action="options.php"> 
-<? settings_fields( 'huiskamers' ); ?>
-<? do_settings_sections( 'huiskamers' );?>
+<?php settings_fields( 'huiskamers' ); ?>
+<?php do_settings_sections( 'huiskamers' );?>
 <table class='form-table'>
 <tr valign='top'>
 <th scope='row'>Admin Email</th>
-<td><input name='huiskamers_admin-email' value='<?=esc_attr(get_option('huiskamers_admin-email'))?>' class='regular-text'/>
+<td><input name='huiskamers_admin-email' value='<?php echo esc_attr(get_option('huiskamers_admin-email'))?>' class='regular-text'/>
 <p class='description'>Berichten aan alle huiskamers worden ook naar dit adres gestuurd.</p>
 </td>
 </tr>
 
 <tr valign='top'>
 <th scope='row'>Herinnering sturen na</th>
-<td><input name='huiskamers_send-reminder-email-after' value='<?=esc_attr(get_option('huiskamers_send-reminder-email-after'))?>' class='regular-text'/> dagen</td>
+<td><input name='huiskamers_send-reminder-email-after' value='<?php echo esc_attr(get_option('huiskamers_send-reminder-email-after'))?>' class='regular-text'/> dagen</td>
 </tr>
 
 <tr valign='top'>
 <th scope='row'>Huiskamers weer beschikbaar maken na</th>
-<td><input name='huiskamers_reset-availability-days' value='<?=esc_attr(get_option('huiskamers_reset-availability-days'))?>' class='regular-text'/> dagen</td>
+<td><input name='huiskamers_reset-availability-days' value='<?php echo esc_attr(get_option('huiskamers_reset-availability-days'))?>' class='regular-text'/> dagen</td>
 </tr>
 
 <tr valign='top'>
@@ -31,20 +31,20 @@
 <li><strong>[email]</strong> Het email adres van de aanmelding</li>
 <li><strong>[bericht]</strong> Het bericht van de aanmelding</li>
 </UL>
-<textarea name="huiskamers_new-message-email-message" rows="10" cols="50" class="large-text code"><?=esc_html(get_option('huiskamers_new-message-email-message'))?></textarea>
+<textarea name="huiskamers_new-message-email-message" rows="10" cols="50" class="large-text code"><?php echo esc_html(get_option('huiskamers_new-message-email-message'))?></textarea>
 </td>
 </tr>
 
 <tr valign='top'>
 <th scope='row'>Email bij herinnering</th>
 <td>
-<textarea name="huiskamers_reminder-email-message" rows="10" cols="50" class="large-text code"><?=esc_html(get_option('huiskamers_reminder-email-message'))?></textarea>
+<textarea name="huiskamers_reminder-email-message" rows="10" cols="50" class="large-text code"><?php echo esc_html(get_option('huiskamers_reminder-email-message'))?></textarea>
 </td>
 </tr>
 </table>
 
 
 
-<? submit_button(); ?>
+<?php submit_button(); ?>
 </form>
 </div>

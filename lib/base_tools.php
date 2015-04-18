@@ -1,4 +1,4 @@
-<?
+<?php
 	namespace Huiskamers;
 	function fix_slashes($data){
 		if(!(is_string($data))) return $data;

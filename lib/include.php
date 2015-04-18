@@ -1,4 +1,4 @@
-<?
+<?php
 include('base_tools.php');
 include('models/lookup.php');
 include('models/base.php');

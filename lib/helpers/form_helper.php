@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class FormHelper {
 	private $section;

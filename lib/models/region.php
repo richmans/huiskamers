@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class Region extends Base {
 	public static function table_name() { return 'regions'; }

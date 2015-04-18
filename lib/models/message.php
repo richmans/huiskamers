@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class Message extends Base {
 	public static function table_name() { return 'messages'; }

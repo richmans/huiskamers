@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class Lookup {
 	public static $lookups = array(

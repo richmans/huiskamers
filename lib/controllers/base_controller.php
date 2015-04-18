@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 abstract class BaseController {
 	public function methods(){ 

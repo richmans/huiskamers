@@ -1,9 +1,9 @@
 <div class='wrap'>
-		<h2>Kolommen <a href="<?=$this->url('insert');?>" class='add-new-h2'>Nieuwe kolom</a></h2>
+		<h2>Kolommen <a href="<?php echo $this->url('insert');?>" class='add-new-h2'>Nieuwe kolom</a></h2>
 		
 		<form method="post">
 
-		<?
+		<?php
 			 $field_table = new Huiskamers\TableHelper($this, $model_name);
 			 $field_table->page_length = 50;
 			  $field_table->sortable_columns = array(

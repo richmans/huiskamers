@@ -1,26 +1,26 @@
-<? $form = new Huiskamers\FormHelper('huiskamer'); ?>
+<?php $form = new Huiskamers\FormHelper('huiskamer'); ?>
 <div class='wrap'>
-	<h2><?=($form_mode == 'create') ? 'Nieuwe huiskamer' : 'Huiskamer bewerken' ?></h2>
-	<form method='post' action='<?=$this->url($form_mode, $id);?>'>
+	<h2><?php echo ($form_mode == 'create') ? 'Nieuwe huiskamer' : 'Huiskamer bewerken' ?></h2>
+	<form method='post' action='<?php echo $this->url($form_mode, $id);?>'>
 	<table class='form-table'>
 		<tbody>
-			<? $form->input('name', 'Naam', $model) ?>
-			<? $form->input('description', 'Beschrijving', $model) ?>
-			<? $form->input('email', 'Email', $model) ?>
-			<? $form->input('regions', 'Regio\'s', $model) ?>
-			<? $form->input('group_size', 'Grootte', $model) ?>
-			<? $form->input('group_type', 'Samenstelling', $model) ?>
-			<? $form->input('age_min', 'Minimum leeftijd', $model) ?>
-			<? $form->input('age_max', 'Maximum leeftijd', $model) ?>
-			<? $form->input('day_part', 'Wanneer', $model) ?>
-			<? $form->input('frequency', 'Hoe vaak', $model) ?>
-			<? $form->input('active', 'Actief', $model) ?>
-			<? $form->input('available', 'Beschikbaar', $model) ?>
-			<? $form->input('order_nr', 'Volgorde', $model) ?>
-			<? foreach(Huiskamers\Field::all() as $field) { ?>
-			<? if($field->is_default()) continue; ?>
-			<? $form->input($field->slug(), $field->name(), $model) ?>
-			<? } ?>
+			<?php $form->input('name', 'Naam', $model) ?>
+			<?php $form->input('description', 'Beschrijving', $model) ?>
+			<?php $form->input('email', 'Email', $model) ?>
+			<?php $form->input('regions', 'Regio\'s', $model) ?>
+			<?php $form->input('group_size', 'Grootte', $model) ?>
+			<?php $form->input('group_type', 'Samenstelling', $model) ?>
+			<?php $form->input('age_min', 'Minimum leeftijd', $model) ?>
+			<?php $form->input('age_max', 'Maximum leeftijd', $model) ?>
+			<?php $form->input('day_part', 'Wanneer', $model) ?>
+			<?php $form->input('frequency', 'Hoe vaak', $model) ?>
+			<?php $form->input('active', 'Actief', $model) ?>
+			<?php $form->input('available', 'Beschikbaar', $model) ?>
+			<?php $form->input('order_nr', 'Volgorde', $model) ?>
+			<?php foreach(Huiskamers\Field::all() as $field) { ?>
+			<?php if($field->is_default()) continue; ?>
+			<?php $form->input($field->slug(), $field->name(), $model) ?>
+			<?php } ?>
 		</tbody>
 	</table>
 	<p class="submit">

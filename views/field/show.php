@@ -1,7 +1,7 @@
 <div class='wrap'>
 		<h2>Kolom</h2>
-		<?=esc_html($model->name())?><br/>
+		<?php echo esc_html($model->name())?><br/>
 	</div>
-	<a href='<?=$this->url('index')?>'>Back</a>
+	<a href='<?php echo $this->url('index')?>'>Back</a>
 </div>
 

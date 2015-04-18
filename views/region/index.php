@@ -1,7 +1,7 @@
 <div class='wrap'>
-		<h2>Regio's <a href="<?=$this->url('insert');?>" class='add-new-h2'>Nieuwe regio</a></h2>
+		<h2>Regio's <a href="<?php echo $this->url('insert');?>" class='add-new-h2'>Nieuwe regio</a></h2>
 		<form method="post">
-		<?
+		<?php
 			 $region_table = new Huiskamers\TableHelper($this, $model_name);
 			 $region_table->page_length = 50;
 			 $region_table->columns = array( 

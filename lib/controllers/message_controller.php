@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Huiskamers;
 class MessageController extends BaseController {
 	public function send_message() {
