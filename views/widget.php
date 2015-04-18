@@ -26,9 +26,9 @@
     <div class="huiskamers">
         <div class="row blog">
             <div id="post-24" class="post-24 page type-page status-publish hentry">	
-<!--                <p style="background: red; color: white; padding:10px;">
+                <p style="background: red; color: white; padding:10px;">
                     Momenteel werken we aan deze pagina, kijk later nog eens terug.
-                </p>-->
+                </p>
                 <div class="postTitle">
                     <h1>Vind een huiskamer</h1>
                 </div>
@@ -41,10 +41,8 @@
                              <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
                         <?php } ?>
                         </select>
-
-                        geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/>
-
-                        jaar. <button id='huiskamers-search'>Zoek</button>
+                        geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/> jaar. 
+                        <!--<button id='huiskamers-search'>Zoek</button>-->
                     </p>
                     <table class='huiskamers-table'>
                         <!--TODO The following can't be used because of the ollapse style. Fix this in the style using classes?-->
