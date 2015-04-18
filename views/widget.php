@@ -90,6 +90,11 @@
                             </tr>
                         <?php } ?>
                     </table>
+                    
+                    <div class="huiskamers-not-found" id="huiskamers-not-found-message"
+                         style="display: none;">
+                        Helaas geen resultaat gevonden.
+                    </div>
                 </div>
             </div>
         </div>

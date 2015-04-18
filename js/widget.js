@@ -43,12 +43,14 @@
     }
 
     function apply_filters() {
+        var findCount = 0;
         $('table.huiskamers-table tr.huiskamer-row').each(function() {
             var matches = true;
             matches = run_filters($(this));
             if (matches)
             {
                 $(this).css('display', ''); // Remove display property.
+                findCount++;
             }
             else
             {
@@ -57,6 +59,23 @@
         })
 
         apply_even_odd_classes();
+        update_not_found_message(findCount);
+    }
+    
+    function update_not_found_message(findCount)
+    {  
+        // Update visibility.
+        var messageObject = $('div#huiskamers-not-found-message');
+        if (findCount <= 0)
+        {
+            messageObject.css('display', '');
+            // Update error text.
+            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen huiskamer gevonden in " + $('select#huiskamers-select-region>option:selected').html() + " geschikt voor mensen van " + $('input#huiskamers-select-age').val() + " jaar.";
+        }
+        else
+        {
+            messageObject.css('display', 'none');
+        }
     }
 
     function apply_even_odd_classes()

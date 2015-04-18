@@ -39,3 +39,10 @@ div.huiskamer-email-fail {
 	padding:20px;
 	margin-bottom:10px;
 }
+
+div.huiskamers-not-found {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-style: italic;
+}
