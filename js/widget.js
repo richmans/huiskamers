@@ -8,6 +8,11 @@
     {
         return value.replace(/[^0-9]+/g, '');
     }
+    
+    function valuefilter_max_length(value, length)
+    {
+        return value.substring(0, length)
+    }
 
     function filter_age(row){
         var min_age = parseInt($(row).attr('data-age-min'));
@@ -90,7 +95,9 @@
   	});
         
         $('#huiskamers-select-age').on('input', function() {
-            var filteredValue = valuefilter_only_numeric($('input#huiskamers-select-age').val());
+            var filteredValue = $('input#huiskamers-select-age').val();
+            filteredValue = valuefilter_only_numeric(filteredValue);
+            filteredValue = valuefilter_max_length(filteredValue, 3);
             $('input#huiskamers-select-age').val(filteredValue);
             
             apply_filters();
