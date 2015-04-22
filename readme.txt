@@ -13,8 +13,9 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 
 == Installation ==
 1. Upload the `huiskamers` directory to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. place [huiskamers] somewhere in a post
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. place [huiskamers] somewhere in a post
+4. Add the style of theme_style.css.example in your active theme and adjust it to your needs.
 
 == Changelog ==
 
@@ -42,3 +43,11 @@ Makes it possible to change the order of huiskamers
 = 1.7 = 
 Added default value functionality to the framework
 Added a switch to temporarily disable emails to huiskamers
+
+= 1.8 =
+Added not-found message.
+The age search field is now executed directly (search button removed).
+The age search field can now only contain numbers.
+The rows are now tagged with even/odd style for zebra striping. (This is updated after filtering)
+Now the huiskamers shortcode returns the widget instead of echo. This makes it able to insert it inside a post instead of only at the top.
+Added theme_style.css.example
