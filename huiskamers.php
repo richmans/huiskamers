@@ -69,7 +69,7 @@ class Huiskamers {
 	
 	//This is the function that is executed when [huiskamers] is found in a post
   public function render_shortcode( $atts ) {
-  	echo $this->widget();
+  	return $this->widget();
   }
 
 	
