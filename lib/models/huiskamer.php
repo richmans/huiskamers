@@ -29,7 +29,8 @@ class Huiskamer extends Base {
 			'active' => array('type' => 'boolean', 'caption' => 'Actief', 'default' => true),
 			'available' => array('type' => 'boolean', 'caption' => 'Beschikbaar', 'default' => true),
 			'unavailable_since' => array('type' => 'timestamp', 'optional' => true),
-			'order_nr'  => array('type' => 'number'),
+                        'seeking_members' => array('type' => 'boolean', 'caption' => 'Leden gezocht', 'default' => false,
+			'order_nr'  => array('type' => 'number')),
 		);
 	}
 
@@ -82,6 +83,9 @@ class Huiskamer extends Base {
 
 	public function available_pretty() {
 		return ($this->available() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
+	}        
+        public function seeking_members_pretty() {
+		return ($this->seeking_members() == 1) ? "<span style='color:#0a0;'>Ja</span>" : "<span style='color:#a00;'>Nee</span>";
 	}
 
 	public function region_names() {

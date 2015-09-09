@@ -16,6 +16,7 @@
 			<?php $form->input('frequency', 'Hoe vaak', $model) ?>
 			<?php $form->input('active', 'Actief', $model) ?>
 			<?php $form->input('available', 'Beschikbaar', $model) ?>
+                        <?php $form->input('seeking_members', 'Leden gezocht', $model) ?>
 			<?php $form->input('order_nr', 'Volgorde', $model) ?>
 			<?php foreach(Huiskamers\Field::all() as $field) { ?>
 			<?php if($field->is_default()) continue; ?>

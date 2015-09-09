@@ -15,9 +15,10 @@
 			 			'frequency'     => 'Hoe vaak',
 			 			'active_pretty' => 'Actief',
 						'available_pretty' => 'Beschikbaar',
+                                                'seeking_members_pretty' => 'Leden gezocht',
 			 			'order_nr' => 'Volgorde',
-            'created_at'    => 'Gemaakt',
-            'updated_at'  => 'Bewerkt'
+                                                'created_at'    => 'Gemaakt',
+                                                'updated_at'  => 'Bewerkt'
 
             );
   		 $huiskamer_table->prepare_items();

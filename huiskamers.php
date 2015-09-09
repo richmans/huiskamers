@@ -3,7 +3,7 @@
 Plugin Name: Huiskamers
 Plugin URI: http://github.com/richmans/huiskamers
 Description: Provides a plugin for huiskamers.nl to administer a list of local groups. It allows visitors to connect to the groups by sending an email.
-Version: 1.8
+Version: 1.9
 Author: Richard Bronkhorst & Joris Voermans
 License: GPL2
 */
@@ -105,6 +105,7 @@ class Huiskamers {
 		$this->check_default_columns();
 		$this->check_huiskamer_order_column();
 		$this->check_huiskamer_available_column();
+                $this->check_huiskamer_seeking_members_column();
 	}
 
 	/**
@@ -307,6 +308,17 @@ Groeten, thuisverder.nl");
 		if ($result == false){
 			Huiskamers\Huiskamer::add_column('available', array('type' => 'boolean', 'default' => 1));
 			Huiskamers\Huiskamer::add_column('unavailable_since', array('type' => 'timestamp'));
+		}
+	}
+        
+        public function check_huiskamer_seeking_members_column() {
+		global $wpdb;
+		$this->use_lib();
+		$table = Huiskamers\Huiskamer::prefixed_table_name();
+		$result = $wpdb->query("select seeking_members from $table");
+		
+		if ($result == false){
+			Huiskamers\Huiskamer::add_column('seeking_members', array('type' => 'boolean', 'default' => 0));
 		}
 	}
 

@@ -51,3 +51,6 @@ The age search field can now only contain numbers.
 The rows are now tagged with even/odd style for zebra striping. (This is updated after filtering)
 Now the huiskamers shortcode returns the widget instead of echo. This makes it able to insert it inside a post instead of only at the top.
 Added theme_style.css.example
+
+= 1.9 =
+Added Searching Members boolean field and ordening
