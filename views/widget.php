@@ -53,9 +53,10 @@
             $isEvenRow = false;
             foreach($huiskamers as $huiskamer) {
                 $evenOddClass = $isEvenRow == true ? "even" : "odd";
+                $seekingMembersClass = $huiskamer->seeking_members() ? "seeking-members" : "";
                 $isEvenRow = !$isEvenRow;
         ?>
-            <tr class='huiskamer-row <?php echo $evenOddClass ?>' data-regions='<?php echo $huiskamer->regions()?>' data-age-min='<?php echo $huiskamer->age_min()?>' data-age-max='<?php echo $huiskamer->age_max()?>'>
+            <tr class='huiskamer-row <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>' data-regions='<?php echo $huiskamer->regions()?>' data-age-min='<?php echo $huiskamer->age_min()?>' data-age-max='<?php echo $huiskamer->age_max()?>'>
                 <?php foreach($columns as $column){ ?>
                     <?php if ($column->slug() == 'age_max') continue; ?>
                 <td data-label="<?php echo GetColumnHeader($column->slug(), $column->name()); ?>">
@@ -66,6 +67,14 @@
                                  <?php echo Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?>
                             <?php } else if ($slug == 'regions') { ?>
                                  <?php echo esc_html($huiskamer->region_names())?>
+                            <?php } else if ($slug == 'description') { ?>
+                                 <?php
+                                 echo esc_html($huiskamer->description());
+                                 if($huiskamer->seeking_members())
+                                 {
+                                     echo "<div class='seeking-members-message'>Wij zijn actief op zoek naar nieuwe leden voor onze huiskamer.</div>";
+                                 }
+                                 ?>
                             <?php } else { ?>
                                  <?php echo esc_html($huiskamer->$slug())?>
                             <?php } ?>
@@ -74,7 +83,7 @@
                 <td data-label="Email">
                     <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>' class="huiskamer-email">
                         <img class='huiskamer-email' src='<?php echo WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
-                    </a>	
+                    </a>
                 </td>
             </tr>
         <?php } ?>

@@ -59,7 +59,7 @@ class Huiskamers {
 		$email_sent = $_REQUEST['huiskamers-email-sent'];
 		$widget_string = '';
 		ob_start();
-		$huiskamers = Huiskamers\Huiskamer::where("active=1", 'order_nr asc');
+		$huiskamers = Huiskamers\Huiskamer::where("active=1", 'seeking_members desc, order_nr asc');
 		$columns = Huiskamers\Field::where('visible=1', 'order_nr asc');
 		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 		$widget_string .= ob_get_clean();
