@@ -29,8 +29,16 @@ abstract class BaseController {
 	}
 
 	public function route() {
-		$method = $_GET['method'];
-		$id = $_GET['id'];
+		$method = $_GET['method'];                
+                if(isset($_GET['id']))
+                {
+                    $id = $_GET['id'];
+                }
+                else
+                {
+                    $id = null;
+                }
+                
 		if (!in_array($method, $this->methods())) {
 			$method = 'index';
 		}

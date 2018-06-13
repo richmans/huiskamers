@@ -8,11 +8,11 @@ abstract class Base {
 
 	public function __construct($values=array()) {
 		foreach($this::fields() as $field => $options){
-			if($options['default'] != null && $values[$field] == null){
+			if(!isset($values[$field]) && isset($options['default'])){
 				$values[$field] = $options['default'];
 			}
-		};
-		$this->values = $values;
+		}
+        $this->values = $values;
 	}
 
 	public function can_delete() {
@@ -152,9 +152,17 @@ abstract class Base {
 
 	public function update_fields($fields) {
 		foreach($this->fields() as $name => $options){
-			if($fields[$name] !== NULL or $options['type'] == 'boolean'){
-				$this->set($name, fix_slashes($fields[$name]));
-			}
+                        $type = null;
+                        if(isset($options['type']))
+                        {
+                            $type = $options['type'];
+                        }
+                            
+                        if(isset($fields[$name])) {
+                                $this->set($name, fix_slashes($fields[$name]));
+                        } else if($type == 'boolean') {
+                                $this->set($name, fix_slashes(false));
+                        }
 		}
 	}
 
@@ -201,7 +209,11 @@ abstract class Base {
 	}
 
 	public function validate_presence($field, $options){
-		if($options['optional'] == true) return true;
+		if(isset($options['optional']) && $options['optional'] == true)
+                {
+                    return true;
+                }
+                
 		$value = $this->values[$field];
 		if($value == NULL || $value == ''){
 			$this->errors[$field] = "mag niet leeg zijn.";
@@ -263,7 +275,12 @@ abstract class Base {
 			}else if ($options['type'] != 'boolean') {
 				$this->validate_presence($field, $options);
 			}
-			$validations = $options['validate'];
+                        
+                        $validations = null;
+                        if(isset($options['validate']))
+                        {
+                            $validations = $options['validate'];
+                        }
 
 			if($validations != NULL){
 				if(!(is_array($validations))) $validations = array($validations);
@@ -307,16 +324,29 @@ abstract class Base {
 	}
 
 	public function get($name){
+            if(isset($this->values[$name]))
+            {
 		return $this->values[$name];
+            }
+            else                
+            {
+                return null;
+            }
 	}
 
 	public function set($name, $value){
 		$fields = $this->fields();
-		$options = $fields[$name];
+                $options = null;
+                if(isset($fields[$name]))
+                {
+                    $options = $fields[$name];
+                }
+                
 		if($options != NULL and $options['type'] == 'multiple_dropdown' and is_array($value)){
 			$value = array_map(function($value){return "($value)";}, $value);
 			$value = implode(",", $value);
-		}
+                }
+                
 		$this->values[$name] = $value;
 	}
 

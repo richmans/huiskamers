@@ -23,14 +23,14 @@ class Message extends Base {
 
 	public function send_first_email() {
 		$huiskamer = $this->get_huiskamer();
-		$subject = '[Inschrijving] Nieuwe inschrijving bij thuisverder.nl';
+		$subject = 'KVDN Vlaardingen: Huiskamer lid aanmelding';
 		$message = $this->render_email($huiskamer);
 		return $huiskamer->send_email($subject, $message);
 	}
 
 	public function send_reminder_email() {
 		$huiskamer = $this->get_huiskamer();
-		$subject = '[Herinnering] Nieuwe inschrijving bij thuisverder.nl';
+		$subject = 'KVDN Vlaardingen: Huiskamer lid aanmelding (Herinnering)';
 		$message = $this->render_email($huiskamer, 'huiskamers_reminder-email-message');
 		return $huiskamer->send_email($subject, $message);
 	}

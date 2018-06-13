@@ -15,14 +15,28 @@ class FormHelper {
 		if($explanation) echo "<p class='description'>$explanation</p>\n";
 		echo "</td>\n";
 		echo "<td>";
-		echo $model->errors[$field]. "\n";
+                if(isset($model->errors[$field]))
+                {
+                    echo $model->errors[$field]. "\n";
+                }
 		echo "</td>\n";
 		echo "</tr>\n";
 	}
 
 	public function get_lookup($options){
-		$lookup_name = $options['lookup'];
-		$lookup_model = "Huiskamers\\" . $options['model'];
+                $lookup_name = null;
+                if(isset($options['lookup']))
+                {
+                   $lookup_name = $options['lookup']; 
+                }  
+                
+                $lookup_model = null;
+                if(isset($options['model']))
+                {
+                    $lookup_model = "Huiskamers\\" . $options['model'];
+                }
+                
+                
 		$lookup = array();
 		if($lookup_name != NULL){
 			$lookup = Lookup::$lookups[$lookup_name];
@@ -40,8 +54,9 @@ class FormHelper {
 	public function input_field($field, $caption, $model){
 		$fields = $model->fields();
 		$value = $model->$field();
-		$options = $fields[$field];
-		$type = $options['type'];
+                $options = $fields[$field];
+                $type = $options['type'];
+                
 		if($type == 'dropdown'){
 			$lookup = $this->get_lookup($options);
 			$this->select_field($field, $caption, $value, $lookup);
@@ -91,8 +106,6 @@ class FormHelper {
 		echo "<select style='width:350px' name='{$section}[{$field}]$index'>\n";
 		foreach($options as $option_key => $option_value){
 			$selected = (intval($option_key) == intval($value))?'selected':'';
-			$option = esc_attr($option);
-
 			echo "<option value='$option_key' $selected>$option_value</option>\n";
 		}
 		echo "</select>\n";

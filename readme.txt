@@ -1,7 +1,7 @@
 === Huiskamers ===
 Tags: matching, huiskamers
-Requires at least: 3.8.1
-Tested up to: 3.8.1
+Requires at least: 4.9.6
+Tested up to: 4.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,3 +54,11 @@ Added theme_style.css.example
 
 = 1.9 =
 Added Searching Members boolean field and ordening
+
+= 1.10 =
+Changed layout to meet new style
+Fixed several PHP errors
+Fixed issue with add huiskamer not working
+Huiskamers are now ordered by whether they are available
+When not available a huiskamer does not have a contact button
+Added more informative messages on whether a huiskamer is available

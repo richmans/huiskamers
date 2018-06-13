@@ -4,6 +4,10 @@
         return re.test(email);
     }
     
+    function validate_text(text) {            
+        return text != null && text != "";
+    }
+    
     function valuefilter_only_numeric(value)
     {
         return value.replace(/[^0-9]+/g, '');
@@ -44,7 +48,7 @@
 
     function apply_filters() {
         var findCount = 0;
-        $('table.huiskamers-table tr.huiskamer-row').each(function() {
+        $('div.huiskamers-searchResults div.huiskamers-searchResult').each(function() {
             var matches = true;
             matches = run_filters($(this));
             if (matches)
@@ -111,10 +115,20 @@
             return false;
   	});
 
-  	$('div#huiskamers-email-form form').submit(function(){
-            var email = $('input#huiskamer-email-input').val();
+  	$('div#huiskamers-email-form form').submit(function(){       
+            var name = $('input#huiskamer-contact-name-input').val();
+            if(!(validate_text(name))){
+                alert("Vul uw naam in.");
+                return false;
+            }                
+            var email = $('input#huiskamer-contact-email-input').val();
             if(!(validate_email(email))){
-                alert("Vul uw email adres in zodat we contact met u op kunnen nemen!");
+                alert("Vul uw e-mail in.");
+                return false;
+            }           
+            var message = $('textarea#huiskamer-contact-message-textarea').val();
+            if(!(validate_text(message))){
+                alert("Vul een bericht in.");
                 return false;
             }
   	});
@@ -130,22 +144,5 @@
         $('#huiskamers-select-age').bind('input', function() {
             on_age_changed();
   	});
-        
-//        $('#huiskamers-select-age').keyup(function( event ) {
-//            apply_filters();
-//        }
-
-
-
-// The following code is replaced by filtering the data directly.
-//  	$('input#huiskamers-select-age').keydown(function( event ) {
-//            if ( event.which == 13 ) {
-//                apply_filters();
-//            }
-//        });
-//        
-//        $('button#huiskamers-search').click(function() {
-//            apply_filters();
-//        })
     });
 }(jQuery));

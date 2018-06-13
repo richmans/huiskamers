@@ -1,8 +1,8 @@
 <?php 
-    function GetColumnHeader($slug, $columnName)
+    function GetColumnHeader($columnSlug, $columnName)
     {
         $result = "";
-        if ($slug == 'age_min') {
+        if ($columnSlug == 'age_min') {
             $result = "Leeftijdsspreiding";
         } else {
             $result = esc_html($columnName);
@@ -11,44 +11,63 @@
         return $result;
     };
 
+    function DrawColumnHTML($huiskamer, $columnSlug, $columnName)
+    {
+        echo "<div class=\"huiskamers-searchResult-column\" data-label=\"" . GetColumnHeader($columnSlug, $columnName) . "\">";
+            echo "<div class=\"huiskamers-searchResult-column-header\">";
+                echo GetColumnHeader($columnSlug, $columnName);                        
+            echo "</div>";
+            echo "<div class=\"huiskamers-searchResult-column-content\">";
+                if($columnSlug == 'age_min') {
+                     echo $huiskamer->age_min() . "-" . $huiskamer->age_max();
+                } else if ($columnSlug == 'group_size') {
+                     echo Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size());
+                } else if ($columnSlug == 'regions') {
+                     echo esc_html($huiskamer->region_names());
+                } else if ($columnSlug == 'description') {
+                    echo esc_html($huiskamer->description());
+                } else {
+                    echo esc_html($huiskamer->$columnSlug());
+                }
+            echo "</div>";
+        echo "</div>";
+    }
 ?>
 
 <?php if ($email_sent == 'ok') {?>
-     <div class='huiskamer-email-sent'>Uw email is verstuurd - bedankt!</div>
+    <div class="wpcf7-response-output wpcf7-display-none wpcf7-mail-sent-ok" role="alert">
+        <div class="wpcf7-valid-tip-text">Uw bericht werd succesvol verzonden.</div>
+    </div>
+     <!--<div class='huiskamers-contact-sent'>Uw bericht werd succesvol verzonden.</div>-->
 <?php } ?>
 <?php if ($email_sent == 'fail') {?>
-     <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden. Probeer het later nog eens.</div>
+     <div class='huiskamers-contact-fail'>Error: Bericht niet verstuurd! Probeer het nog eens.<br/>
+         Als het probleem zich blijft voordoen dan graag contact opnemen met het huiskamer team.</div>
 <?php } ?>
 <?php if ($email_sent == 'unavailable') {?>
-     <div class='huiskamer-email-fail'>Uw email kon niet verstuurd worden, omdat de huiskamer momenteel geen aanmeldingen kan aannemen. Probeer het later nog eens.</div>
+     <div class='huiskamers-contact-fail'>Error: Bericht niet verstuurd!<br/>
+         De huiskamer neemt momenteel geen aanmeldingen aan.</div>
 <?php } ?>
 
-<div id="huiskamers">
-    <p>
+<div class="huiskamers">
+    <div class="huiskamers-searcher">
         Zoek een huiskamer in 
-        <select style="width:150px" id='huiskamers-select-region'>
-        <option value='-1'>Heel Nederland</option>
+        <select class='huiskamers-searcher-selectRegion' id='huiskamers-select-region'>
+        <option value='-1'>heel Nederland</option>
         <?php foreach(Huiskamers\Region::all() as $region) { ?>
              <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
         <?php } ?>
         </select>
-        geschikt voor mensen van <input type='text' name='huiskamers-age' style='width:90px' id='huiskamers-select-age'/> jaar. 
-        <!--<button id='huiskamers-search'>Zoek</button>-->
-    </p>
-    <table class='huiskamers-table'>
-        <thead>
-            <tr class="even">
-                <?php foreach($columns as $column){ ?>
-                     <?php if ($column->slug() == 'age_max') continue; ?>
-                     <?php $custom_style = $custom_styles[$column->slug()]; ?>
-                     <?php $custom_style = ($custom_style) ? " style='$custom_style' " : ""; ?>
-                     <th <?php echo $custom_style?>>
-                         <?php echo GetColumnHeader($column->slug(), $column->name()); ?>
-                     </th>
-                <?php } ?>
-                <th>Email</th>
-            </tr>
-        </thead>
+        geschikt voor mensen van <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/> jaar.
+    </div>
+    
+    <div class="huiskamers-noResults" id="huiskamers-not-found-message"
+         style="display: none;">
+        Geen huiskamers beschikbaar
+    </div>
+    
+    
+    <div class="huiskamers-searchResults">
         <?php
             $isEvenRow = false;
             foreach($huiskamers as $huiskamer) {
@@ -56,62 +75,117 @@
                 $seekingMembersClass = $huiskamer->seeking_members() ? "seeking-members" : "";
                 $isEvenRow = !$isEvenRow;
         ?>
-            <tr class='huiskamer-row <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>' data-regions='<?php echo $huiskamer->regions()?>' data-age-min='<?php echo $huiskamer->age_min()?>' data-age-max='<?php echo $huiskamer->age_max()?>'>
-                <?php foreach($columns as $column){ ?>
-                    <?php if ($column->slug() == 'age_max') continue; ?>
-                <td data-label="<?php echo GetColumnHeader($column->slug(), $column->name()); ?>">
-                            <?php $slug = $column->slug();?>
-                            <?php if($slug == 'age_min') { ?>
-                                 <?php echo $huiskamer->age_min()?>-<?php echo $huiskamer->age_max()?>
-                            <?php } else if ($slug == 'group_size') { ?>
-                                 <?php echo Huiskamers\Lookup::get('group_sizes', $huiskamer->group_size())?>
-                            <?php } else if ($slug == 'regions') { ?>
-                                 <?php echo esc_html($huiskamer->region_names())?>
-                            <?php } else if ($slug == 'description') { ?>
-                                 <?php
-                                 echo esc_html($huiskamer->description());
-                                 if($huiskamer->seeking_members())
-                                 {
-                                     echo "<div class='seeking-members-message'>Wij zijn actief op zoek naar nieuwe leden voor onze huiskamer.</div>";
-                                 }
-                                 ?>
-                            <?php } else { ?>
-                                 <?php echo esc_html($huiskamer->$slug())?>
-                            <?php } ?>
-                        </td>
+            <!-- Search results -->
+            <div class='huiskamers-searchResult <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>' 
+                 data-regions='<?php echo $huiskamer->regions()?>' 
+                 data-age-min='<?php echo $huiskamer->age_min()?>' 
+                 data-age-max='<?php echo $huiskamer->age_max()?>'
+                 style="">
+                <!-- Seeking members message -->
+                <?php if($huiskamer->seeking_members()) { ?>
+                    <div class='huiskamers-seeking-members-message'>Deze huiskamer is op zoek naar nieuwe leden</div>
                 <?php } ?>
-                <td data-label="Email">
-                    <a title='Bericht naar huiskamer' href="#TB_inline?width=400&height=400&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>' class="huiskamer-email">
-                        <img class='huiskamer-email' src='<?php echo WP_PLUGIN_URL . '/huiskamers/images/email_button.png'?>'/>
-                    </a>
-                </td>
-            </tr>
+                <!-- Not available message -->
+                <?php if(!$huiskamer->available()) { ?>
+                    <div class='huiskamers-not-available-message'>Deze huiskamer neemt momenteel geen nieuwe leden aan</div>
+                <?php } ?>
+                <!-- Columns -->
+                <?php 
+                    $leftColumnsCount = ceil((count($columns) - 2) / 2);
+                    $leftColumns = null;
+                    $rightColumns = null;
+                    $fullSizeColumns = null;
+                    $columnNr = 0;
+                    foreach($columns as $column){                      
+                        $columnSlug = $column->slug();
+                        if ($columnSlug == 'age_max') 
+                        { 
+                                continue;                             
+                        }                        
+                        else if ($columnSlug == 'description')
+                        {
+                            $fullSizeColumns[] = $column;
+                            continue;
+                        }
+                        
+                        if($columnNr < $leftColumnsCount)
+                        {
+                            $leftColumns[] = $column;
+                        }
+                        else
+                        {
+                            $rightColumns[] = $column;
+                        }
+                        
+                        $columnNr++;
+                    } 
+                    
+                    // Draw left columns
+                    if(isset($leftColumns))
+                    {
+                        echo "<div class=\"huiskamers-searchResult-leftColumns\">";
+                            foreach($leftColumns as $column)
+                            {
+                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                            }
+                        echo "</div>";
+                    }
+                    
+                    // Draw right columns
+                    if(isset($rightColumns))
+                    {
+                        echo "<div class=\"huiskamers-searchResult-rightColumns\">";
+                            foreach($rightColumns as $column)
+                            {
+                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                            }
+                        echo "</div>";
+                    }
+                    
+                    // Draw full size columns
+                    if(isset($fullSizeColumns))
+                    {
+                        echo "<div class=\"huiskamers-searchResult-fullSizeColumns\">";
+                            foreach($fullSizeColumns as $column)
+                            {
+                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                            }
+                        echo "</div>";
+                    }
+                    ?>
+                    <!-- contact button -->
+                    <?php if($huiskamer->available()) { ?>                
+                    <div class="vc_btn3-container vc_btn3-right huiskamers-searchResult-contactButton">
+                        <a class="vc_general vc_btn3 vc_btn3-size-md vc_btn3-shape-rounded vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamer-email" 
+                           title='Contact huiskamer' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
+                            <i class="vc_btn3-icon fa fa-envelope"></i> Contact
+                        </a>
+                    </div>        
+                    <?php } ?>
+            </div>
         <?php } ?>
-    </table>
-
-    <div class="huiskamers-not-found" id="huiskamers-not-found-message"
-         style="display: none;">
-        Helaas geen resultaat gevonden.
     </div>
-</div>
+    
+
 
 <!-- email pop up -->
-<div id="huiskamers-email-form" style="display:none;">
-     <p>Verstuur een bericht naar een vertegenwoordiger van de huiskamer.</p>
-     <form method='post' class='huiskamer'>
+<div id="huiskamers-email-form" class="huiskamers-contactForm-container" style="display:none;">
+     <form method='post' id="huiskamers-contactForm-form" class='huiskamers-contactForm-form'>
           <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
           <div class='field'>
-               <label for='name'>Naam</label><input type='text' name='huiskamer_message[name]'/>
+               <label for='name' class="huiskamers-contactForm-header">Naam</label><br/>
+               <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-name-input'  name='huiskamer_message[name]' autofocus/>
           </div>
           <div class='field'>
-               <label for='email'>Uw&nbsp;email&nbsp;adres</label><input type='text' id='huiskamer-email-input' name='huiskamer_message[email]'/>
+               <label for='email' class="huiskamers-contactForm-header">E-mail</label><br/>
+               <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-email-input' name='huiskamer_message[email]'/>
           </div>
           <div class='field'>
-               <label for='bericht'>Bericht</label><textarea name='huiskamer_message[message]'></textarea>
+               <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
+               <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
           </div>
           <input type='submit' value='Versturen'/>
      </form>
-     </p>
 </div>
 
 <!-- gesloten huiskamer pop up -->

@@ -1,48 +1,168 @@
 /* This stylesheet is used to style the public view of the widget. */
-img.huiskamer-email {
-	width:100px;
-	min-width:75px;
-}
 
-form.huiskamer label{
-	width:100px;
-	display:inline-block;
-	vertical-align: top;
-}
+    .huiskamers { 
+    }
+        
+/*** Searcher ***/
+    .huiskamers-searcher {  
+        color: #000000;
+        background: rgb(205, 200, 209);
+        margin-top: 0px;
+        margin-bottom: 20px;
+        padding: 25px;
+    }
+    
+    .huiskamers-searcher-selectRegion {
+        width: 175px;
+        margin: 0px;
+    }
+    
+    .huiskamers-searcher-inputAge {
+        width: 90px;
+        margin: 0px;
+    }
+    
+/*** Search Results ***/    
+    .huiskamers-searchResults {
+        
+    }    
+    
+    .huiskamers-searchResult {
+        background: #f3f3f3;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 16px;
+    }
+    
+    
+    .huiskamers-searchResult .odd {
+    }
 
-form.huiskamer input[type=text]{
-	width:300px;
-}
+    .huiskamers-searchResult .even {
+    }
+    
+    .huiskamers-searchResult .odd.seeking-members  {
+    }
 
-form.huiskamer textarea{
-	width:300px;
-}
+    .huiskamers-searchResult .even.seeking-members  {
+    }
+    
+    .huiskamers-searchResult-leftColumns
+    {
+        width: 50%;
+        display:inline-block;
+        vertical-align: top;
+    }
+    
+    .huiskamers-searchResult-rightColumns
+    {
+        width: 50%;
+        display:inline-block;
+        vertical-align: top;
+    }
+    
+    .huiskamers-searchResult-fullSizeColumns
+    {
+        width: 100%;
+        display:inline-block;
+        vertical-align: top;
+    }
+    
+    @media (max-width: 399px) {        
+        .huiskamers-searchResult-leftColumns
+        {
+            width: 100%;
+        }
 
-form.huiskamer div.field{
-	margin-bottom:10px;
-}
+        .huiskamers-searchResult-rightColumns
+        {
+            width: 100%;
+        }
+    }
+    
+    .huiskamers-searchResult-column{   
+        margin: 8px;
+    }
+    
+    .huiskamers-searchResult-column-header {
+        font-weight: bold;
+    }
+    
+    .huiskamers-searchResult-column-content {        
+        padding-left: 0px;
+    }
+    
+    .huiskamers-seeking-members-message {
+        color: #020425;
+        font-style: italic;
+        font-weight: bold;
+        text-align: center; 
+        font-size: 16px;
+    }
+    
+    .huiskamers-not-available-message {
+        color: #020425;
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    .huiskamers-searchResult-contactButton{
+    }
+    
+/*** No Results ***/
+    .huiskamers-noResults
+    {
+        background: #f3f3f3;
+        border-top: 0px solid #ccc; 
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-style: italic;
+        padding: 25px;
+    }
+    
+/*** Contact form ***/
+    .huiskamers-contactForm-container{
+    }
+    
+    .huiskamers-contactForm-form{
+        padding-top: 10px;
+    }
+    
+    .huiskamers-contactForm-message{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .huiskamers-contactForm-header{
+        font-weight: bold;
+    }
+    
+    .huiskamers-contactForm-input{  
+        width: 100%;
+    }
+    
+    .huiskamers-contactForm-textarea{
+        width: 100%;
+        height: 70px;
+    }
+    
+/*** Contact messages ***/
+    .huiskamers-contact-sent {
+        font-size: 15pt;
+        font-weight: 900;
+        color: green;
+        background-color:#AAFFAA;
+        margin-bottom:10px;
+        padding: 25px;
+    }
 
-div.huiskamer-email-sent {
-	font-size: 15pt;
-	font-weight: 900;
-	color: green;
-	background-color:#AAFFAA;
-	padding:20px;
-	margin-bottom:10px;
-}
-
-div.huiskamer-email-fail {
-	font-size: 15pt;
-	font-weight: 900;
-	color: #CC0000;
-	background-color:#FFAAAA;
-	padding:20px;
-	margin-bottom:10px;
-}
-
-div.huiskamers-not-found {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-style: italic;
-}
+    .huiskamers-contact-fail {
+        font-size: 15pt;
+        font-weight: 900;
+        color: #CC0000;
+        background-color:#FFAAAA;
+        margin-bottom:10px;
+    }

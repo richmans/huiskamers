@@ -29,8 +29,8 @@ class Huiskamer extends Base {
 			'active' => array('type' => 'boolean', 'caption' => 'Actief', 'default' => true),
 			'available' => array('type' => 'boolean', 'caption' => 'Beschikbaar', 'default' => true),
 			'unavailable_since' => array('type' => 'timestamp', 'optional' => true),
-                        'seeking_members' => array('type' => 'boolean', 'caption' => 'Leden gezocht', 'default' => false,
-			'order_nr'  => array('type' => 'number')),
+			'seeking_members' => array('type' => 'boolean', 'caption' => 'Leden gezocht', 'default' => false),
+			'order_nr'  => array('type' => 'number'),
 		);
 	}
 
