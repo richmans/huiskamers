@@ -35,16 +35,19 @@
     }
     
     
-    .huiskamers-searchResult .odd {
+    .huiskamers-searchResult.odd {
     }
 
-    .huiskamers-searchResult .even {
+    .huiskamers-searchResult.even {
     }
     
-    .huiskamers-searchResult .odd.seeking-members  {
+    
+    .huiskamers-searchResult.odd.seeking-members  {
+        background: #e9eefb;
     }
 
-    .huiskamers-searchResult .even.seeking-members  {
+    .huiskamers-searchResult.even.seeking-members  {
+        background: #e9eefb;
     }
     
     .huiskamers-searchResult-leftColumns
@@ -109,6 +112,7 @@
     }
     
     .huiskamers-searchResult-contactButton{
+        margin-top: 8px;
     }
     
 /*** No Results ***/
