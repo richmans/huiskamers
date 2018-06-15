@@ -105,7 +105,7 @@ class Huiskamer extends Base {
 
 
 	public function send_email($subject, $message){
-                $headers = array('Content-Type: text/html; charset=UTF-8');                
+                $headers = array('Content-Type: text/html; charset=UTF-8', 'From: '.get_option('huiskamers_from-name').' <'.get_option('huiskamers_from-email').'>');                
 		$result = wp_mail( $this->email(), $subject, $message, $headers); 
 		if($result == false) return false;
 

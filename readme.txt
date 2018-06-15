@@ -14,7 +14,8 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 == Installation ==
 1. Upload the `huiskamers` directory to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. place [huiskamers] somewhere in a post
+3. Place [huiskamers] somewhere in a post
+4. Go to settings > huiskamers and adjust them. (See "Example aanmelding email.txt" and "Example herinnering aanmelding email.txt" for example html mails)
 
 == Changelog ==
 
@@ -62,3 +63,4 @@ Huiskamers are now ordered by whether they are available
 When not available a huiskamer does not have a contact button
 Added more informative messages on whether a huiskamer is available
 Html email support
+Added new setting options

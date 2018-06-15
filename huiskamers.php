@@ -169,28 +169,35 @@ class Huiskamers {
 	* Registers the admin menu 
 	*/
 	public function build_admin_menu(){
-		add_menu_page('Huiskamers', 'Huiskamers', 'manage_huiskamers', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
-		add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_huiskamers', 'huiskamers_message', array($this, 'show_messages_page'));
-		add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_huiskamers', 'huiskamers_region', array($this, 'show_regions_page'));
-		add_submenu_page('huiskamers_huiskamer', 'Kolommen beheren', 'Kolommen', 'manage_huiskamers', 'huiskamers_field', array($this, 'show_fields_page'));
-	  add_options_page('Huiskamer options', 'Huiskamers', 'manage_huiskamers', 'huiskamer-options', array( $this, 'show_options_page' ));
-        
+            add_menu_page('Huiskamers', 'Huiskamers', 'manage_huiskamers', 'huiskamers_huiskamer', array($this, 'show_admin_page'), 'dashicons-groups');
+            add_submenu_page('huiskamers_huiskamer', 'Berichten beheren', 'Berichten', 'manage_huiskamers', 'huiskamers_message', array($this, 'show_messages_page'));
+            add_submenu_page('huiskamers_huiskamer', 'Regio\'s beheren', 'Regio\'s', 'manage_huiskamers', 'huiskamers_region', array($this, 'show_regions_page'));
+            add_submenu_page('huiskamers_huiskamer', 'Kolommen beheren', 'Kolommen', 'manage_huiskamers', 'huiskamers_field', array($this, 'show_fields_page'));
+            add_options_page('Huiskamer options', 'Huiskamers', 'manage_huiskamers', 'huiskamer-options', array( $this, 'show_options_page' ));
 	}
 
 	public function register_settings() {
-		register_setting( 'huiskamers', 'huiskamers_admin-email', 'is_email' );
-		register_setting( 'huiskamers', 'huiskamers_new-message-email-message' );
-	  register_setting( 'huiskamers', 'huiskamers_reminder-email-message' );
-	  register_setting( 'huiskamers', 'huiskamers_send-reminder-email-after', 'intval' );
-	  register_setting( 'huiskamers', 'huiskamers_reset-availability-days', 'intval' );
+            register_setting( 'huiskamers', 'huiskamers_admin-email', 'is_email' );
+            register_setting( 'huiskamers', 'huiskamers_new-message-email-message' );
+            register_setting( 'huiskamers', 'huiskamers_reminder-email-message' );
+            register_setting( 'huiskamers', 'huiskamers_send-reminder-email-after', 'intval' );
+            register_setting( 'huiskamers', 'huiskamers_reset-availability-days', 'intval' );
+            register_setting( 'huiskamers', 'huiskamers_from-email', 'is_email' );
+            register_setting( 'huiskamers', 'huiskamers_from-name', 'string' );
+            register_setting( 'huiskamers', 'huiskamers_new-message-email-subject', 'string' );
+            register_setting( 'huiskamers', 'huiskamers_reminder-email-subject', 'string' );
 	}
 
 	public function unregister_settings() {
-		delete_option( 'huiskamers_admin-email');
-		delete_option(  'huiskamers_new-message-email-message' );
-	  delete_option( 'huiskamers_reminder-email-message' );
-	  delete_option( 'huiskamers_send-reminder-email-after');
-	  	  delete_option( 'huiskamers_reset-availability-days');
+            delete_option( 'huiskamers_admin-email');
+            delete_option( 'huiskamers_new-message-email-message' );
+            delete_option( 'huiskamers_reminder-email-message' );
+            delete_option( 'huiskamers_send-reminder-email-after');
+            delete_option( 'huiskamers_reset-availability-days');
+            delete_option( 'huiskamers_from-email');
+            delete_option( 'huiskamers_from-name');
+            delete_option( 'huiskamers_new-message-email-subject' );
+            delete_option( 'huiskamers_reminder-email-subject');            
 	}
 
 	public function setting_defaults() {
@@ -216,6 +223,10 @@ Email: [email]
 Bericht: [bericht]
 
 Groeten, thuisverder.nl");
+            update_option( 'huiskamers_from-email', "noreply@kvdnvlaardingen.nl");
+            update_option( 'huiskamers_from-name', "KVDN Vlaardingen (No Reply)");
+            update_option( 'huiskamers_new-message-email-subject', "Huiskamer lid aanmelding (KVDN Vlaardingen)" );
+            update_option( 'huiskamers_reminder-email-subject', "Herinnering: Huiskamer lid aanmelding (KVDN Vlaardingen)");     
 	}
 
 	public function show_options_page() {
