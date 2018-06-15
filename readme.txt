@@ -15,7 +15,6 @@ Provides a plugin for thuisverder.nl to administer a list of local groups. It al
 1. Upload the `huiskamers` directory to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. place [huiskamers] somewhere in a post
-4. Add the style of theme_style.css.example in your active theme and adjust it to your needs.
 
 == Changelog ==
 
@@ -62,3 +61,4 @@ Fixed issue with add huiskamer not working
 Huiskamers are now ordered by whether they are available
 When not available a huiskamer does not have a contact button
 Added more informative messages on whether a huiskamer is available
+Html email support

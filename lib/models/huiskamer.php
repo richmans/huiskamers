@@ -105,12 +105,13 @@ class Huiskamer extends Base {
 
 
 	public function send_email($subject, $message){
-		$result = wp_mail( $this->email(), $subject, $message); 
+                $headers = array('Content-Type: text/html; charset=UTF-8');                
+		$result = wp_mail( $this->email(), $subject, $message, $headers); 
 		if($result == false) return false;
 
 		$admin_email = get_option('huiskamers_admin-email');
 		if(is_email($admin_email)){
-			$result = wp_mail($admin_email , $subject, $message); 
+			$result = wp_mail($admin_email , $subject, $message, $headers); 
 			if($result == false) return false;
 		}
 		return true;

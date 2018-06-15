@@ -23,14 +23,14 @@ class Message extends Base {
 
 	public function send_first_email() {
 		$huiskamer = $this->get_huiskamer();
-		$subject = 'KVDN Vlaardingen: Huiskamer lid aanmelding';
+		$subject = 'Huiskamer aanmelding (KVDN Vlaardingen)';
 		$message = $this->render_email($huiskamer);
 		return $huiskamer->send_email($subject, $message);
 	}
 
 	public function send_reminder_email() {
 		$huiskamer = $this->get_huiskamer();
-		$subject = 'KVDN Vlaardingen: Huiskamer lid aanmelding (Herinnering)';
+		$subject = 'Herinnering: Huiskamer aanmelding (KVDN Vlaardingen)';
 		$message = $this->render_email($huiskamer, 'huiskamers_reminder-email-message');
 		return $huiskamer->send_email($subject, $message);
 	}
@@ -39,10 +39,10 @@ class Message extends Base {
 		$template = get_option($template_name);
 		$email = $template;
 		$email = str_replace('[huiskamer]', $huiskamer->name(), $email);
-		$email = str_replace('[naam]', $this->name(), $email);
-		$email = str_replace('[email]', $this->email(), $email);
+		$email = str_replace('[naam]', nl2br(htmlspecialchars($this->name())), $email);
+		$email = str_replace('[email]', nl2br(htmlspecialchars($this->email())), $email);
 		$email = str_replace('[ip]', $this->ip(), $email);
-		$email = str_replace('[bericht]', $this->message(), $email);
+		$email = str_replace('[bericht]', nl2br(htmlspecialchars($this->message())), $email);
 		return $email;
 	}
 }
