@@ -97,7 +97,7 @@ class TableHelper extends \WP_List_Table {
         }
     }
 
-    function prepare_items() {
+    function prepare_items($defaultOrder = "asc") {
         $per_page = $this->page_length;
         $columns = $this->get_columns();
         $hidden = array();
@@ -108,7 +108,7 @@ class TableHelper extends \WP_List_Table {
         
         
         $order_by = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : $this->default_sort; //If no sort, default to title
-        $order_direction = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
+        $order_direction = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : $defaultOrder; //If no order, default to asc
         $order = "$order_by $order_direction";
         $where = '1=1';
         

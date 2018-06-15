@@ -12,7 +12,7 @@
           
             );
 			 $message_table->disable_edit = true;
-  		 $message_table->prepare_items();
+  		 $message_table->prepare_items("desc");
   		 $message_table->display();
     ?>
     </form>
