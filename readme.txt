@@ -64,3 +64,4 @@ When not available a huiskamer does not have a contact button
 Added more informative messages on whether a huiskamer is available
 Html email support
 Added new setting options
+Default order messages table descending
