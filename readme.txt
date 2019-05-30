@@ -1,7 +1,7 @@
 === Huiskamers ===
 Tags: matching, huiskamers
-Requires at least: 4.9.6
-Tested up to: 4.9.6
+Requires at least: 5.2.0
+Tested up to: 5.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,3 +65,6 @@ Added more informative messages on whether a huiskamer is available
 Html email support
 Added new setting options
 Default order messages table descending
+
+= 1.11 =
+Added extra age options to the ages lookup table
