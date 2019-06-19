@@ -11,5 +11,18 @@ class Region extends Base {
 	public static function indexes() {
 		return array('name');
 	}
+        
+        public function huiskamer_count() {
+            $count = 0;
+            foreach(Huiskamer::all() as $huiskamer)
+            {
+                if(in_array($this->id(), $huiskamer->region_ids()))
+                {
+                    $count++;
+                }
+            }
+            
+            return $count;
+	} 
 }
 ?>

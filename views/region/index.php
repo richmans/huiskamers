@@ -6,6 +6,7 @@
 			 $region_table->page_length = 50;
 			 $region_table->columns = array( 
 			 			'title'     => 'Naam',
+                             'huiskamer_count' => 'Huiskamers',
             'created_at'    => 'Gemaakt',
             'updated_at'  => 'Bewerkt');
   		 $region_table->prepare_items();
