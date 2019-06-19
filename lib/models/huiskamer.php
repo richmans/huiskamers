@@ -61,9 +61,10 @@ class Huiskamer extends Base {
 	}
 
 	public function validate_description() {
+                $max_description_length = 200;
 		$description_length = count(explode(' ', $this->description()));
-		if($description_length > 50){
-			$this->errors['description'] =  "mag niet langer zijn dan 50 woorden (huidig $description_length)";
+		if($description_length > $max_description_length){
+			$this->errors['description'] =  "mag niet langer zijn dan $max_description_length woorden (huidig $description_length)";
 		}
 	}
 
