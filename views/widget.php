@@ -51,14 +51,19 @@
 
 <div class="huiskamers">
     <div class="huiskamers-searcher">
-        Zoek een huiskamer in 
-        <select class='huiskamers-searcher-selectRegion' id='huiskamers-select-region'>
-        <option value='-1'>heel Nederland</option>
-        <?php foreach(Huiskamers\Region::all() as $region) { ?>
-             <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
-        <?php } ?>
-        </select>
-        geschikt voor mensen van <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/> jaar.
+        <div style="margin-bottom:10px;">
+            <b>Locatie</b><br/>
+            <select class='huiskamers-searcher-selectRegion' id='huiskamers-select-region'>
+            <option value='-1'>heel Nederland</option>
+            <?php foreach(Huiskamers\Region::all() as $region) { ?>
+                 <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
+            <?php } ?>
+            </select>
+        </div>
+        <div style="margin-top:10px;">
+            <b>Leeftijd</b><br/>
+            <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
+        </div>
     </div>
     
     <div class="huiskamers-noResults" id="huiskamers-not-found-message"
