@@ -33,8 +33,8 @@
     function filter_region(row){
         var regions = $(row).attr('data-regions');
         var prefered_region = $('select#huiskamers-select-region').val();
-        if(prefered_region != -1){
-            return (regions.search("(" + prefered_region + ")") != -1);
+        if(prefered_region !== -1){
+            return (regions.indexOf("(" + prefered_region + ")") !== -1);
         } else {
             return true;	
         }
