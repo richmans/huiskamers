@@ -88,11 +88,11 @@
                  style="">
                 <!-- Seeking members message -->
                 <?php if($huiskamer->seeking_members()) { ?>
-                    <div class='huiskamers-seeking-members-message'>Deze huiskamer is op zoek naar nieuwe leden</div>
+                    <div class='huiskamers-seeking-members-message'>Deze ThuisVerder-kring is op zoek naar nieuwe leden</div>
                 <?php } ?>
                 <!-- Not available message -->
                 <?php if(!$huiskamer->available()) { ?>
-                    <div class='huiskamers-not-available-message'>Deze huiskamer neemt momenteel geen nieuwe leden aan</div>
+                    <div class='huiskamers-not-available-message'>Deze ThuisVerder-kring neemt momenteel geen nieuwe leden aan</div>
                 <?php } ?>
                 <!-- Columns -->
                 <?php 
@@ -162,7 +162,7 @@
                     <?php if($huiskamer->available()) { ?>                
                     <div class="vc_btn3-container vc_btn3-right huiskamers-searchResult-contactButton">
                         <a class="vc_general vc_btn3 vc_btn3-size-md vc_btn3-shape-rounded vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamer-email" 
-                           title='Contact huiskamer' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
+                           title='Contact ThuisVerder-kring' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
                             <i class="vc_btn3-icon fa fa-envelope"></i> Contact
                         </a>
                     </div>        

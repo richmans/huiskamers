@@ -18,6 +18,33 @@
         return value.substring(0, length)
     }
 
+
+    function apply_filters() {
+        var findCount = 0;
+        $('div.huiskamers-searchResults div.huiskamers-searchResult').each(function() {
+            var matches = true;
+            matches = run_filters($(this));
+            if (matches)
+            {
+                $(this).css('display', ''); // Remove display property.
+                findCount++;
+            }
+            else
+            {
+                $(this).css('display', 'none');                            
+            }
+        })
+
+        apply_even_odd_classes();
+        update_not_found_message(findCount);
+    }
+    
+    function run_filters(row) {
+        if (filter_age(row) == false) return false;
+        if (filter_region(row) == false) return false;
+        return true;
+    }
+    
     function filter_age(row){
         var min_age = parseInt($(row).attr('data-age-min'));
         var max_age = parseInt($(row).attr('data-age-max'));
@@ -40,32 +67,6 @@
         }
     }
 
-    function run_filters(row) {
-        if (filter_age(row) == false) return false;
-        if (filter_region(row) == false) return false;
-        return true;
-    }
-
-    function apply_filters() {
-        var findCount = 0;
-        $('div.huiskamers-searchResults div.huiskamers-searchResult').each(function() {
-            var matches = true;
-            matches = run_filters($(this));
-            if (matches)
-            {
-                $(this).css('display', ''); // Remove display property.
-                findCount++;
-            }
-            else
-            {
-                $(this).css('display', 'none');                            
-            }
-        })
-
-        apply_even_odd_classes();
-        update_not_found_message(findCount);
-    }
-    
     function update_not_found_message(findCount)
     {  
         // Update visibility.
@@ -74,7 +75,7 @@
         {
             messageObject.css('display', '');
             // Update error text.
-            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen huiskamer gevonden in " + $('select#huiskamers-select-region>option:selected').html() + " geschikt voor mensen van " + $('input#huiskamers-select-age').val() + " jaar.";
+            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen ThuisVerder-kring gevonden in " + $('select#huiskamers-select-region>option:selected').html() + " geschikt voor mensen van " + $('input#huiskamers-select-age').val() + " jaar.";
         }
         else
         {
