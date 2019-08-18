@@ -20,10 +20,15 @@
 
 
     function apply_filters() {
+        var searchData = {
+            age: $('input#huiskamers-select-age').val(),
+            region: $('select#huiskamers-select-region').val(),
+        }
+        
         var findCount = 0;
         $('div.huiskamers-searchResults div.huiskamers-searchResult').each(function() {
             var matches = true;
-            matches = run_filters($(this));
+            matches = run_filters(searchData, $(this));
             if (matches)
             {
                 $(this).css('display', ''); // Remove display property.
@@ -39,16 +44,16 @@
         update_not_found_message(findCount);
     }
     
-    function run_filters(row) {
-        if (filter_age(row) == false) return false;
-        if (filter_region(row) == false) return false;
+    function run_filters(searchData, row) {
+        if (filter_age(searchData, row) == false) return false;
+        if (filter_region(searchData, row) == false) return false;
         return true;
     }
     
-    function filter_age(row){
+    function filter_age(searchData, row){
         var min_age = parseInt($(row).attr('data-age-min'));
         var max_age = parseInt($(row).attr('data-age-max'));
-        var prefered_age = $('input#huiskamers-select-age').val();
+        var prefered_age = searchData.age;
         if(prefered_age){
             prefered_age = parseInt(prefered_age);
             return ((min_age <= prefered_age) && (max_age >= prefered_age));
@@ -57,9 +62,9 @@
         }
     }
 
-    function filter_region(row){
+    function filter_region(searchData, row){
         var regions = $(row).attr('data-regions');
-        var prefered_region = $('select#huiskamers-select-region').val();
+        var prefered_region = searchData.region;
         if(prefered_region !== "-1"){
             return (regions.indexOf("(" + prefered_region + ")") !== -1);
         } else {
