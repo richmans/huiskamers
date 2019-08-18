@@ -64,7 +64,7 @@
             <b>Leeftijd</b><br/>
             <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
         </div>
-        <div id='huiskamers-searcher-days'>
+        <div style="margin-top:10px;" id='huiskamers-searcher-days'>
             <b>Dag</b><br/>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='maandag' id='huiskamers-searcher-day-maandag' /><label for='huiskamers-searcher-day-maandag'>Maandag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
@@ -73,6 +73,12 @@
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='vrijdag' id='huiskamers-searcher-day-vrijdag' /><label for='huiskamers-searcher-day-vrijdag'>Vrijdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zaterdag' id='huiskamers-searcher-day-zaterdag' /><label for='huiskamers-searcher-day-zaterdag'>Zaterdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zondag' id='huiskamers-searcher-day-zondag' /><label for='huiskamers-searcher-day-zondag'>Zondag</label></span>
+        </div>
+        <div style="margin-top:10px;" id='huiskamers-searcher-moments'>
+            <b>Moment</b><br/>
+            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='ochtend' id='huiskamers-searcher-moment-ochtend' /><label for='huiskamers-searcher-moment-ochtend'>Ochtend</label></span>
+            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='middag' id='huiskamers-searcher-moment-middag' /><label for='huiskamers-searcher-moment-middag'>Middag</label></span>
+            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='avond' id='huiskamers-searcher-moment-avond' /><label for='huiskamers-searcher-moment-avond'>Avond</label></span>
         </div>
     </div>
     

@@ -20,12 +20,14 @@
 
     function createSearchData()
     {
-        var daysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]:checked");
+        var checkedDaysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]:checked");
+        var checkedMomentsCheckboxes = document.querySelectorAll("#huiskamers-searcher-moments input[type=checkbox]:checked");
         
         return {
             age: $('input#huiskamers-select-age').val(),
             region: $('select#huiskamers-select-region').val(),
-            days: Array.from(daysCheckboxes, checkbox => checkbox.value)
+            days: Array.from(checkedDaysCheckboxes, x => x.value),
+            moments: Array.from(checkedMomentsCheckboxes, x => x.value)
         };
     }
 
@@ -52,9 +54,10 @@
     }
     
     function run_filters(row, searchData) {
-        if (filter_age(row, searchData.age) == false) return false;
-        if (filter_region(row, searchData.region) == false) return false;
-        if (filter_days(row, searchData.days) == false) return false;
+        if (filter_age(row, searchData.age) === false) return false;
+        if (filter_region(row, searchData.region) === false) return false;
+        if (filter_days(row, searchData.days) === false) return false;
+        if (filter_moments(row, searchData.moments) === false) return false;
         return true;
     }
     
@@ -94,8 +97,26 @@
             }
         
             return false; // no prefered day found
+        }        
+    }
+    
+    function filter_moments(row, prefered_moments){
+        var moment = $(row).attr('data-moment').toLowerCase();
+        if(prefered_moments.length === 0)
+        {
+            return true; // no prefered moment selected
         }
+        else            
+        {
+            for (i = 0; i < prefered_moments.length; i++) { 
+                if(moment.includes(prefered_moments[i]))
+                {
+                    return true; // prefered moment found
+                }                
+            }
         
+            return false; // no prefered moment found
+        }        
     }
 
     function update_not_found_message(findCount)
@@ -180,6 +201,11 @@
         var daysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]");
         for (i = 0; i < daysCheckboxes.length; i++) {
             daysCheckboxes[i].addEventListener('change', apply_filters, false);
+        }   
+        
+        var momentsCheckboxes = document.querySelectorAll("#huiskamers-searcher-moments input[type=checkbox]");
+        for (i = 0; i < momentsCheckboxes.length; i++) {
+            momentsCheckboxes[i].addEventListener('change', apply_filters, false);
         }
     });
 }(jQuery));
