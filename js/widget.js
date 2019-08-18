@@ -18,14 +18,20 @@
         return value.substring(0, length)
     }
 
-
-    function apply_filters() {
-        var searchData = {
+    function createSearchData()
+    {
+        var daysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]:checked");
+        
+        return {
             age: $('input#huiskamers-select-age').val(),
             region: $('select#huiskamers-select-region').val(),
-            days: []
-        }
-        
+            days: Array.from(daysCheckboxes, checkbox => checkbox.value)
+        };
+    }
+
+    function apply_filters() 
+    {
+        var searchData = createSearchData();
         var findCount = 0;
         $('div.huiskamers-searchResults div.huiskamers-searchResult').each(function() {
             var matches = true;
@@ -100,7 +106,7 @@
         {
             messageObject.css('display', '');
             // Update error text.
-            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen ThuisVerder-kring gevonden in " + $('select#huiskamers-select-region>option:selected').html() + " geschikt voor mensen van " + $('input#huiskamers-select-age').val() + " jaar.";
+            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen ThuisVerder-kring gevonden voor geselecteerde filters.";
         }
         else
         {
@@ -170,5 +176,10 @@
         $('#huiskamers-select-age').bind('input', function() {
             on_age_changed();
   	});
+                
+        var daysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]");
+        for (i = 0; i < daysCheckboxes.length; i++) {
+            daysCheckboxes[i].addEventListener('change', apply_filters, false);
+        }
     });
 }(jQuery));

@@ -64,9 +64,8 @@
             <b>Leeftijd</b><br/>
             <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
         </div>
-<!--        <div id='huiskamers-searcher-days'>
+        <div id='huiskamers-searcher-days'>
             <b>Dag</b><br/>
-            <i>Dit is momenteel onder ontwikkeling en werkt dus nog niet!</i><br/>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='maandag' id='huiskamers-searcher-day-maandag' /><label for='huiskamers-searcher-day-maandag'>Maandag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='woensdag' id='huiskamers-searcher-day-woensdag' /><label for='huiskamers-searcher-day-woensdag'>Woensdag</label></span>
@@ -74,7 +73,7 @@
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='vrijdag' id='huiskamers-searcher-day-vrijdag' /><label for='huiskamers-searcher-day-vrijdag'>Vrijdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zaterdag' id='huiskamers-searcher-day-zaterdag' /><label for='huiskamers-searcher-day-zaterdag'>Zaterdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zondag' id='huiskamers-searcher-day-zondag' /><label for='huiskamers-searcher-day-zondag'>Zondag</label></span>
-        </div>-->
+        </div>
     </div>
     
     <div class="huiskamers-noResults" id="huiskamers-not-found-message"
