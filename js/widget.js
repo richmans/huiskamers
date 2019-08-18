@@ -23,6 +23,7 @@
         var searchData = {
             age: $('input#huiskamers-select-age').val(),
             region: $('select#huiskamers-select-region').val(),
+            days: []
         }
         
         var findCount = 0;
@@ -47,6 +48,7 @@
     function run_filters(row, searchData) {
         if (filter_age(row, searchData.age) == false) return false;
         if (filter_region(row, searchData.region) == false) return false;
+        if (filter_days(row, searchData.days) == false) return false;
         return true;
     }
     
@@ -68,6 +70,26 @@
         } else {
             return true;	
         }
+    }    
+    
+    function filter_days(row, prefered_days){
+        var moment = $(row).attr('data-moment').toLowerCase();
+        if(prefered_days.length === 0)
+        {
+            return true; // no prefered day selected
+        }
+        else            
+        {
+            for (i = 0; i < prefered_days.length; i++) { 
+                if(moment.includes(prefered_days[i]))
+                {
+                    return true; // prefered day found
+                }                
+            }
+        
+            return false; // no prefered day found
+        }
+        
     }
 
     function update_not_found_message(findCount)

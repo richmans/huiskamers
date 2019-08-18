@@ -96,6 +96,7 @@
                  data-regions='<?php echo $huiskamer->regions()?>' 
                  data-age-min='<?php echo $huiskamer->age_min()?>' 
                  data-age-max='<?php echo $huiskamer->age_max()?>'
+                 data-moment='<?php echo $huiskamer->day_part()?>'
                  style="">
                 <!-- Seeking members message -->
                 <?php if($huiskamer->seeking_members()) { ?>
