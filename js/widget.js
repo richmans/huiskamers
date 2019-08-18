@@ -20,12 +20,13 @@
 
     function createSearchData()
     {
+        var checkedRegionsCheckboxes = document.querySelectorAll("#huiskamers-searcher-regions input[type=checkbox]:checked");
         var checkedDaysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]:checked");
         var checkedMomentsCheckboxes = document.querySelectorAll("#huiskamers-searcher-moments input[type=checkbox]:checked");
         
         return {
             age: $('input#huiskamers-select-age').val(),
-            region: $('select#huiskamers-select-region').val(),
+            regions: Array.from(checkedRegionsCheckboxes, x => x.value),
             days: Array.from(checkedDaysCheckboxes, x => x.value),
             moments: Array.from(checkedMomentsCheckboxes, x => x.value)
         };
@@ -55,7 +56,7 @@
     
     function run_filters(row, searchData) {
         if (filter_age(row, searchData.age) === false) return false;
-        if (filter_region(row, searchData.region) === false) return false;
+        if (filter_regions(row, searchData.regions) === false) return false;
         if (filter_days(row, searchData.days) === false) return false;
         if (filter_moments(row, searchData.moments) === false) return false;
         return true;
@@ -71,18 +72,28 @@
             return true;	
         }
     }
-
-    function filter_region(row, prefered_region){
-        var regions = $(row).attr('data-regions');
-        if(prefered_region !== "-1"){
-            return (regions.indexOf("(" + prefered_region + ")") !== -1);
-        } else {
-            return true;	
+    
+    function filter_regions(row, prefered_regions){
+        var rowRegions = $(row).attr('data-regions').toLowerCase();
+        if(prefered_regions.length === 0)
+        {
+            return true; // no prefered region selected
         }
-    }    
+        else            
+        {
+            for (i = 0; i < prefered_regions.length; i++) { 
+                if(rowRegions.indexOf("(" + prefered_regions[i] + ")") !== -1)
+                {
+                    return true; // prefered region found
+                }               
+            }
+        
+            return false; // no prefered region found
+        }        
+    }
     
     function filter_days(row, prefered_days){
-        var moment = $(row).attr('data-moment').toLowerCase();
+        var rowMoment = $(row).attr('data-moment').toLowerCase();
         if(prefered_days.length === 0)
         {
             return true; // no prefered day selected
@@ -90,7 +101,7 @@
         else            
         {
             for (i = 0; i < prefered_days.length; i++) { 
-                if(moment.includes(prefered_days[i]))
+                if(rowMoment.includes(prefered_days[i]))
                 {
                     return true; // prefered day found
                 }                
@@ -101,7 +112,7 @@
     }
     
     function filter_moments(row, prefered_moments){
-        var moment = $(row).attr('data-moment').toLowerCase();
+        var rowMoment = $(row).attr('data-moment').toLowerCase();
         if(prefered_moments.length === 0)
         {
             return true; // no prefered moment selected
@@ -109,7 +120,7 @@
         else            
         {
             for (i = 0; i < prefered_moments.length; i++) { 
-                if(moment.includes(prefered_moments[i]))
+                if(rowMoment.includes(prefered_moments[i]))
                 {
                     return true; // prefered moment found
                 }                
@@ -196,7 +207,12 @@
         
         $('#huiskamers-select-age').bind('input', function() {
             on_age_changed();
-  	});
+  	});   
+        
+        var regionsCheckboxes = document.querySelectorAll("#huiskamers-searcher-regions input[type=checkbox]");
+        for (i = 0; i < regionsCheckboxes.length; i++) {
+            regionsCheckboxes[i].addEventListener('change', apply_filters, false);
+        }  
                 
         var daysCheckboxes = document.querySelectorAll("#huiskamers-searcher-days input[type=checkbox]");
         for (i = 0; i < daysCheckboxes.length; i++) {

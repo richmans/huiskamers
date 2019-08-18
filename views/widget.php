@@ -51,22 +51,14 @@
 
 <div class="huiskamers">
     <div class="huiskamers-searcher">
-        <div style="margin-bottom:10px;">
+        <div id='huiskamers-searcher-regions'>
             <b>Locatie</b><br/>
-            <select class='huiskamers-searcher-selectRegion' id='huiskamers-select-region'>
-            <option value='-1'>heel Nederland</option>
             <?php foreach(Huiskamers\Region::all() as $region) { ?>
-                 <option value='<?php echo $region->id()?>'><?php echo esc_html($region->name())?></option>
+                <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='<?php echo $region->id()?>' id='huiskamers-searcher-day-<?php echo $region->id()?>' /><label for='huiskamers-searcher-day-<?php echo $region->id()?>'><?php echo esc_html($region->name())?></label></span>
             <?php } ?>
-            </select>
-        </div>
-        <div style="margin-top:10px;">
-            <b>Leeftijd</b><br/>
-            <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
         </div>
         <div style="margin-top:10px;" id='huiskamers-searcher-days'>
             <b>Dag</b><br/>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='maandag' id='huiskamers-searcher-day-maandag' /><label for='huiskamers-searcher-day-maandag'>Maandag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='woensdag' id='huiskamers-searcher-day-woensdag' /><label for='huiskamers-searcher-day-woensdag'>Woensdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='donderdag' id='huiskamers-searcher-day-donderdag' /><label for='huiskamers-searcher-day-donderdag'>Donderdag</label></span>
@@ -79,6 +71,10 @@
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='ochtend' id='huiskamers-searcher-moment-ochtend' /><label for='huiskamers-searcher-moment-ochtend'>Ochtend</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='middag' id='huiskamers-searcher-moment-middag' /><label for='huiskamers-searcher-moment-middag'>Middag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='avond' id='huiskamers-searcher-moment-avond' /><label for='huiskamers-searcher-moment-avond'>Avond</label></span>
+        </div>
+        <div style="margin-top:10px;">
+            <b>Leeftijd</b><br/>
+            <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
         </div>
     </div>
     
