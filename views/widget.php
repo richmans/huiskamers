@@ -59,6 +59,7 @@
         </div>
         <div style="margin-top:10px;" id='huiskamers-searcher-days'>
             <b>Dag</b><br/>
+            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='maandag' id='huiskamers-searcher-day-maandag' /><label for='huiskamers-searcher-day-maandag'>Maandag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='woensdag' id='huiskamers-searcher-day-woensdag' /><label for='huiskamers-searcher-day-woensdag'>Woensdag</label></span>
             <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='donderdag' id='huiskamers-searcher-day-donderdag' /><label for='huiskamers-searcher-day-donderdag'>Donderdag</label></span>
