@@ -13,6 +13,7 @@ class TableHelper extends \WP_List_Table {
     public $page_length=100;
     public $columns = array();
     public $sortable_columns=array();
+    public $columns_width=array();
     public $default_sort = 'id';
     function __construct($controller){
         global $status, $page;
@@ -30,7 +31,12 @@ class TableHelper extends \WP_List_Table {
             'created_at'    => array('created_at',false),
             'updated_at'  => array('updated_at',false)
         );
+        $this->columns_width = array(
+            'created_at'    => "100px",
+            'updated_at'  => "100px",
+        );
     }
+    
 
     function column_default($item, $column_name){
         return $item->$column_name();  
@@ -124,6 +130,23 @@ class TableHelper extends \WP_List_Table {
             'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
             'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
         ) );
+        
+        echo $this->styles();
+    }
+    
+    function styles() {        
+        echo '<style type="text/css">' . "\r\n";
+        foreach ($this->columns_width as $key => $value)
+        {
+            echo '.wp-list-table .column-'.$key.' { width: '.$value.'; }' . "\r\n";
+        }
+        
+        echo '</style>';
+      }
+      
+    function no_items()
+    {
+        return "No items available";
     }
 }
 ?>
