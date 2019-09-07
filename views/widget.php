@@ -42,7 +42,7 @@
 <?php } ?>
 <?php if ($email_sent == 'fail') {?>
      <div class='huiskamers-contact-fail'>Error: Bericht niet verstuurd! Probeer het nog eens.<br/>
-         Als het probleem zich blijft voordoen dan graag contact opnemen met het huiskamer team.</div>
+         Als het probleem zich blijft voordoen dan graag contact opnemen met het ThuisVerder-team.</div>
 <?php } ?>
 <?php if ($email_sent == 'unavailable') {?>
      <div class='huiskamers-contact-fail'>Error: Bericht niet verstuurd!<br/>
