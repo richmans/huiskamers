@@ -14,9 +14,9 @@
 			<?php $form->input('age_max', 'Maximum leeftijd', $model) ?>
 			<?php $form->input('day_part', 'Wanneer', $model) ?>
 			<?php $form->input('frequency', 'Hoe vaak', $model) ?>
-			<?php $form->input('active', 'Actief', $model) ?>
-			<?php $form->input('available', 'Beschikbaar', $model) ?>
-                        <?php $form->input('seeking_members', 'Leden gezocht', $model) ?>
+			<?php $form->input('active', 'Zichtbaar', $model) ?>
+			<?php $form->input('available', 'Open', $model) ?>
+                        <?php $form->input('seeking_members', 'Zoekend (naar leden)', $model) ?>
 			<?php $form->input('order_nr', 'Volgorde', $model) ?>
 			<?php foreach(Huiskamers\Field::all() as $field) { ?>
 			<?php if($field->is_default()) continue; ?>
