@@ -50,165 +50,172 @@
 <?php } ?>
 
 <div class="huiskamers">
-    <div class="huiskamers-searcher">
-        <div id='huiskamers-searcher-regions'>
-            <b>Locatie</b><br/>
-            <?php foreach(Huiskamers\Region::all() as $region) { ?>
-                <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='<?php echo $region->id()?>' id='huiskamers-searcher-day-<?php echo $region->id()?>' /><label for='huiskamers-searcher-day-<?php echo $region->id()?>'><?php echo esc_html($region->name())?></label></span>
+    <div class="huiskamers-searcher-container">
+        <div class="huiskamers-searcher">
+            <div id='huiskamers-searcher-regions'>
+                <b>Locatie</b><br/>
+                <?php foreach(Huiskamers\Region::all() as $region) { ?>
+                    <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='<?php echo $region->id()?>' id='huiskamers-searcher-day-<?php echo $region->id()?>' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-<?php echo $region->id()?>'><?php echo esc_html($region->name())?></label></span>
+                <?php } ?>
+            </div>
+            <div style="margin-top:10px;" id='huiskamers-searcher-days'>
+                <b>Dag</b><br/>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='maandag' id='huiskamers-searcher-day-maandag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-maandag'>Maandag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='woensdag' id='huiskamers-searcher-day-woensdag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-woensdag'>Woensdag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='donderdag' id='huiskamers-searcher-day-donderdag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-donderdag'>Donderdag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='vrijdag' id='huiskamers-searcher-day-vrijdag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-vrijdag'>Vrijdag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='zaterdag' id='huiskamers-searcher-day-zaterdag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-zaterdag'>Zaterdag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='zondag' id='huiskamers-searcher-day-zondag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-zondag'>Zondag</label></span>
+            </div>
+            <div style="margin-top:10px;" id='huiskamers-searcher-moments'>
+                <b>Moment</b><br/>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='ochtend' id='huiskamers-searcher-moment-ochtend' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-moment-ochtend'>Ochtend</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='middag' id='huiskamers-searcher-moment-middag' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-moment-middag'>Middag</label></span>
+                <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='avond' id='huiskamers-searcher-moment-avond' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-moment-avond'>Avond</label></span>
+            </div>
+            <div style="margin-top:10px;">
+                <b>Leeftijd</b><br/>
+                <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="huiskamers-noResults-container">
+        <div class="huiskamers-noResults" id="huiskamers-not-found-message"
+             style="display: none;">
+            Geen huiskamers beschikbaar
+        </div>
+    </div>    
+    
+    <div class="huiskamers-searchResultsContainer">
+        <div class="huiskamers-searchResults">
+            <?php
+                $isEvenRow = false;
+                foreach($huiskamers as $huiskamer) {
+                    $evenOddClass = $isEvenRow == true ? "even" : "odd";
+                    $seekingMembersClass = $huiskamer->seeking_members() ? "seeking-members" : "";
+                    $isEvenRow = !$isEvenRow;
+            ?>
+                <!-- Search results -->
+                <div class='huiskamers-searchResult-container <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>'>
+                    <div class='huiskamers-searchResult <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>' 
+                         data-regions='<?php echo $huiskamer->regions()?>' 
+                         data-age-min='<?php echo $huiskamer->age_min()?>' 
+                         data-age-max='<?php echo $huiskamer->age_max()?>'
+                         data-moment='<?php echo $huiskamer->day_part()?>'>
+                        <!-- Seeking members message -->
+                        <?php if($huiskamer->seeking_members()) { ?>
+                            <div class='huiskamers-seeking-members-message'>Deze ThuisVerder-kring is op zoek naar nieuwe leden</div>
+                        <?php } ?>
+                        <!-- Not available message -->
+                        <?php if(!$huiskamer->available()) { ?>
+                            <div class='huiskamers-not-available-message'>Deze ThuisVerder-kring neemt momenteel geen nieuwe leden aan</div>
+                        <?php } ?>
+                        <!-- Columns -->
+                        <?php 
+                            $leftColumnsCount = ceil((count($columns) - 2) / 2);
+                            $leftColumns = null;
+                            $rightColumns = null;
+                            $fullSizeColumns = null;
+                            $columnNr = 0;
+                            foreach($columns as $column){                      
+                                $columnSlug = $column->slug();
+                                if ($columnSlug == 'age_max') 
+                                { 
+                                        continue;                             
+                                }                        
+                                else if ($columnSlug == 'description')
+                                {
+                                    $fullSizeColumns[] = $column;
+                                    continue;
+                                }
+
+                                if($columnNr < $leftColumnsCount)
+                                {
+                                    $leftColumns[] = $column;
+                                }
+                                else
+                                {
+                                    $rightColumns[] = $column;
+                                }
+
+                                $columnNr++;
+                            } 
+
+                            // Draw left columns
+                            if(isset($leftColumns))
+                            {
+                                echo "<div class=\"huiskamers-searchResult-leftColumns\">";
+                                    foreach($leftColumns as $column)
+                                    {
+                                        DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                                    }
+                                echo "</div>";
+                            }
+
+                            // Draw right columns
+                            if(isset($rightColumns))
+                            {
+                                echo "<div class=\"huiskamers-searchResult-rightColumns\">";
+                                    foreach($rightColumns as $column)
+                                    {
+                                        DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                                    }
+                                echo "</div>";
+                            }
+
+                            // Draw full size columns
+                            if(isset($fullSizeColumns))
+                            {
+                                echo "<div class=\"huiskamers-searchResult-fullSizeColumns\">";
+                                    foreach($fullSizeColumns as $column)
+                                    {
+                                        DrawColumnHTML($huiskamer, $column->slug(), $column->name());
+                                    }
+                                echo "</div>";
+                            }
+                            ?>
+                            <!-- contact button -->
+                            <?php if($huiskamer->available()) { ?>                
+                            <div class="vc_btn3-container vc_btn3-right huiskamers-searchResult-contactButton-container">
+                                <a class="vc_general vc_btn3 vc_btn3-size-md vc_btn3-shape-rounded vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamers-searchResult-contactButton huiskamer-email" 
+                                   title='Contact ThuisVerder-kring' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
+                                    <i class="vc_btn3-icon fa fa-envelope"></i> Contact
+                                </a>
+                            </div>        
+                            <?php } ?>
+                    </div>
+                </div>
             <?php } ?>
         </div>
-        <div style="margin-top:10px;" id='huiskamers-searcher-days'>
-            <b>Dag</b><br/>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='maandag' id='huiskamers-searcher-day-maandag' /><label for='huiskamers-searcher-day-maandag'>Maandag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='dinsdag' id='huiskamers-searcher-day-dinsdag' /><label for='huiskamers-searcher-day-dinsdag'>Dinsdag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='woensdag' id='huiskamers-searcher-day-woensdag' /><label for='huiskamers-searcher-day-woensdag'>Woensdag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='donderdag' id='huiskamers-searcher-day-donderdag' /><label for='huiskamers-searcher-day-donderdag'>Donderdag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='vrijdag' id='huiskamers-searcher-day-vrijdag' /><label for='huiskamers-searcher-day-vrijdag'>Vrijdag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zaterdag' id='huiskamers-searcher-day-zaterdag' /><label for='huiskamers-searcher-day-zaterdag'>Zaterdag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='zondag' id='huiskamers-searcher-day-zondag' /><label for='huiskamers-searcher-day-zondag'>Zondag</label></span>
-        </div>
-        <div style="margin-top:10px;" id='huiskamers-searcher-moments'>
-            <b>Moment</b><br/>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='ochtend' id='huiskamers-searcher-moment-ochtend' /><label for='huiskamers-searcher-moment-ochtend'>Ochtend</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='middag' id='huiskamers-searcher-moment-middag' /><label for='huiskamers-searcher-moment-middag'>Middag</label></span>
-            <span style="display: inline-block; padding-right: 10px;"><input type='checkbox' value='avond' id='huiskamers-searcher-moment-avond' /><label for='huiskamers-searcher-moment-avond'>Avond</label></span>
-        </div>
-        <div style="margin-top:10px;">
-            <b>Leeftijd</b><br/>
-            <input type='text' name='huiskamers-age' id='huiskamers-select-age' class='huiskamers-searcher-inputAge'/>
-        </div>
     </div>
-    
-    <div class="huiskamers-noResults" id="huiskamers-not-found-message"
-         style="display: none;">
-        Geen huiskamers beschikbaar
-    </div>
-    
-    
-    <div class="huiskamers-searchResults">
-        <?php
-            $isEvenRow = false;
-            foreach($huiskamers as $huiskamer) {
-                $evenOddClass = $isEvenRow == true ? "even" : "odd";
-                $seekingMembersClass = $huiskamer->seeking_members() ? "seeking-members" : "";
-                $isEvenRow = !$isEvenRow;
-        ?>
-            <!-- Search results -->
-            <div class='huiskamers-searchResult <?php echo $evenOddClass ?> <?php echo $seekingMembersClass ?>' 
-                 data-regions='<?php echo $huiskamer->regions()?>' 
-                 data-age-min='<?php echo $huiskamer->age_min()?>' 
-                 data-age-max='<?php echo $huiskamer->age_max()?>'
-                 data-moment='<?php echo $huiskamer->day_part()?>'
-                 style="">
-                <!-- Seeking members message -->
-                <?php if($huiskamer->seeking_members()) { ?>
-                    <div class='huiskamers-seeking-members-message'>Deze ThuisVerder-kring is op zoek naar nieuwe leden</div>
-                <?php } ?>
-                <!-- Not available message -->
-                <?php if(!$huiskamer->available()) { ?>
-                    <div class='huiskamers-not-available-message'>Deze ThuisVerder-kring neemt momenteel geen nieuwe leden aan</div>
-                <?php } ?>
-                <!-- Columns -->
-                <?php 
-                    $leftColumnsCount = ceil((count($columns) - 2) / 2);
-                    $leftColumns = null;
-                    $rightColumns = null;
-                    $fullSizeColumns = null;
-                    $columnNr = 0;
-                    foreach($columns as $column){                      
-                        $columnSlug = $column->slug();
-                        if ($columnSlug == 'age_max') 
-                        { 
-                                continue;                             
-                        }                        
-                        else if ($columnSlug == 'description')
-                        {
-                            $fullSizeColumns[] = $column;
-                            continue;
-                        }
-                        
-                        if($columnNr < $leftColumnsCount)
-                        {
-                            $leftColumns[] = $column;
-                        }
-                        else
-                        {
-                            $rightColumns[] = $column;
-                        }
-                        
-                        $columnNr++;
-                    } 
-                    
-                    // Draw left columns
-                    if(isset($leftColumns))
-                    {
-                        echo "<div class=\"huiskamers-searchResult-leftColumns\">";
-                            foreach($leftColumns as $column)
-                            {
-                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
-                            }
-                        echo "</div>";
-                    }
-                    
-                    // Draw right columns
-                    if(isset($rightColumns))
-                    {
-                        echo "<div class=\"huiskamers-searchResult-rightColumns\">";
-                            foreach($rightColumns as $column)
-                            {
-                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
-                            }
-                        echo "</div>";
-                    }
-                    
-                    // Draw full size columns
-                    if(isset($fullSizeColumns))
-                    {
-                        echo "<div class=\"huiskamers-searchResult-fullSizeColumns\">";
-                            foreach($fullSizeColumns as $column)
-                            {
-                                DrawColumnHTML($huiskamer, $column->slug(), $column->name());
-                            }
-                        echo "</div>";
-                    }
-                    ?>
-                    <!-- contact button -->
-                    <?php if($huiskamer->available()) { ?>                
-                    <div class="vc_btn3-container vc_btn3-right huiskamers-searchResult-contactButton">
-                        <a class="vc_general vc_btn3 vc_btn3-size-md vc_btn3-shape-rounded vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamer-email" 
-                           title='Contact ThuisVerder-kring' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
-                            <i class="vc_btn3-icon fa fa-envelope"></i> Contact
-                        </a>
-                    </div>        
-                    <?php } ?>
-            </div>
-        <?php } ?>
-    </div>
-    
 
 
 <!-- email pop up -->
 <div id="huiskamers-email-form" class="huiskamers-contactForm-container" style="display:none;">
-     <form method='post' id="huiskamers-contactForm-form" class='huiskamers-contactForm-form'>
-          <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
-          <div class='field'>
-               <label for='name' class="huiskamers-contactForm-header">Naam</label><br/>
-               <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-name-input'  name='huiskamer_message[name]' autofocus/>
-          </div>
-          <div class='field'>
-               <label for='email' class="huiskamers-contactForm-header">E-mail</label><br/>
-               <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-email-input' name='huiskamer_message[email]'/>
-          </div>
-          <div class='field'>
-               <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
-               <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
-          </div>
-          <input type='submit' value='Versturen'/>
-     </form>
+    <form method='post' id="huiskamers-contactForm-form" class='huiskamers-contactForm-form'>
+         <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
+         <div class='field'>
+              <label for='name' class="huiskamers-contactForm-header">Naam</label><br/>
+              <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-name-input'  name='huiskamer_message[name]' autofocus/>
+         </div>
+         <div class='field'>
+              <label for='email' class="huiskamers-contactForm-header">E-mail</label><br/>
+              <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-email-input' name='huiskamer_message[email]'/>
+         </div>
+         <div class='field'>
+              <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
+              <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
+         </div>
+         <input type='submit' value='Versturen'/>
+    </form>
 </div>
 
 <!-- gesloten huiskamer pop up -->
 <div id="huiskamers-unavailable" style="display:none;">
-    <p>Dankjewel voor je interesse in deze ThuisVerder-kring! Helaas kan deze kring tijdelijk geen nieuwe leden opnemen. Wellicht heeft één van de andere kring ook je interesse.</p>
-    <p>Het ThuisVerder-team</p>
+    <div class='huiskamers-unavailable-container'>
+        <p>Dankjewel voor je interesse in deze ThuisVerder-kring! Helaas kan deze kring tijdelijk geen nieuwe leden opnemen. Wellicht heeft één van de andere kring ook je interesse.</p>
+        <p>Het ThuisVerder-team</p>
+    </div>
 </div>

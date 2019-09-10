@@ -1,37 +1,65 @@
 /* This stylesheet is used to style the public view of the widget. */
-
     .huiskamers { 
     }
         
 /*** Searcher ***/
-    .huiskamers-searcher {  
-        color: #000000;
-        background: rgb(205, 200, 209);
+    .huiskamers-searcher-container { 
+        color: #ffffff;
+        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);    
         margin-top: 0px;
-        margin-bottom: 20px;
-        padding: 25px;
+        margin-bottom: 0px;
     }
-    
-    .huiskamers-searcher-selectRegion {
-        width: 175px;
-        margin: 0px;
-    }
+
+    .huiskamers-searcher { 
+        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
+        opacity:0.8; 
+        background-attachment:scroll;
+        
+        padding-top: 35px;
+        padding-bottom: 35px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }    
     
     .huiskamers-searcher-inputAge {
         width: 90px;
         margin: 0px;
+        border-radius: 3px !important;
+    }
+    
+    .huiskamers-searcher-checkbox-span {
+        display: inline-block; 
+        padding-right: 12px;
+    }
+    
+    .huiskamers-searcher-checkbox {
+        margin-right: 4px;
+    }
+    
+    .huiskamers-searcher-checkbox-label {
+        
     }
     
 /*** Search Results ***/    
-    .huiskamers-searchResults {
-        
+    .huiskamers-searchResults {        
     }    
     
+    .huiskamers-searchResult-container {
+        color: #ffffff;
+        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
     .huiskamers-searchResult {
-        background: #f3f3f3;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 16px;
+        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
+        opacity:0.8; 
+        background-attachment:scroll;
+        
+        padding-top: 35px;
+        padding-bottom: 35px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
     
     
@@ -43,11 +71,9 @@
     
     
     .huiskamers-searchResult.odd.seeking-members  {
-        background: #e9eefb;
     }
 
     .huiskamers-searchResult.even.seeking-members  {
-        background: #e9eefb;
     }
     
     .huiskamers-searchResult-leftColumns
@@ -96,7 +122,7 @@
     }
     
     .huiskamers-seeking-members-message {
-        color: #020425;
+        color: #c1002c;
         font-style: italic;
         font-weight: bold;
         text-align: center; 
@@ -104,35 +130,56 @@
     }
     
     .huiskamers-not-available-message {
-        color: #020425;
+        color: #c1002c;
         font-style: italic;
         font-weight: bold;
         text-align: center;
         font-size: 16px;
     }
-    
+    .huiskamers-searchResult-contactButton:hover{
+        color: #ffffff;
+        background-color: #b2003b;
+        border: none;
+        background-position: 100% 0;
+    }
     .huiskamers-searchResult-contactButton{
         margin-top: 8px;
+        color: #ffffff;
+        border: none;
+        background-color: #c1002c;
+        background-image: -webkit-linear-gradient(left, #c1002c 0%, #b2003b 50%,#c1002c 100%);
+        background-image: linear-gradient(to right, #c1002c 0%, #b2003b 50%,#c1002c 100%);
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        background-size: 200% 100%;
     }
     
 /*** No Results ***/
+    .huiskamers-noResults-container {
+        color: #ffffff;
+        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
     .huiskamers-noResults
     {
-        background: #f3f3f3;
-        border-top: 0px solid #ccc; 
-        margin-top: 20px;
-        margin-bottom: 20px;
+        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
+        opacity:0.8; 
+        background-attachment:scroll;
+        
+        padding-top: 35px;
+        padding-bottom: 35px;
+        padding-left: 15px;
+        padding-right: 15px;
+        
         text-align: center;
         font-style: italic;
-        padding: 25px;
     }
     
-/*** Contact form ***/
-    .huiskamers-contactForm-container{
-    }
-    
+/*** Contact form ***/    
     .huiskamers-contactForm-form{
         padding-top: 10px;
+        foreground: black;
     }
     
     .huiskamers-contactForm-message{
