@@ -178,10 +178,10 @@
                             ?>
                             <!-- contact button -->
                             <?php if($huiskamer->available()) { ?>                
-                            <div class="vc_btn3-container vc_btn3-right huiskamers-searchResult-contactButton-container">
-                                <a class="vc_general vc_btn3 vc_btn3-size-md vc_btn3-shape-rounded vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamers-searchResult-contactButton huiskamer-email" 
+                            <div class="vc_btn3-container vc_btn3-left huiskamers-searchResult-contactButton-container">
+                                <a class="vc_general vc_btn3 vc_btn3-size-sm vc_btn3-shape-round vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamers-searchResult-contactButton huiskamer-email" 
                                    title='Contact ThuisVerder-kring' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
-                                    <i class="vc_btn3-icon fa fa-envelope"></i> Contact
+                                    <i class="vc_btn3-icon fa fa-envelope"></i> CONTACT
                                 </a>
                             </div>        
                             <?php } ?>
@@ -208,7 +208,7 @@
               <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
               <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
          </div>
-         <input type='submit' value='Versturen'/>
+         <input type='submit' value='VERSTUREN'/>
     </form>
 </div>
 

@@ -1,10 +1,13 @@
 /* This stylesheet is used to style the public view of the widget. */
     .huiskamers { 
+        color: #ffffff;
+        font-family: Raleway;
+        font-weight: 400;
+        font-style: normal;
     }
         
 /*** Searcher ***/
     .huiskamers-searcher-container { 
-        color: #ffffff;
         background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);    
         margin-top: 0px;
         margin-bottom: 0px;
@@ -17,8 +20,11 @@
         
         padding-top: 35px;
         padding-bottom: 35px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 25px;
+        padding-right: 25px;
+        
+        max-width: 1190px;
+        margin: 0 auto;
     }    
     
     .huiskamers-searcher-inputAge {
@@ -60,6 +66,9 @@
         padding-bottom: 35px;
         padding-left: 15px;
         padding-right: 15px;
+        
+        max-width: 1190px;
+        margin: 0 auto;
     }
     
     
@@ -136,22 +145,27 @@
         text-align: center;
         font-size: 16px;
     }
+    
+    .huiskamers-searchResult-contactButton-container {
+        margin: 10px;
+    }
+    
     .huiskamers-searchResult-contactButton:hover{
-        color: #ffffff;
-        background-color: #b2003b;
-        border: none;
-        background-position: 100% 0;
+        color: #ffffff !important;
+        background-color: #b2003b !important;
+        border: none !important;
+        background-position: 100% 0 !important;
     }
     .huiskamers-searchResult-contactButton{
-        margin-top: 8px;
-        color: #ffffff;
-        border: none;
-        background-color: #c1002c;
-        background-image: -webkit-linear-gradient(left, #c1002c 0%, #b2003b 50%,#c1002c 100%);
-        background-image: linear-gradient(to right, #c1002c 0%, #b2003b 50%,#c1002c 100%);
+        margin-top: 8px !important;
+        color: #ffffff !important;
+        border: none !important;
+        background-color: #c1002c !important;
+        background-image: -webkit-linear-gradient(left, #c1002c 0%, #b2003b 50%,#c1002c 100%) !important;
+        background-image: linear-gradient(to right, #c1002c 0%, #b2003b 50%,#c1002c 100%) !important;
         -webkit-transition: all .2s ease-in-out;
         transition: all .2s ease-in-out;
-        background-size: 200% 100%;
+        background-size: 200% 100% !important;
     }
     
 /*** No Results ***/

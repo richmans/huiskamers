@@ -1,0 +1,26 @@
+/* The content of this css file can be used on your page to override the thickbox pop up style. */
+#TB_window {  
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+    width: 96% !important;
+    left: 0px !important;
+    right: 0px !important;
+        
+    color: #ffffff !important;
+    font-family: Raleway !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%) !important; 
+    }
+    
+#TB_ajaxContent {
+    width: 96% !important;
+}    
+
+#TB_title { 
+    color: #ffffff !important;
+    font-family: Raleway !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%) !important; 
+    }
