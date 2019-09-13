@@ -137,8 +137,6 @@
         if (findCount <= 0)
         {
             messageObject.css('display', '');
-            // Update error text.
-            document.getElementById('huiskamers-not-found-message').innerHTML = "Helaas geen ThuisVerder-kring gevonden voor geselecteerde filters.";
         }
         else
         {

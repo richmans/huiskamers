@@ -49,7 +49,8 @@
          De huiskamer neemt momenteel geen aanmeldingen aan.</div>
 <?php } ?>
 
-<div class="huiskamers">
+<div class="huiskamers">    
+    <div class="huiskamers-spacer-top"></div>
     <div class="huiskamers-searcher">
         <div class="huiskamers-searcher-background">
             <div class="huiskamers-searcher-content">
@@ -87,8 +88,8 @@
              style="display: none;">
             <div class="huiskamers-spacer"></div>
             <div class="huiskamers-noResults-background">
-                <div class="huiskamers-noResult-content">
-                    Geen huiskamers beschikbaar
+                <div class="huiskamers-noResults-content">
+                    Helaas geen ThuisVerder-kring gevonden voor geselecteerde filters.
                 </div>
             </div>    
         </div>
@@ -187,7 +188,7 @@
                                 <?php if($huiskamer->available()) { ?>                
                                 <div class="vc_btn3-container vc_btn3-left huiskamers-searchResult-contactButton-container">
                                     <a class="vc_general vc_btn3 vc_btn3-size-sm vc_btn3-shape-round vc_btn3-style-modern vc_btn3-icon-left vc_btn3-color-inverse huiskamers-searchResult-contactButton huiskamer-email" 
-                                       title='Contact ThuisVerder-kring' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
+                                       title='Contact ThuisVerder-kring: <?php echo $huiskamer->name()?>' href="#TB_inline?width=375&height=290&inlineId=<?php echo $huiskamer->form_title()?>" data-huiskamer='<?php echo $huiskamer->id()?>'>
                                         <i class="vc_btn3-icon fa fa-envelope"></i> CONTACT
                                     </a>
                                 </div>        
@@ -197,26 +198,31 @@
                 </div>
             <?php } ?>
         </div>
+        <div class="huiskamers-spacer-bottom"></div>
     </div>
 
 
 <!-- email pop up -->
 <div id="huiskamers-email-form" class="huiskamers-contactForm-container" style="display:none;">
     <form method='post' id="huiskamers-contactForm-form" class='huiskamers-contactForm-form'>
-         <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
-         <div class='field'>
-              <label for='name' class="huiskamers-contactForm-header">Naam</label><br/>
-              <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-name-input'  name='huiskamer_message[name]' autofocus/>
-         </div>
-         <div class='field'>
-              <label for='email' class="huiskamers-contactForm-header">E-mail</label><br/>
-              <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-email-input' name='huiskamer_message[email]'/>
-         </div>
-         <div class='field'>
-              <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
-              <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
-         </div>
-         <input type='submit' value='VERSTUREN'/>
+        <div class='huiskamers-contactForm-background'>
+            <div class='huiskamers-contactForm-content'>
+                <input type='hidden' name='huiskamer_message[huiskamer]' id='huiskamer-id' value='<?php echo $huiskamer_id?>'/>
+                <div class='field'>
+                     <label for='name' class="huiskamers-contactForm-header">Naam</label><br/>
+                     <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-name-input'  name='huiskamer_message[name]' autofocus/>
+                </div>
+                <div class='field'>
+                     <label for='email' class="huiskamers-contactForm-header">E-mail</label><br/>
+                     <input type='text' class="huiskamers-contactForm-input" id='huiskamer-contact-email-input' name='huiskamer_message[email]'/>
+                </div>
+                <div class='field'>
+                     <label for='bericht' class="huiskamers-contactForm-header">Bericht</label><br/>
+                     <textarea class="huiskamers-contactForm-textarea" id='huiskamer-contact-message-textarea' name='huiskamer_message[message]'></textarea>
+                </div>
+                <input type='submit' value='VERSTUREN'/>
+            </div>
+        </div>
     </form>
 </div>
 

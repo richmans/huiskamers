@@ -13,6 +13,14 @@
         background-image: url("https://kvdnvlaardingen.nl/wp-content/uploads/2019/09/BG2.jpg"); 
         background-attachment: fixed;
     }
+    .huiskamers-spacer-bottom {   
+        height: 150px;
+        background-size: cover; 
+        background-repeat: repeat; 
+        background-color: rgba(0, 0, 0, 0);
+        background-image: url("https://kvdnvlaardingen.nl/wp-content/uploads/2019/09/BG2.jpg"); 
+        background-attachment: fixed;
+    }
         
 /*** Searcher ***/    
     .huiskamers-searcher-background { 
@@ -58,6 +66,8 @@
         background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
         margin-top: 0px;
         margin-bottom: 0px;
+        
+        min-height: 200px;
     }
     .huiskamers-noResults-content
     {
@@ -65,13 +75,16 @@
         opacity:0.8; 
         background-attachment:scroll;
         
-        padding-top: 35px;
-        padding-bottom: 35px;
+        padding-top: 80px;
+        padding-bottom: 80px;
         padding-left: 15px;
-        padding-right: 15px;
+        padding-right: 15px; 
+        
+        max-width: 1190px;
+        margin: 0 auto;
         
         text-align: center;
-        font-style: italic;
+        font-style: italic;             
     }
     
 /*** Search Results ***/    
@@ -194,16 +207,24 @@
         background-size: 200% 100% !important;
     }
     
-/*** Contact form ***/    
+/*** Contact form ***/
     .huiskamers-contactForm-form{
+    }
+         
+    .huiskamers-contactForm-background { 
+        /*background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);*/
+    }
+
+    .huiskamers-contactForm-content { 
+/*        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
+        opacity:0.8; 
+        background-attachment:scroll;*/
+        
         padding-top: 10px;
-        foreground: black;
-    }
-    
-    .huiskamers-contactForm-message{
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }   
     
     .huiskamers-contactForm-header{
         font-weight: bold;
@@ -214,8 +235,9 @@
     }
     
     .huiskamers-contactForm-textarea{
+        resize: vertical;
         width: 100%;
-        height: 70px;
+        min-height: 200px;
     }
     
 /*** Contact messages ***/
