@@ -5,15 +5,21 @@
         font-weight: 400;
         font-style: normal;
     }
+    .huiskamers-spacer {   
+        height: 60px;
+        background-size: cover; 
+        background-repeat: repeat; 
+        background-color: rgba(0, 0, 0, 0);
+        background-image: url("https://kvdnvlaardingen.nl/wp-content/uploads/2019/09/BG2.jpg"); 
+        background-attachment: fixed;
+    }
         
-/*** Searcher ***/
-    .huiskamers-searcher-container { 
-        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);    
-        margin-top: 0px;
-        margin-bottom: 0px;
+/*** Searcher ***/    
+    .huiskamers-searcher-background { 
+        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
     }
 
-    .huiskamers-searcher { 
+    .huiskamers-searcher-content { 
         background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
         opacity:0.8; 
         background-attachment:scroll;
@@ -46,18 +52,38 @@
         
     }
     
-/*** Search Results ***/    
-    .huiskamers-searchResults {        
-    }    
-    
-    .huiskamers-searchResult-container {
+/*** No Results ***/
+    .huiskamers-noResults-background {
         color: #ffffff;
         background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
         margin-top: 0px;
         margin-bottom: 0px;
     }
+    .huiskamers-noResults-content
+    {
+        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
+        opacity:0.8; 
+        background-attachment:scroll;
+        
+        padding-top: 35px;
+        padding-bottom: 35px;
+        padding-left: 15px;
+        padding-right: 15px;
+        
+        text-align: center;
+        font-style: italic;
+    }
     
-    .huiskamers-searchResult {
+/*** Search Results ***/    
+    .huiskamers-searchResults {        
+    }    
+    
+    .huiskamers-searchResult-background {
+        color: #ffffff;
+        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
+    }
+    
+    .huiskamers-searchResult-content {
         background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
         opacity:0.8; 
         background-attachment:scroll;
@@ -166,28 +192,6 @@
         -webkit-transition: all .2s ease-in-out;
         transition: all .2s ease-in-out;
         background-size: 200% 100% !important;
-    }
-    
-/*** No Results ***/
-    .huiskamers-noResults-container {
-        color: #ffffff;
-        background: -webkit-linear-gradient(top, rgb(32, 33, 50) 0%, rgb(9, 9, 15) 100%);
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-    .huiskamers-noResults
-    {
-        background-image:url(https://kvdnvlaardingen.nl/wp-content/plugins/Ultimate_VC_Addons/assets/images/patterns/08.png); 
-        opacity:0.8; 
-        background-attachment:scroll;
-        
-        padding-top: 35px;
-        padding-bottom: 35px;
-        padding-left: 15px;
-        padding-right: 15px;
-        
-        text-align: center;
-        font-style: italic;
     }
     
 /*** Contact form ***/    
