@@ -56,9 +56,11 @@
             <div class="huiskamers-searcher-content">
                 <div id='huiskamers-searcher-regions'>
                     <b>Locatie</b><br/>
-                    <?php foreach(Huiskamers\Region::all() as $region) { ?>
+                    <?php foreach(Huiskamers\Region::all() as $region) { 
+                        if($region->huiskamer_visible_count() > 0){?>
+                        
                         <span class="huiskamers-searcher-checkbox-span"><input type='checkbox' class="huiskamers-searcher-checkbox" value='<?php echo $region->id()?>' id='huiskamers-searcher-day-<?php echo $region->id()?>' /><label class="huiskamers-searcher-checkbox-label" for='huiskamers-searcher-day-<?php echo $region->id()?>'><?php echo esc_html($region->name())?></label></span>
-                    <?php } ?>
+                    <?php }} ?>
                 </div>
                 <div style="margin-top:10px;" id='huiskamers-searcher-days'>
                     <b>Dag</b><br/>

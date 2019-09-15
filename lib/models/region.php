@@ -24,5 +24,21 @@ class Region extends Base {
             
             return $count;
 	} 
+        
+        public function huiskamer_visible_count() {
+            $count = 0;
+            foreach(Huiskamer::all() as $huiskamer)
+            {
+                if(in_array($this->id(), $huiskamer->region_ids()))                
+                {
+                    if($huiskamer->active() && $huiskamer->available())
+                    {
+                        $count++;
+                    }
+                }
+            }
+            
+            return $count;
+	} 
 }
 ?>
