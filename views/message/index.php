@@ -7,7 +7,7 @@
 			 $message_table->columns = array( 
 			 			'title'     => 'Naam',
 			 			'email'     => 'Email',
-			 			'huiskamer'     => 'Huiskamer',
+			 			'huiskamer_pretty'     => 'Huiskamer',
 			 			'message' => 'Bericht',
 			 			'created_at'    => 'Verstuurd',          
                             );
@@ -17,13 +17,13 @@
                              'created_at' => array('created_at',false),
                              'updated_at' => array('updated_at',false),
                              'email' => array('email',false),
-                             'huiskamer' => array('huiskamer',false),
+                             'huiskamer_pretty' => array('huiskamer',false),
                              );
 			 $message_table->disable_edit = true;
                         $message_table->columns_width = array(
                             'title'    => "150px",
                             'email'    => "200px",
-                            'huiskamer'    => "100px",
+                            'huiskamer_pretty'    => "100px",
                             'created_at'    => "100px",
                             'updated_at'  => "100px",
                         );

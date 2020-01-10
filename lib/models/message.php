@@ -45,5 +45,10 @@ class Message extends Base {
 		$email = str_replace('[bericht]', nl2br(htmlspecialchars($this->message())), $email);
 		return $email;
 	}
+        
+        public function huiskamer_pretty() {
+		$huiskamer = $this->get_huiskamer();
+		return $huiskamer->name() . "&nbsp;<span style=\"color:silver\">(id:".$this->huiskamer().")</span>";
+	}
 }
 ?>
