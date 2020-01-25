@@ -36,9 +36,9 @@ class Huiskamer extends Base {
 
 	public function before_create() {
 		global $wpdb;
-		$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->prefixed_table_name()}");
-		if($max_order == NULL) $max_order = 0;
-		$this->set_order_nr($max_order + 1);
+		//$max_order = $wpdb->get_var("SELECT MAX( order_nr ) FROM  {$this->prefixed_table_name()}");
+		//if($max_order == NULL) $max_order = 0;
+		//$this->set_order_nr($max_order + 1);
 	}
 	
 	public function before_update() {
