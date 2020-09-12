@@ -318,7 +318,8 @@ abstract class Base {
 		$table_name = static::prefixed_table_name();
 		$sql = "SELECT * FROM $table_name where id=$id";
 		$record = $wpdb->get_row( $sql, ARRAY_A );
-		if($record==NULL) throw new \Exception("Record not found");
+		if($record==NULL)
+                    return NULL;
 		$instance = new static($record);
 		return $instance;
 	}

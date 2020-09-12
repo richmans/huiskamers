@@ -48,7 +48,14 @@ class Message extends Base {
         
         public function huiskamer_pretty() {
 		$huiskamer = $this->get_huiskamer();
-		return $huiskamer->name() . "&nbsp;<span style=\"color:silver\">(id:".$this->huiskamer().")</span>";
+                if($huiskamer == NULL)
+                {
+                    return "Opgeheven" . "<br/><span style=\"color:silver\">(id:".$this->huiskamer().")</span>";
+                }
+                else
+                {
+                    return $huiskamer->name() . "<br/><span style=\"color:silver\">(id:".$this->huiskamer().")</span>";
+                }
 	}
 }
 ?>
